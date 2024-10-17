@@ -17,6 +17,7 @@ export default function Home() {
         </p>
         <Link className="veja">Veja mais</Link>
       </div>
+
       <center>
         <Link>
           <ChevronDown className="roll" />
@@ -42,6 +43,46 @@ export default function Home() {
           <Link className="veja">Veja mais</Link>
         </div>
       </div>
+
+      <img src="/assets/images/line_one.svg" alt="" className="line_one" />
+
+      <div className="slogan-service">
+        <img src="/assets/images/services.svg" alt=""/>
+        <p>
+          Oferecemos cuidados especializados para realçar sua beleza, desde alongamento de cílios, design de sobrancelhas até epilação. Usamos produtos de alta qualidade para garantir resultados duradouros e naturais.
+        </p>
+      </div>
+      <div className="cards">
+        <div className="card">
+          <img src="/assets/images/image.png" alt="" className="img_card"/>
+          <p className="preco">R$0</p>
+          <div className="circle"/>
+              <img src="/assets/images/cilios.svg" alt="" className="cilio"/>
+          <p>Serviço de estética de cílios envolve alongamento, lifting ou tintura para realçar os cílios, tornando-os mais longos, volumosos e definidos, com resultados naturais e duradouros.</p>
+        </div>
+
+        <div className="card">
+        <img src="/assets/images/image2.png" alt="" className="img_card"/>
+        <p className="preco">R$0</p>
+        <div className="circle"/>
+          <img src="/assets/images/sobrancelha.svg" alt="" className="cilio"/>
+          <p>Serviço de estética de sobrancelhas inclui design, micropigmentação ou tintura para definir e realçar o formato das sobrancelhas, garantindo uma aparência harmoniosa e bem cuidada.</p>
+        </div>
+
+        <div className="card">
+        <img src="/assets/images/imag3.png" alt="" className="img_card"/>
+        <p className="preco">R$0</p>
+        <div className="circle"/>
+          <img src="/assets/images/epilacao.svg" alt="" className="cilio"/>
+          <p>A epilação é o processo de remoção dos pelos pela raiz, utilizando métodos como cera quente, pinça, ou aparelhos elétricos. Ao contrário da depilação, que apenas corta o pelo na superfície.</p>
+        </div>
+      </div>
+      <center>
+        <Link className="veja_detalhes">Veja os detalhes</Link>
+      </center>
+
+      <img src="/assets/images/faixa.svg" alt="" className="line_one" />
+
     </div>
   );
 }

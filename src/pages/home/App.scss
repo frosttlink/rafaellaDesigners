@@ -1,72 +1,188 @@
 .pagina-home {
-    height: 100vh;
-    background-image: url(../../../public/assets/images/face-back.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
+  height: 100vh;
+  background-image: url(../../../public/assets/images/face-back.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 
-    .slogan {
-      color: #fff;
-    }
+  .veja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #ffb6cb;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    width: 140px;
+    padding: 10px 30px;
+    margin-left: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px #ffc2d4;
+  }
 
-    .busque {
-      width: 540px;
-      margin-bottom: -10px;
-    }
+  .veja_detalhes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #ffb6cb;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    width: 323px;
+    padding: 10px 30px;
+    margin-left: 15px;
+    margin-bottom: 450px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px #ffc2d4;
+  }
+
+  .slogan {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 300px 100px;
+    color: #fff;
 
     p {
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       font-weight: 700;
+      font-size: 22px;
       padding-left: 15px;
       margin-bottom: 10px;
     }
 
-    .slogan {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 300px 100px;
+    .busque {
+      width: 740px;
+      margin-bottom: -10px;
     }
 
     .veja {
       display: flex;
       align-items: center;
       justify-content: center;
-
       color: #fff;
-      background-color: #FFB6CB;
-
-      font-family: Roboto;
+      background-color: #ffb6cb;
+      font-family: Roboto, sans-serif;
       font-weight: 700;
       text-decoration: none;
-
       width: 140px;
-
       padding: 10px 30px;
       margin-left: 15px;
       border-radius: 8px;
-      box-shadow: 0px 0px 15px #FFC2D4;
+      box-shadow: 0px 0px 15px #ffc2d4;
     }
+  }
 
-    .roll {
-      margin-top: 40px;
-      color: #fff;
-    }
+  .roll {
+    margin-top: -40px;
+    color: #fff;
+  }
 
-    .dicas {
+  .dicas {
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+
+    .pele {
       display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin-top: -150px;
+
+      p {
+        font-family: Roboto, sans-serif;
+        font-weight: 700;
+        padding-left: 15px;
+        margin-bottom: 10px;
+      }
+
+      .ult {
+        margin-bottom: 20px;
+      }
+
+      
+    }
+  }
+
+  .line_one {
+    margin-top: -160px;
+    width: 100%;
+  }
+
+  .slogan-service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 100px;
+
+    p {
+      font-family: Roboto, sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      max-width: 1100px;
+    }
+  }
+
+  .cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 45px;
+    gap: 30px;
+    position: relative;
+
+
+    .circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      margin-left: 355px;
+      top: 20px;
+
+      background-color: #FFF1F5;
+      
+      position: absolute;
+      z-index: 0;
+    }
+
+    .preco {
+      position: absolute;
+      top: 35px;
+      right: 34px;
+      z-index: 1;
+      font-weight: 700;
+    }
+
+    .card {
+      width: 450px;
+      height: 550px;
+      padding: 50px 20px;
+      position: relative;
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      margin-left: 100px;
+      text-align: center;
+      border-radius: 12px;
+      
+      background-color: #FFB6CB;
+  
+      .cilio {
+        margin: 20px 0px 10px 0px;
+      }
 
-      .pele {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        margin-top: -150px;
-
-        .ult {
-          margin-bottom: 20px;
-        }
+      p {
+        font-weight: 700;
+        max-width: 85%;
       }
     }
+  }
 
+  
+ 
 }
