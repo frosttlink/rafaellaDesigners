@@ -17,13 +17,13 @@ export default function Home() {
           em você.
         </p>
         <Link className="veja">Veja mais</Link>
+        <center>
+          <Link>
+            <ChevronDown className="roll" />
+          </Link>
+        </center>
       </div>
 
-      <center>
-        <Link>
-          <ChevronDown className="roll" />
-        </Link>
-      </center>
 
       <div className="dicas">
         <img src="/assets/images/square.svg" alt="" />
@@ -82,13 +82,27 @@ export default function Home() {
         <Link className="veja_detalhes">Veja os detalhes</Link>
       </center>
 
-      {/* <img src="/assets/images/depo.svg" alt="" className="depoiments" />  
-      <img src="/assets/images/faixa.svg" alt="" className="line_one" />
-      <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo" /> */}
-      <img src="/assets/images/line_two.svg" alt="" className="line_one" />
+      <div className="depo">
+        <img src="/assets/images/depo.svg" alt="" className="depoiments" />
+        <img src="/assets/images/faixa.svg" alt="" className="line_one" />
+        <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo" />
+        <img src="/assets/images/line_two.svg" alt="" className="line_two" />
+        <p className="depoimento">
+          Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu. Lacus urna bibendum sagittis sit risus sagittis viverra mattis. Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut consequat posuere id.
+        
+
+        Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu. Lacus urna bibendum sagittis sit risus sagittis viverra mattis. Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut consequat posuere id.
+        </p>
+        <div className="circle"/>
+        <div className="depoidor">
+          <h5>Fulana de tal</h5>
+          <h6>@instagram</h6>
+        </div>
+
+      </div>
       
       <div className="vantagens">
-        <center><img src="/assets/images/encontra.svg" alt=""/></center>
+        <center><img src="/assets/images/encontra.svg" alt="" className="encontra"/></center>
 
         <div className="cards_encontra">
           <div className="card">

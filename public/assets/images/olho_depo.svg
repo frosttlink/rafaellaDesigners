@@ -1,10 +1,10 @@
-<svg width="902" height="1056" viewBox="0 0 902 1056" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="714" height="826" viewBox="0 0 714 826" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g filter="url(#filter0_d_84_47)">
-<rect width="692" height="846" rx="8" transform="matrix(-1 0 0 1 797 105)" fill="url(#pattern0_84_47)" shape-rendering="crispEdges"/>
-<rect x="-0.5" y="0.5" width="691" height="845" rx="7.5" transform="matrix(-1 0 0 1 796 105)" stroke="white" stroke-opacity="0.1" shape-rendering="crispEdges"/>
+<rect width="504" height="616" rx="8" transform="matrix(-1 0 0 1 609 105)" fill="url(#pattern0_84_47)" shape-rendering="crispEdges"/>
+<rect x="-0.5" y="0.5" width="503" height="615" rx="7.5" transform="matrix(-1 0 0 1 608 105)" stroke="white" stroke-opacity="0.1" shape-rendering="crispEdges"/>
 </g>
 <defs>
-<filter id="filter0_d_84_47" x="0" y="0" width="902" height="1056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d_84_47" x="0" y="0" width="714" height="826" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feMorphology radius="5" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_84_47"/>

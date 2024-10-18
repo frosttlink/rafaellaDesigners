@@ -1,3 +1,9 @@
+$color_white: #fff;
+$color_gray: #FFF1F5;
+$color_pink_base: #ffb6cb;
+$color_pink_shock: #FF789F;
+$color_pink_shadow: #ffc2d4;
+
 .pagina-home {
   height: 100vh;
   background-image: url(../../../public/assets/images/face-back.svg);
@@ -8,8 +14,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    background-color: #ffb6cb;
+    color: $color_white;
+    background-color: $color_pink_base;
     font-family: Roboto, sans-serif;
     font-weight: 700;
     text-decoration: none;
@@ -17,32 +23,32 @@
     padding: 10px 30px;
     margin-left: 15px;
     border-radius: 8px;
-    box-shadow: 0px 0px 15px #ffc2d4;
+    box-shadow: 0px 0px 15px $color_pink_shadow;
   }
 
   .veja_detalhes {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    background-color: #ffb6cb;
+    color: $color_white;
+    background-color: $color_pink_base;
     font-family: Roboto, sans-serif;
     font-weight: 700;
     text-decoration: none;
     width: 323px;
     padding: 10px 30px;
     margin-left: 15px;
-    margin-bottom: 450px;
+    margin-bottom: 280px;
     border-radius: 8px;
-    box-shadow: 0px 0px 15px #ffc2d4;
+    box-shadow: 0px 0px 15px $color_pink_shadow;
   }
 
   .slogan {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 300px 100px;
-    color: #fff;
+    padding: 300px 100px 0px 100px;
+    color: $color_white;
 
     p {
       font-family: Roboto, sans-serif;
@@ -61,8 +67,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      background-color: #ffb6cb;
+      color: $color_white;
+      background-color: $color_pink_base;
       font-family: Roboto, sans-serif;
       font-weight: 700;
       text-decoration: none;
@@ -70,25 +76,28 @@
       padding: 10px 30px;
       margin-left: 15px;
       border-radius: 8px;
-      box-shadow: 0px 0px 15px #ffc2d4;
+      box-shadow: 0px 0px 15px $color_pink_shadow;
     }
   }
 
   .roll {
-    margin-top: -40px;
-    color: #fff;
+    margin-top: 190px;
+    color: $color_white;
   }
 
   .dicas {
     display: flex;
     align-items: center;
-    margin-left: 100px;
+    justify-content: center;
+    margin-left: -75px;
 
     .pele {
       display: flex;
       flex-direction: column;
       max-width: 600px;
       margin-top: -150px;
+      margin-left: -60px;
+
 
       p {
         font-family: Roboto, sans-serif;
@@ -110,10 +119,52 @@
   }
 
   .line_one {
+    position: relative;
     width: 100%;
   }
+
+  .olho_depo {
+    position: absolute;
+    left: 620px;
+    top: 2900px;
+  }
+
+  .depoimento {
+    position: absolute;
+    top: 3200px;
+    left: 100px;
+    color: $color_white;
+    max-width: 600px;
+  }
+
+  .depo {
+    .circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      margin-left: 355px;
+      top: 3340px;
+      left: -259px;
+
+
+      background-color: $color_gray;
+      
+      position: absolute;
+    }
+
+    .depoidor {
+      top: 3349px;
+      left: 160px;
+      color: $color_white;
+      font-weight: 700;
+      position: absolute;
+      z-index: 1;
+    }
+  }
+
   .line_two {
     width: 100%;
+    margin-top: 200px;
   }
 
   .slogan-service {
@@ -132,6 +183,7 @@
     }
   }
 
+
   .cards {
     display: flex;
     align-items: center;
@@ -149,7 +201,7 @@
       margin-left: 355px;
       top: 20px;
 
-      background-color: #FFF1F5;
+      background-color: $color_gray;
       
       position: absolute;
       z-index: 0;
@@ -176,7 +228,7 @@
       text-align: center;
       border-radius: 12px;
       
-      background-color: #FFB6CB;
+      background-color: $color_pink_base;
   
       .cilio {
         margin: 20px 0px 10px 0px;
@@ -189,36 +241,40 @@
     }
   }
 
-  .cards_encontra {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+  .vantagens {
+    margin-top: 100px;
 
-    .card {
+    .cards_encontra {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      width: 500px;
-      height: 500px;
-      border-radius: 12px;
-      box-shadow: 0px 0px 15px #ffc2d4;
+      gap: 30px;
 
-      .icon {
-        width: 120px;
-        height: 120px;
-        color: #FF85A8;
+      .card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 500px;
+        height: 500px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 15px $color_pink_shadow;
+
+        .icon {
+          width: 120px;
+          height: 120px;
+          color: #FF85A8;
+        }
+
+        p {
+          max-width: 300px;
+          text-align: center;
+          font-weight: 700;
+          color: #5C5C5C;
+        }
       }
 
-      p {
-        max-width: 300px;
-        text-align: center;
-        font-weight: 700;
-        color: #5C5C5C;
-      }
     }
-
   }
 
   .agendar {
@@ -230,8 +286,8 @@
     font-weight: 700;
     border-radius: 8px;
     border-style: none;
-    color: #fff;
-    background-color: #FF789F;
+    color: $color_white;
+    background-color: $color_pink_shock;
     margin-top: 30px;
     position: fixed;
     bottom: 10px;
@@ -242,5 +298,11 @@
       height: 17px;
     }
   }
+
+  .encontra {
+    margin-bottom: 45px;
+  }
+
+  
  
 }

@@ -1,11 +1,11 @@
-<svg width="1920" height="508" viewBox="0 0 1920 508" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1920" height="579" viewBox="0 0 1920 579" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_0_1)">
-<rect y="7" width="1920" height="494" fill="#FF85A8"/>
+<rect y="7" width="1920" height="565" fill="#FF85A8"/>
 </g>
-<path d="M39 7L39 501.002" stroke="#FFB6CB" stroke-width="14"/>
-<path d="M69 7L69 501.002" stroke="#FFB6CB" stroke-width="14"/>
+<path d="M36 572.016L36 6.984" stroke="#FFB6CB" stroke-width="14"/>
+<path d="M66.5 572.011L66.5 6.98889" stroke="#FFB6CB" stroke-width="14"/>
 <defs>
-<filter id="filter0_d_0_1" x="-7" y="0" width="1934" height="508" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d_0_1" x="-7" y="0" width="1934" height="579" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feMorphology radius="2" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_0_1"/>
