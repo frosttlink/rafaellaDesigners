@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import Cabecalho from "../components/header";
 import "./App.scss";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleDollarSign, Send, ShieldCheckIcon, ShoppingBasket } from "lucide-react";
+import Rodape from "../components/footer";
 
 export default function Home() {
   return (
@@ -81,7 +82,39 @@ export default function Home() {
         <Link className="veja_detalhes">Veja os detalhes</Link>
       </center>
 
+      {/* <img src="/assets/images/depo.svg" alt="" className="depoiments" />  
       <img src="/assets/images/faixa.svg" alt="" className="line_one" />
+      <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo" /> */}
+      <img src="/assets/images/line_two.svg" alt="" className="line_one" />
+      
+      <div className="vantagens">
+        <center><img src="/assets/images/encontra.svg" alt=""/></center>
+
+        <div className="cards_encontra">
+          <div className="card">
+            <ShieldCheckIcon className="icon"/>
+            <img src="/assets/images/certi.svg" alt="" />
+            <p>Tenho certificação em design de sobrancelhas e extensão de cílios, garantindo um atendimento profissional e qualificado.</p>
+          </div>
+          <div className="card">
+            <CircleDollarSign className="icon"/>
+            <img src="/assets/images/preco.svg" alt="" />
+            <p>Ofereço serviços de sobrancelhas e cílios com preços acessíveis, sem comprometer a qualidade e o cuidado.</p>
+          </div>
+          <div className="card">
+            <ShoppingBasket className="icon"/>
+            <img src="/assets/images/produto.svg" alt="" />
+            <p>Uso produtos de qualidade para garantir os melhores resultados em sobrancelhas e cílios, sempre mantendo preços acessíveis.</p>
+          </div>
+        </div>
+      </div>
+
+      <button className="agendar">
+        <Send className="icon"/>
+        Vamos agendar
+      </button>
+
+      <Rodape/>
 
     </div>
   );
