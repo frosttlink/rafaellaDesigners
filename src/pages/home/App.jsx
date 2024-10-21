@@ -44,11 +44,11 @@ export default function Home() {
       <div className="cards">
         <CardService/>
         <CardService/>
-        <CardService/>
       </div>
-      <center> <ButtonVeja texto="Veja os detalhes"/> </center>1
+      <center> <ButtonVeja texto="Veja os detalhes"/> </center>
 
-      <Depoimentos/>
+      <div><Depoimentos/></div>
+      <img src="/assets/images/line_two.svg" alt="" className="line_two" />
       
       <div className="vantagens">
         <center><img src="/assets/images/encontra.svg" alt="" className="encontra"/></center>

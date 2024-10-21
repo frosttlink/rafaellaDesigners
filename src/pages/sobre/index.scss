@@ -1,0 +1,25 @@
+.comp-cabecalho {
+
+  background-color: #ffc2d4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 75px;
+
+  .navigation {
+    display: flex;
+    gap: 30px;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 17px;
+    font-family: Roboto;
+    font-weight: 700;
+    color: #000000; 
+
+    &.active {
+      color: #000000; 
+    }
+  }
+}
