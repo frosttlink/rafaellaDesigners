@@ -22,10 +22,12 @@ export default function Adm(){
                     </div>
                     <div className='inputs'>
                         <input type="text" placeholder='Senha'/>
-                        <Lock className='iconen'/>
+                        <Lock className='iconem'/>
                     </div>
-                    <button> Entrar</button>
-                    <Link>Esqueceu a senha?</Link>
+                    <button>Entrar</button>
+                    <center>
+                        <Link className='linkado'>Esqueceu a senha?</Link>
+                    </center>
                 </div>
             </div>
         </div>

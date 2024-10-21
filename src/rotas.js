@@ -9,6 +9,7 @@ export default function Navegacao() {
       <Routes>
         <Route path="/" element={ <Home/> }/>
         <Route path="/adm" element={ <Adm/> }/>
+        <Route path="/sobre" element={ <Sobre/> }/>
       </Routes>
     </BrowserRouter>
   );

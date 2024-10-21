@@ -1,3 +1,5 @@
+@import "../../colors.scss";
+
 .adm-pagina{
     background-image: url(../../../public/assets/images/fundoRosa.svg);
     height: 100vh;
@@ -16,6 +18,7 @@
         justify-content: space-around;
         width: 1000px;
         height: 600px;
+        border-radius: 10px;
         .borbo{
             .brabu{
                 width: 400px;
@@ -26,11 +29,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 25px;
             justify-items: center;
+            text-align: center;
 
             .foto{
                 margin-bottom: 30px;
+                text-align: center;
                 .user{
                     width: 120px;
                 }
@@ -38,15 +43,50 @@
                     opacity: 0.5;
                 }
             }
-            input{
-                padding: 10px 250px;
-                padding-left: 10PX;
-                border: 0px;
-                border-radius: 10px;
-                text-align: start;
-            }
-            button{
+            .inputs{
+                display: flex;
                 
+                input{
+                    padding: 10px 250px;
+                    padding-left: 10PX;
+                    border: 0px;
+                    border-radius: 10px;
+                    text-align: start;
+                    position: relative;
+                }
+                .iconen{
+                    position: absolute;
+                    top: 459px;
+                    right: 200px;
+                    opacity: 0.5;
+                }
+                .iconem{
+                    position: absolute;
+                    top: 519px;
+                    right: 200px;
+                    opacity: 0.5;
+                }
+            }
+            
+            button{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: $color_white;
+                background-color: $color_pink_base;
+                font-family: Roboto, sans-serif;
+                font-weight: 700;
+                text-decoration: none;
+                padding: 12px 50px;
+                border-radius: 8px;
+                border-style: none;
+                box-shadow: 0px 0px 15px $color_pink_shadow;
+            }
+            .linkado{
+                color:#5C5C5C;
+                font-family: Roboto, sans-serif;
+                font-weight: 800;
+                align-self: center;
             }
 
         }
