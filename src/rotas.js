@@ -10,6 +10,7 @@ export default function Navegacao() {
         <Route path="/" element={ <Home/> }/>
         <Route path="/adm" element={ <Adm/> }/>
         <Route path="/sobre" element={ <Sobre/> }/>
+        <Route path="/estoque" element={ <Sobre/> }/>
       </Routes>
     </BrowserRouter>
   );
