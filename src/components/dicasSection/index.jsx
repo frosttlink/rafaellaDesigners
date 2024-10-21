@@ -4,9 +4,11 @@ import "./index.scss"
 export default function DicasSection() {
   return (
     <div className="dicas">
+
       <img src="/assets/images/square.svg" alt="" />
       <div className="pele">
         <img src="/assets/images/dica.svg" alt="" />
+        
         <p>
           Mantenha sua pele hidratada! Beba pelo menos 2 litros de água por
           dia para manter a pele elástica. Use um hidratante adequado ao seu
@@ -19,8 +21,11 @@ export default function DicasSection() {
           vegetais ricos em água na sua dieta para ajudar a manter a pele
           saudável. Seguindo essas dicas, você terá uma pele mais radiante!
         </p>
+
         <ButtonVeja tamBotao="140px" texto="Veja mais" />
+
       </div>
+
     </div>
   )
 }

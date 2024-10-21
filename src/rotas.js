@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/App";
 import Adm from "./pages/admin";
+import DicasSection from "./components/dicasSection";
 
 
 export default function Navegacao() {
