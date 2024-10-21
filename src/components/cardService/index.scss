@@ -1,0 +1,26 @@
+@import "../../colors.scss";
+
+.card {
+  width: 450px;
+  height: 550px;
+  padding: 50px 20px;
+  position: relative;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 12px;
+  
+  background-color: $color_pink_base;
+
+  .cilio {
+    margin: 20px 0px 10px 0px;
+  }
+
+  p {
+    font-weight: 700;
+    max-width: 85%;
+  }
+}

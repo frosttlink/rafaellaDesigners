@@ -1,0 +1,26 @@
+.dicas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -75px;
+
+  .pele {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin-top: -150px;
+    margin-left: -60px;
+
+
+    p {
+      font-family: Roboto, sans-serif;
+      font-weight: 700;
+      padding-left: 15px;
+      margin-bottom: 10px;
+    }
+
+    .ult {
+      margin-bottom: 20px;
+    }   
+  }
+}
