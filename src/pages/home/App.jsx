@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import Cabecalho from "../components/header";
+import Cabecalho from "../../components/header";
 import "./App.scss";
 import { ChevronDown, CircleDollarSign, Send, ShieldCheckIcon, ShoppingBasket } from "lucide-react";
-import Rodape from "../components/footer";
+import Rodape from "../../components/footer";
 
 export default function Home() {
   return (
