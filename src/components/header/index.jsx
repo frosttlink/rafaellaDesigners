@@ -12,7 +12,7 @@ export default function Cabecalho() {
         <Link className={location.pathname === '/servicos' ? 'active' : ''} to="/servicos">Serviços</Link>
         <Link className={location.pathname === '/sobre' ? 'active' : ''} to="/sobre">Sobre</Link>
       </div>
-      <img src="/assets/images/user.svg" alt="" />
+      <Link className="adm" to='/adm'><img src="/assets/images/user.svg" alt="" /></Link>
     </div>
   );
 }
