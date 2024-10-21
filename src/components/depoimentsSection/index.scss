@@ -1,34 +1,56 @@
 @import "../../colors.scss";
 
-.depoimento {
-  position: absolute;
-  top: 3200px;
-  left: 100px;
-  color: $color_white;
-  max-width: 600px;
-}
-
 .depo {
-  .circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    margin-left: 355px;
-    top: 3340px;
-    left: -259px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  color: $color_white;
+  position: relative;
+  
+  .line_two {
+    width: 100%;
+  }
 
+  .depoiments {
+    margin-left: 170px;
+    margin-bottom: 30px;
+  }
 
-    background-color: $color_gray;
-    
+  .line_one {
+    z-index: 0;
+    position: relative;
+    width: 100%;
+  }
+
+  .olho_depo {
+    z-index: 1;
     position: absolute;
+    left: 750px;
+    top: 10px;
+  }
+
+  .depoimento {
+    position: absolute;
+    max-width: 600px;
+    top: 170px;
+    left: 100px;
   }
 
   .depoidor {
-    top: 3349px;
-    left: 160px;
-    color: $color_white;
-    font-weight: 700;
     position: absolute;
-    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    top: 300px;
+    left: 100px;
+  }
+
+  .circle {
+    background-color: $color_gray;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
   }
 }

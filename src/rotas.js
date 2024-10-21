@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/App";
 import Adm from "./pages/admin";
 import Sobre from "./pages/sobre";
+import Depoimentos from "./components/depoimentsSection";
 
 export default function Navegacao() {
   return (
