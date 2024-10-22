@@ -1,12 +1,11 @@
-import { ShieldCheckIcon } from "lucide-react"
 import "./index.scss"
 
-export default function CardEncontra() {
+export default function CardEncontra(props) {
   return (
     <div className="card_encontra">
-      <ShieldCheckIcon className="icon" />
-      <img src="/assets/images/certi.svg" alt="" />
-      <p>Tenho certificação em design de sobrancelhas e extensão de cílios, garantindo um atendimento profissional e qualificado.</p>
+      {props.icone && <props.icone className="icon" />}
+      <img src={"/assets/images/" + props.imagem }  alt="" />
+      <p>{props.texto}</p>
     </div>
   )
 }
