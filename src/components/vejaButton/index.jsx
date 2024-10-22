@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom"
-import "./index.scss"
+import { Link } from "react-router-dom";
+import "./index.scss";
 
 export default function ButtonVeja(props) {
   const vejaDetalhes = {
-      width: props.tamBotao || "323px",
-      marginBottom: "280px"
-  }
+    width: props.tamBotao || "323px",
+    marginBottom: "280px",
+  };
   return (
-    <Link style={vejaDetalhes} className="veja">{props.texto || "textoaqui"}</Link>
-
-
-  )
+    <Link style={vejaDetalhes} className="veja">
+      {props.texto || "textoaqui"}
+    </Link>
+  );
 }

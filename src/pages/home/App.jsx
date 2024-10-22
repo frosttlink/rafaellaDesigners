@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Cabecalho from "../../components/header";
 import "./App.scss";
-import { ChevronDown, Send, } from "lucide-react";
+import { ChevronDown, Send } from "lucide-react";
 import Rodape from "../../components/footer";
 import ButtonVeja from "../../components/vejaButton";
 import CardService from "../../components/cardService";
@@ -22,7 +22,7 @@ export default function Home() {
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja tamBotao="140px" texto="Veja mais"/>
+        <ButtonVeja tamBotao="140px" texto="Veja mais" />
         <center>
           <Link>
             <ChevronDown className="roll" />
@@ -30,40 +30,63 @@ export default function Home() {
         </center>
       </div>
 
-      <DicasSection/>
-      
+      <DicasSection />
 
       <img src="/assets/images/line_one.svg" alt="" className="line_one" />
 
       <div className="slogan-service">
-        <img src="/assets/images/services.svg" alt=""/>
+        <img src="/assets/images/services.svg" alt="" />
         <p>
-          Oferecemos cuidados especializados para realçar sua beleza, desde alongamento de cílios, design de sobrancelhas até epilação. Usamos produtos de alta qualidade para garantir resultados duradouros e naturais.
+          Oferecemos cuidados especializados para realçar sua beleza, desde
+          alongamento de cílios, design de sobrancelhas até epilação. Usamos
+          produtos de alta qualidade para garantir resultados duradouros e
+          naturais.
         </p>
       </div>
       <div className="cards">
-        <CardService/>
-        <CardService/>
+        <CardService
+          caminho="/assets/images/image.png"
+          preco="R$1"
+          caminhoServico="/assets/images/cilios.svg"
+          texto="Serviço de estética de cílios envolve alongamento, lifting ou tintura para realçar os cílios, tornando-os mais longos, volumosos e definidos, com resultados naturais e duradouros."
+        />
+        <CardService
+          caminho="/assets/images/image2.png"
+          preco="R$1"
+          caminhoServico="/assets/images/sobrancelha.svg"
+          texto="Serviço de estética de sobrancelhas inclui design, micropigmentação ou tintura para definir e realçar o formato das sobrancelhas, garantindo uma aparência harmoniosa e bem cuidada."
+        />
+        <CardService
+          caminho="/assets/images/imag3.png"
+          preco="R$1"
+          caminhoServico="/assets/images/epilacao.svg"
+          texto="A epilação é o processo de remoção dos pelos pela raiz, utilizando métodos como cera quente, pinça, ou aparelhos elétricos. Ao contrário da depilação, que apenas corta o pelo na superfície."
+        />
       </div>
-      <center> <ButtonVeja texto="Veja os detalhes"/> </center>
+      <center>
+        {" "}
+        <ButtonVeja texto="Veja os detalhes" />{" "}
+      </center>
 
-      <div><Depoimentos/></div>
+      <div>
+        <Depoimentos />
+      </div>
       <img src="/assets/images/line_two.svg" alt="" className="line_two" />
-      
+
       <div className="vantagens">
-        <center><img src="/assets/images/encontra.svg" alt="" className="encontra"/></center>
+        <center>
+          <img src="/assets/images/encontra.svg" alt="" className="encontra" />
+        </center>
 
         <div className="cards_encontra">
-          <CardEncontra/>
-          <CardEncontra/>
-          <CardEncontra/>
-      <AgendarButton/>
+          <CardEncontra />
+          <CardEncontra />
+          <CardEncontra />
+          <AgendarButton />
         </div>
       </div>
 
-
-      <Rodape/>
-
+      <Rodape />
     </div>
   );
 }

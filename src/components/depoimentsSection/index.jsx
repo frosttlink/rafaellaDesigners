@@ -8,8 +8,8 @@ export default function Depoimentos() {
       <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo" />
       <p className="depoimento">
         Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu. Lacus urna bibendum sagittis sit risus sagittis viverra mattis. Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut consequat posuere id.
-
-
+        <br />
+        <br />
         Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu. Lacus urna bibendum sagittis sit risus sagittis viverra mattis. Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut consequat posuere id.
       </p>
       
