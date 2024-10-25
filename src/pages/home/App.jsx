@@ -24,9 +24,9 @@
           </p>
           <ButtonVeja tamBotao="140px" texto="Veja mais" />
           <center>
-            <Link>
+            <a href="#dicas">
               <ChevronDown className="roll" />
-            </Link>
+            </a>
           </center>
         </div>
 

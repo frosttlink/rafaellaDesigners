@@ -3,7 +3,7 @@ import "./index.scss"
 
 export default function DicasSection() {
   return (
-    <div className="dicas">
+    <div className="dicas" id="dicas">
 
       <img src="/assets/images/square.svg" alt="" />
       <div className="pele">
