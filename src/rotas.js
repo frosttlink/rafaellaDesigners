@@ -3,6 +3,7 @@ import Home from "./pages/home/App";
 import Adm from "./pages/admin";
 import Sobre from "./pages/sobre";
 import Depoimentos from "./components/depoimentsSection";
+import Estoque from "./pages/estoque";
 
 export default function Navegacao() {
   return (
@@ -11,7 +12,7 @@ export default function Navegacao() {
         <Route path="/" element={ <Home/> }/>
         <Route path="/adm" element={ <Adm/> }/>
         <Route path="/sobre" element={ <Sobre/> }/>
-        <Route path="/estoque" element={ <Sobre/> }/>
+        <Route path="/estoque" element={ <Estoque/> }/>
       </Routes>
     </BrowserRouter>
   );
