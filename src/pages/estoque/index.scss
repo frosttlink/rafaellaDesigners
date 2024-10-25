@@ -35,6 +35,7 @@
         padding: 10px;
         border-radius: 8px;
         transition: background-color 0.3s;
+        cursor: pointer;
 
         &.active {
           background-color: $color_pink_rede;

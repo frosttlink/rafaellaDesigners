@@ -3,6 +3,7 @@ import Cabecalho from '../../components/header/index.jsx'
 import Rodape from '../../components/footer/index.jsx'
 import { Instagram, Send } from 'lucide-react';
 import ButtonVeja from '../../components/vejaButton/index.jsx';
+import { Link } from 'react-router-dom';
 
 
 export default function Sobre() {
@@ -43,8 +44,8 @@ export default function Sobre() {
           </div>
         </div>
 
-        <ButtonVeja texto="Voltar ao site"/>
-
+        <ButtonVeja texto="Voltar ao site" />
+        
       </center>
       <Rodape />
 

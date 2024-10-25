@@ -17,7 +17,7 @@ export default function Estoque() {
             <div className="secao">
                 <div className="menu">
                     <header>
-                        <img src="/assets/images/borboleta2.svg" alt="" className="borboleta" /><ArrowLeftFromLine />
+                        <img src="/assets/images/borboleta2.svg" alt="" className="borboleta" /> <ArrowLeftFromLine className="min"/>
                     </header>
 
                     <ul>
