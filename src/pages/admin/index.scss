@@ -41,29 +41,33 @@
                 }
                 .usuario{
                     opacity: 0.5;
+                    font-size: 4vh;
                 }
+
             }
             .inputs{
                 display: flex;
-                
+                flex-direction: row;
+                background-color: #fff;
+                border-radius: 10px;
+                align-items: center;
+                width: 65vh;
+                padding-right: 10px;
                 input{
-                    padding: 10px 250px;
-                    padding-left: 10PX;
+                    width: 100%;
+                    padding: 10px 10px;
+                    
                     border: 0px;
                     border-radius: 10px;
                     text-align: start;
-                    position: relative;
+                    outline: none;
                 }
                 .iconen{
-                    position: absolute;
-                    top: 459px;
-                    right: 200px;
+
                     opacity: 0.5;
                 }
                 .iconem{
-                    position: absolute;
-                    top: 519px;
-                    right: 200px;
+                    
                     opacity: 0.5;
                 }
             }

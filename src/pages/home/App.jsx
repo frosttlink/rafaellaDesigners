@@ -1,4 +1,5 @@
 import "./App.scss";
+import { Toaster } from "react-hot-toast";
 import Cabecalho from "../../components/header";
 import {
   ChevronDown,
@@ -19,6 +20,10 @@ import { motion } from "framer-motion";
 export default function Home() {
   return (
     <div className="pagina-home">
+            <Toaster
+            position="top-center"
+            reverseOrder={false}
+            />
         <Cabecalho />
         <AgendarButton />
       <div className="slogan">

@@ -3,6 +3,8 @@ import './index.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 export default function Adm(){
 
@@ -19,11 +21,14 @@ export default function Adm(){
         let resp = await axios.post(url,usuario)
 
         if(resp.data.erro != undefined){
-            alert(resp.data.erro)
+            toast.error(resp.data.erro);
+            
         }
         else{
+            toast.success('Login realizado');
             localStorage.setItem("usuario",resp.data.token)
             navigate('/')
+            
         }
     
     }
@@ -31,7 +36,10 @@ export default function Adm(){
 
     return(
         <div className='adm-pagina'>
-            
+            <Toaster
+            position="top-center"
+            reverseOrder={false}
+            />
             <div className='fundo'>
                 <div className='borbo'>
                     <img className='brabu' src='/assets/images/borboleta.svg' alt="" />
@@ -40,6 +48,7 @@ export default function Adm(){
                     <div className='foto'>
                         <img className='user' src="/assets/images/user.svg" alt="" />
                         <h1 className='usuario'>@usuario</h1>
+                        
                     </div>
                     
                     <div className='inputs'>
