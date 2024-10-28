@@ -20,12 +20,31 @@ export default function Estoque() {
   const [menuOpcao, setmenuOpcao] = useState("");
   const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [menuCompacto, setMenuCompacto] = useState(false);
-  const [verFormulario, setVerFormulario] = useState(false); 
+  const [verFormulario, setVerFormulario] = useState(false);
+  const [imagem, setImagem] = useState(null)
 
   const escolherArquivo = (e) => {
     const file = e.target.files[0];
     setNomeArquivo(file ? file.name : "Nenhuma arquivo selecionado");
   };
+
+  function alterarImagem(e) {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagem(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  const multiFunction = (e) => {
+    escolherArquivo(e); 
+    alterarImagem(e);
+  }
 
   return (
     <div className="estoque-pagina">
@@ -118,8 +137,9 @@ export default function Estoque() {
                       type="file"
                       id="fileInput"
                       className="file-input"
-                      onChange={escolherArquivo}
-                    />
+                      accept="image/*"
+                      onChange={multiFunction}
+                    />    
                     <label htmlFor="fileInput">
                       <span>{nomeArquivo}</span>
                       <Image className="icon" />
@@ -128,6 +148,15 @@ export default function Estoque() {
                   <button className="reg">Registrar</button>
                 </form>
               )}
+              {imagem  &&
+                <div className="imagem">
+                  <img
+                    id="produto"
+                    src={imagem}
+                    alt="foto"
+                  />
+                </div>
+              }
 
               {!verFormulario && (
                 <div className="lista-produto">
