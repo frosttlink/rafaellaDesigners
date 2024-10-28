@@ -104,11 +104,6 @@ export default function Estoque() {
                     placeholder="Nome do produto"
                     className="nome"
                   />
-                  <input
-                    type="text"
-                    placeholder="Descrição do produto"
-                    className="descricao"
-                  />
                   <div className="osDiferentes">
                     <input
                       type="text"

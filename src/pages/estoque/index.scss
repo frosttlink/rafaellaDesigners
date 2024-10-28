@@ -165,12 +165,18 @@
 
       .icon {
         font-size: 24px;
-        color: $color_pink_text;
+        color: $color_pink_text;        
+        transition-duration: 0.4s;
+      }
+
+      .icon:hover {
+        transform: scale(1.05);
+        background-color: $color_pink_search_hover;
       }
     }
 
     .custom-file-input:hover {
-      background-color: $color_pink_rede;
+      background-color: $color_pink_search_hover;
     }
 
     a {
@@ -224,11 +230,18 @@
 
     .reg {
       background-color: $color_pink_base;
+      cursor: pointer;
       color: $color_pink_text;
       font-weight: 700;
       width: 200px;
       height: 50px;
       border-radius: 8px;
+      transition-duration: 0.4s;
+    }
+
+    .reg:hover {
+      transform: scale(1.05);
+      background-color: $color_pink_search_hover;
     }
   }
 
@@ -315,52 +328,52 @@
       thead {
         background-color: $color_pink_base;
         color: $color_pink_text;
-  
+
         & tr {
           height: 50px;
           font-weight: 700;
         }
-  
+
         & th {
           padding: 10px;
           text-align: left;
         }
       }
-  
+
       tbody {
         background-color: $color_pink_lista;
         color: $color_white;
-  
+
         tr {
           td {
             border-bottom: 2px solid $color_pink_text
           }
         }
-  
+
         & td {
           padding: 10px;
           text-align: left;
         }
-  
+
         & .qtd {
           color: $color_pink_text;
         }
-  
+
         .action {
           color: $color_pink_text;
         }
-  
+
         .produto {
           display: flex;
           align-items: center;
           padding: 10px;
           text-align: left;
         }
-  
+
         td img {
           margin-right: 10px;
         }
       }
     }
-  } 
+  }
 }
