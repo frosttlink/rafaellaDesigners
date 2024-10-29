@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import "./index.scss";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -22,6 +22,8 @@ export default function InterfaceAdm() {
   const [menuCompacto, setMenuCompacto] = useState(false);
   const [verFormulario, setVerFormulario] = useState(false);
   const [imagem, setImagem] = useState(null)
+
+  const navigate = useNavigate()
 
   const escolherArquivo = (e) => {
     const file = e.target.files[0];
@@ -41,8 +43,8 @@ export default function InterfaceAdm() {
     }
   }
 
-  const multiFunction = (e) => {
-    escolherArquivo(e); 
+  function multiFunction(e) {
+    escolherArquivo(e);
     alterarImagem(e);
   }
 
@@ -86,12 +88,13 @@ export default function InterfaceAdm() {
             </li>
           </ul>
 
-          <button className="sair">{!menuCompacto && "Sair"}</button>
+          <button onClick={() => navigate("/")} className="sair">{!menuCompacto && "Sair"}</button>
         </div>
 
         <div className="formularios">
           {menuOpcao === "estoque" && (
             <div className="listagem-estoque">
+
               {!verFormulario && (
                 <div className="barra-pesquisa">
                   <div className="barra">
@@ -150,7 +153,7 @@ export default function InterfaceAdm() {
                   </form>
                 )}
 
-                {imagem  &&
+                {imagem &&
                   <div className="imagem">
                     <h4>Imagem do produto:</h4>
                     <img
@@ -192,6 +195,46 @@ export default function InterfaceAdm() {
                   </table>
                 </div>
               )}
+            </div>
+          )}
+
+          {menuOpcao === "agenda" && (
+            <div className="listagem-agenda">
+              <div className="agendamentos">
+                <h4>Nenhum horário agendado</h4>
+              </div>
+              <div className="adicionar-agenda">
+                <form className="agenda-form">
+                  <input
+                    type="text"
+                    placeholder="Nome do cliente"
+                    className="nome"
+                  />
+                  <div className="ser-dat">
+                    <input
+                      type="text"
+                      placeholder="Serviço do cliente"
+                      className="servico"
+                    />
+                    <input
+                      type="datetime-local"
+                      placeholder="Data e hora do serviço"
+                      className="dt-hr"
+                    />
+                  </div>
+                  <div className="atend-for">
+                    <div class="int-wrapper">
+                      <span class="int-label">Atendimento a domicilio</span>
+                      <label class="int">
+                        <input type="checkbox" value={false} />
+                        <span class="slider"></span>
+                      </label>
+                    </div>
+                    <input type="number" placeholder="Forma de pagamento" className="forma" />
+                  </div>
+                  <center><button className="age">Agendar</button></center>
+                </form>
+              </div>
             </div>
           )}
         </div>
