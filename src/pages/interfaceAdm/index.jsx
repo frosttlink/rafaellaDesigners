@@ -16,7 +16,7 @@ import "./index.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Estoque() {
+export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
   const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [menuCompacto, setMenuCompacto] = useState(false);
@@ -47,7 +47,7 @@ export default function Estoque() {
   }
 
   return (
-    <div className="estoque-pagina">
+    <div className="interface-adm">
       <div className="secao">
         <div className={`menu ${menuCompacto ? "compacto" : ""}`}>
           <header onClick={() => setMenuCompacto(!menuCompacto)}>
@@ -113,50 +113,54 @@ export default function Estoque() {
               )}
 
 
-              {verFormulario && (
-                <form className="estoque-form">
-                  <Link onClick={() => setVerFormulario(false)}>
-                    <Undo2 className="icon" />
-                  </Link>
-                  <input
-                    type="text"
-                    placeholder="Nome do produto"
-                    className="nome"
-                  />
-                  <div className="osDiferentes">
+              <div className="adicionar-estoque">
+                {verFormulario && (
+                  <form className="estoque-form">
+                    <Link onClick={() => setVerFormulario(false)}>
+                      <Undo2 className="icon" />
+                    </Link>
                     <input
                       type="text"
-                      placeholder="Categoria"
-                      className="categoria"
+                      placeholder="Nome do produto"
+                      className="nome"
                     />
-                    <input type="number" placeholder="Preço" className="preco" />
-                    <input type="number" placeholder="Quantidade" className="qtd" />
+                    <div className="osDiferentes">
+                      <input
+                        type="text"
+                        placeholder="Categoria"
+                        className="categoria"
+                      />
+                      <input type="number" placeholder="Preço" className="preco" />
+                      <input type="number" placeholder="Quantidade" className="qtd" />
+                    </div>
+                    <div className="custom-file-input">
+                      <input
+                        type="file"
+                        id="fileInput"
+                        className="file-input"
+                        accept="image/*"
+                        onChange={multiFunction}
+                      />
+                      <label htmlFor="fileInput">
+                        <span>{nomeArquivo}</span>
+                        <Image className="icon" />
+                      </label>
+                    </div>
+                    <button className="reg">Registrar</button>
+                  </form>
+                )}
+
+                {imagem  &&
+                  <div className="imagem">
+                    <h4>Imagem do produto:</h4>
+                    <img
+                      id="produto"
+                      src={imagem}
+                      alt="foto"
+                    />
                   </div>
-                  <div className="custom-file-input">
-                    <input
-                      type="file"
-                      id="fileInput"
-                      className="file-input"
-                      accept="image/*"
-                      onChange={multiFunction}
-                    />    
-                    <label htmlFor="fileInput">
-                      <span>{nomeArquivo}</span>
-                      <Image className="icon" />
-                    </label>
-                  </div>
-                  <button className="reg">Registrar</button>
-                </form>
-              )}
-              {imagem  &&
-                <div className="imagem">
-                  <img
-                    id="produto"
-                    src={imagem}
-                    alt="foto"
-                  />
-                </div>
-              }
+                }
+              </div>
 
               {!verFormulario && (
                 <div className="lista-produto">
