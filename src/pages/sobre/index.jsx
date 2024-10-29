@@ -44,7 +44,7 @@ export default function Sobre() {
           </div>
         </div>
 
-        <ButtonVeja texto="Voltar ao site" />
+        <ButtonVeja linkDestino="/" texto="Voltar ao site" />
         
       </center>
       <Rodape />

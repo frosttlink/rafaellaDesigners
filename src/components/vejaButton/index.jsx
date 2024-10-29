@@ -6,8 +6,9 @@ export default function ButtonVeja(props) {
     width: props.tamBotao || "323px",
     marginBottom: "280px",
   };
+
   return (
-    <Link style={vejaDetalhes} className="veja">
+    <Link to={props.linkDestino || "/"} style={vejaDetalhes} className="veja">
       {props.texto || "textoaqui"}
     </Link>
   );

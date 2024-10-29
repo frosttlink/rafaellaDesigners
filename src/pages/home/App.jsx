@@ -34,7 +34,7 @@ export default function Home() {
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja tamBotao="140px" texto="Veja mais" />
+        <ButtonVeja  tamBotao="140px" texto="Veja mais" />
         <center>
           <a href="#dicas">
             <ChevronDown className="roll" />
