@@ -1,20 +1,12 @@
 @import "../../colors.scss";
 
 .pagina-sobre {
-  .comp-cabecalho {
-    background-color: $color_pink_shadow;
-
-    .active {
-      color: $color_pink_shock;
-    }
-  }
-
   .container {
     display: flex;
     justify-content: center;
 
-    background-color: #FFF1F5;
-    margin: 90px 50px 40px 50px ;
+    background-color: #fff1f5;
+    margin: 90px 50px 40px 50px;
     height: 586px;
     width: 1100px;
     border-radius: 8px;
@@ -68,15 +60,11 @@
           color: $color_white;
         }
       }
-
     }
 
     .textoSobre {
       width: 180px;
       margin-bottom: 20px;
     }
-
-  
-
   }
 }

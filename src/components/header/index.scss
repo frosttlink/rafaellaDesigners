@@ -1,8 +1,18 @@
+@import "../../colors.scss";
+
 .comp-cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 3px 75px;
+
+  &.not-home {
+    background-color: $color_pink_shadow; 
+
+    .active {
+      color: $color_pink_shock; 
+    }
+  }
 
   .navigation {
     display: flex;
@@ -17,7 +27,7 @@
     color: #fff; 
 
     &.active {
-      color: #FFB6CB; 
+      color: #FFB6CB;
     }
   }
 }

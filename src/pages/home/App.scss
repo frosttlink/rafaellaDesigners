@@ -1,12 +1,10 @@
 @import "../../colors.scss";
 
-
 .pagina-home {
   height: 100vh;
   background-image: url(../../../public/assets/images/face-back.svg);
   background-repeat: no-repeat;
   background-size: cover;
-
 
   .slogan {
     display: flex;
@@ -27,21 +25,16 @@
       width: 740px;
       margin-bottom: -10px;
     }
-
-
   }
 
   .roll {
     color: $color_white;
   }
 
-
   .line_one {
     position: relative;
     width: 100%;
   }
-
-
 
   .line_two {
     width: 100%;
@@ -64,7 +57,6 @@
     }
   }
 
-
   .cards {
     display: flex;
     align-items: center;
@@ -73,7 +65,6 @@
     margin-bottom: 45px;
     gap: 30px;
     position: relative;
-
 
     .circle {
       width: 50px;
@@ -94,9 +85,7 @@
       right: 34px;
       z-index: 1;
       font-weight: 700;
-    }
-
-    
+    } 
   }
 
   .vantagens {
@@ -106,17 +95,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 30px;
-
-      
-
+      gap: 30px;    
     }
   }
 
   .encontra {
     margin-bottom: 45px;
   }
-
-  
- 
 }
