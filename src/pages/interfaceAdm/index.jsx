@@ -290,6 +290,39 @@ export default function InterfaceAdm() {
               </div>
             </div>
           )}
+
+          {menuOpcao === "editar" && (
+            <div className="listagem-editar">
+              <h1>Hello World</h1>
+            </div>
+          )}
+
+          {menuOpcao === "clientes" && (
+            <div className="listagem-clientes">
+              <div className="lista-produto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Celular</th>
+                      <th>Ações</th>
+                      <th><Link className="add"> <Plus className="icon"/> Adicionar </Link></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Leonardo Debora Henrique</td>
+                      <td>11 9999-9999</td>
+                      <td className="action">
+                        <SquarePen /> <Trash />
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

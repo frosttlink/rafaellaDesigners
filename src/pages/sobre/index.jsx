@@ -34,10 +34,10 @@ export default function Sobre() {
               <img src="/assets/images/rede.svg" alt="" className='textoSobre' />
               <div className="redes">
                 <div>
-                  <Instagram className='icon' />
+                  <Instagram className='icon' /> <a target='_blank' href='https://instagram.com/rafaella_designers'> rafaella_designers </a>
                 </div>
                 <div>
-                  <Send className='icon' />
+                  <Send className='icon' /> <a target='_blank' href='https://api.whatsapp.com/send/?phone=5511975220906&text&type=phone_number&app_absent=0' className='num'> 11 97522-0906 </a>
                 </div>
               </div>
             </div>

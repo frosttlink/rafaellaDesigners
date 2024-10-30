@@ -422,6 +422,7 @@
     }
 
     .agenda-form {
+
       .nome,
       .servico,
       .dt-hr,
@@ -539,6 +540,78 @@
       .age:hover {
         transform: scale(1.05);
         background-color: $color_pink_search_hover;
+      }
+    }
+  }
+
+  .listagem-editar {}
+
+  .listagem-clientes {
+    table {
+      width: 100%;
+      margin-top: 50px;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      font-weight: 700;
+
+      thead {
+        background-color: $color_pink_base;
+        color: $color_pink_text;
+
+        & tr {
+          height: 50px;
+          font-weight: 700;
+        }
+
+        & th {
+          padding: 10px;
+          text-align: left;
+
+          & .add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            gap: 8px;
+            background-color: $color_pink_rede;
+            color: $color_white;
+            height: 40px;
+            width: 120px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+
+            .icon {
+              font-size: 20px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      tbody {
+        background-color: $color_pink_lista;
+        color: $color_pink_clientes;
+
+        td img {
+          height: 85px;
+          width: 120px;
+          border-radius: 20px;
+          object-fit: cover;
+        }
+
+        tr {
+          td {
+            border-bottom: 2px solid $color_pink_text
+          }
+        }
+
+        & td {
+          padding: 10px 120px 10px 10px;
+          text-align: left;
+        }
       }
     }
   }
