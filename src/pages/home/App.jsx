@@ -96,7 +96,7 @@ export default function Home() {
         />
       </motion.div>
       <center>
-        <ButtonVeja texto="Veja os detalhes" />
+        <ButtonVeja linkDestino="/servicos" texto="Veja os detalhes" />
       </center>
 
       <motion.div
