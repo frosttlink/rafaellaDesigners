@@ -362,6 +362,13 @@
         background-color: $color_pink_lista;
         color: $color_white;
 
+        td img {
+          height: 85px;
+          width: 120px;
+          border-radius: 20px;
+          object-fit: cover;
+        }
+
         tr {
           td {
             border-bottom: 2px solid $color_pink_text

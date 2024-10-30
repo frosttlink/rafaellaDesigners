@@ -21,24 +21,29 @@ export default function InterfaceAdm() {
   const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [menuCompacto, setMenuCompacto] = useState(false);
   const [verFormulario, setVerFormulario] = useState(false);
-  const [imagem, setImagem] = useState(null)
+  const [imagem, setImagem] = useState(null);
+  const [produtos, setProdutos] = useState([]);
+  const [novoProduto, setNovoProduto] = useState({
+    nome: "",
+    categoria: "",
+    preco: "",
+    quantidade: "",
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const escolherArquivo = (e) => {
     const file = e.target.files[0];
-    setNomeArquivo(file ? file.name : "Nenhuma arquivo selecionado");
+    setNomeArquivo(file ? file.name : "Nenhum arquivo selecionado");
   };
 
   function alterarImagem(e) {
     const file = e.target.files[0];
-
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagem(reader.result);
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -46,6 +51,25 @@ export default function InterfaceAdm() {
   function multiFunction(e) {
     escolherArquivo(e);
     alterarImagem(e);
+  }
+
+  function inputChange(e) {
+    const { name, value } = e.target;
+    setNovoProduto({ ...novoProduto, [name]: value });
+  }
+
+  function addProduto() {
+    const produto = {
+      ...novoProduto,
+      id: produtos.length + 1,
+      preco: parseFloat(novoProduto.preco),
+      quantidade: parseInt(novoProduto.quantidade, 10),
+      imagem: imagem || "/assets/images/imagemFake.svg",
+    };
+    setProdutos([...produtos, produto]);
+    setVerFormulario(false);
+    setNovoProduto({ nome: "", categoria: "", preco: "", quantidade: "" });
+    setImagem(null);
   }
 
   return (
@@ -88,13 +112,14 @@ export default function InterfaceAdm() {
             </li>
           </ul>
 
-          <button onClick={() => navigate("/")} className="sair">{!menuCompacto && "Sair"}</button>
+          <button onClick={() => navigate("/")} className="sair">
+            {!menuCompacto && "Sair"}
+          </button>
         </div>
 
         <div className="formularios">
           {menuOpcao === "estoque" && (
             <div className="listagem-estoque">
-
               {!verFormulario && (
                 <div className="barra-pesquisa">
                   <div className="barra">
@@ -115,26 +140,51 @@ export default function InterfaceAdm() {
                 </div>
               )}
 
-
               <div className="adicionar-estoque">
                 {verFormulario && (
-                  <form className="estoque-form">
+                  <form
+                    className="estoque-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      addProduto();
+                    }}
+                  >
                     <Link onClick={() => setVerFormulario(false)}>
                       <Undo2 className="icon" />
                     </Link>
                     <input
                       type="text"
+                      name="nome"
                       placeholder="Nome do produto"
                       className="nome"
+                      value={novoProduto.nome}
+                      onChange={inputChange}
                     />
                     <div className="osDiferentes">
                       <input
                         type="text"
+                        name="categoria"
                         placeholder="Categoria"
                         className="categoria"
+                        value={novoProduto.categoria}
+                        onChange={inputChange}
                       />
-                      <input type="number" placeholder="Preço" className="preco" />
-                      <input type="number" placeholder="Quantidade" className="qtd" />
+                      <input
+                        type="number"
+                        name="preco"
+                        placeholder="Preço"
+                        className="preco"
+                        value={novoProduto.preco}
+                        onChange={inputChange}
+                      />
+                      <input
+                        type="number"
+                        name="quantidade"
+                        placeholder="Quantidade"
+                        className="qtd"
+                        value={novoProduto.quantidade}
+                        onChange={inputChange}
+                      />
                     </div>
                     <div className="custom-file-input">
                       <input
@@ -153,16 +203,12 @@ export default function InterfaceAdm() {
                   </form>
                 )}
 
-                {imagem &&
+                {imagem && (
                   <div className="imagem">
                     <h4>Imagem do produto:</h4>
-                    <img
-                      id="produto"
-                      src={imagem}
-                      alt="foto"
-                    />
+                    <img id="produto" src={imagem} alt="foto" />
                   </div>
-                }
+                )}
               </div>
 
               {!verFormulario && (
@@ -177,20 +223,21 @@ export default function InterfaceAdm() {
                         <th></th>
                       </tr>
                     </thead>
-
                     <tbody>
-                      <tr>
-                        <td className="produto">
-                          <img src="/assets/images/imagemFake.svg" alt="" />
-                          Extensão de cílios
-                        </td>
-                        <td>Cílios</td>
-                        <td className="qtd">21</td>
-                        <td>R$70,50</td>
-                        <td className="action">
-                          <SquarePen /> <Trash />
-                        </td>
-                      </tr>
+                      {produtos.map((produto) => (
+                        <tr key={produto.id}>
+                          <td className="produto">
+                            <img src={produto.imagem} alt="" />
+                            {produto.nome}
+                          </td>
+                          <td>{produto.categoria}</td>
+                          <td className="qtd">{produto.quantidade}</td>
+                          <td>R${Number(produto.preco).toFixed(2)}</td>
+                          <td className="action">
+                            <SquarePen /> <Trash />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -223,16 +270,22 @@ export default function InterfaceAdm() {
                     />
                   </div>
                   <div className="atend-for">
-                    <div class="int-wrapper">
-                      <span class="int-label">Atendimento a domicilio</span>
-                      <label class="int">
+                    <div className="int-wrapper">
+                      <span className="int-label">Atendimento a domicilio</span>
+                      <label className="int">
                         <input type="checkbox" value={false} />
-                        <span class="slider"></span>
+                        <span className="slider"></span>
                       </label>
                     </div>
-                    <input type="number" placeholder="Forma de pagamento" className="forma" />
+                    <input
+                      type="number"
+                      placeholder="Forma de pagamento"
+                      className="forma"
+                    />
                   </div>
-                  <center><button className="age">Agendar</button></center>
+                  <center>
+                    <button className="age">Agendar</button>
+                  </center>
                 </form>
               </div>
             </div>
