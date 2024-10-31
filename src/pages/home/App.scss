@@ -102,4 +102,11 @@
   .encontra {
     margin-bottom: 45px;
   }
+
+  @media (max-width: 1640px) {
+    .olho_depo {
+      display: none;
+    }
+  }
 }
+

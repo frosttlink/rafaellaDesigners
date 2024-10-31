@@ -7,7 +7,7 @@
   flex-direction: column;
   color: $color_white;
   position: relative;
-  
+
   .line_two {
     width: 100%;
   }
@@ -53,5 +53,23 @@
     width: 45px;
     height: 45px;
     border-radius: 100%;
+  }
+
+  @media (max-width: 1640px) {
+    .depoimento {
+      text-align: center;
+      max-width: 1000px;
+      left: 245px;
+    }
+
+    .depoiments {
+      text-align: center;
+    }
+
+    .depoidor {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

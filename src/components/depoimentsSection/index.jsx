@@ -12,9 +12,9 @@ export default function Depoimentos() {
         <br />
         Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu. Lacus urna bibendum sagittis sit risus sagittis viverra mattis. Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut consequat posuere id.
       </p>
-      
+
       <div className="depoidor">
-      <div className="circle" />
+        <div className="circle" />
         <div>
           <h5>Fulana de tal</h5>
           <h6>@instagram</h6>
