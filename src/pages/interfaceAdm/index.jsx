@@ -99,12 +99,6 @@ export default function InterfaceAdm() {
               <Layers className="icon" /> {!menuCompacto && "Estoque"}
             </li>
             <li
-              onClick={() => setmenuOpcao("editar")}
-              className={menuOpcao === "editar" ? "active" : ""}
-            >
-              <SquarePen className="icon" /> {!menuCompacto && "Editar site"}
-            </li>
-            <li
               onClick={() => setmenuOpcao("clientes")}
               className={menuOpcao === "clientes" ? "active" : ""}
             >
@@ -288,12 +282,6 @@ export default function InterfaceAdm() {
                   </center>
                 </form>
               </div>
-            </div>
-          )}
-
-          {menuOpcao === "editar" && (
-            <div className="listagem-editar">
-              <h1>Hello World</h1>
             </div>
           )}
 

@@ -1,5 +1,4 @@
 import Cabecalho from "../../components/header";
-import AgendarButton from "../../components/agendarButton";
 import "./index.scss";
 
 export default function DetalhesServicos() {
@@ -30,7 +29,7 @@ export default function DetalhesServicos() {
           ut vitae. Nulla velit morbi nibh nulla fringilla arcu aliquet. Id
           lacinia mi sit pharetra.
         </p>
-        <AgendarButton/>
+        <button>Agendar</button>
       </div>
     </div>
   );
