@@ -126,7 +126,7 @@ useEffect(() => {
     if (!token) { 
         navigate('/');
     } else {
-        consultar(token); 
+        // consultar(token); 
     }
 }, []);
 
