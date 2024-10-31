@@ -20,12 +20,9 @@ import { motion } from "framer-motion";
 export default function Home() {
   return (
     <div className="pagina-home">
-            <Toaster
-            position="top-center"
-            reverseOrder={false}
-            />
-        <Cabecalho />
-        <AgendarButton />
+      <Toaster position="top-center" reverseOrder={false} />
+      <Cabecalho />
+      <AgendarButton />
       <div className="slogan">
         <img src="/assets/images/busque.svg" alt="" className="busque" />
         <p>
@@ -34,7 +31,7 @@ export default function Home() {
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja  tamBotao="140px" texto="Veja mais" />
+        <ButtonVeja tamBotao="140px" texto="Veja mais" />
         <center>
           <a href="#dicas">
             <ChevronDown className="roll" />
@@ -107,7 +104,7 @@ export default function Home() {
       >
         <Depoimentos />
       </motion.div>
-      
+
       <img src="/assets/images/line_two.svg" alt="" className="line_two" />
 
       <motion.div

@@ -4,6 +4,7 @@ import Adm from "./pages/admin";
 import Sobre from "./pages/sobre";
 import InterfaceAdm from "./pages/interfaceAdm";
 import DetalhesServicos from "./pages/servicos";
+import Galeria from "./components/galeria";
 
 export default function Navegacao() {
   return (
@@ -14,6 +15,7 @@ export default function Navegacao() {
         <Route path="/sobre" element={ <Sobre/> }/>
         <Route path="/interfaceAdm" element={ <InterfaceAdm/> }/>
         <Route path="/servicos" element={ <DetalhesServicos/> }/>
+        <Route path="/galeria" element={ <Galeria/> }/>
       </Routes>
     </BrowserRouter>
   );

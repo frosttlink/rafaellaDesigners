@@ -22,7 +22,7 @@ export default function DicasSection() {
           saudável. Seguindo essas dicas, você terá uma pele mais radiante!
         </p>
 
-        <ButtonVeja tamBotao="140px" texto="Veja mais" />
+        <ButtonVeja linkDestino="/galeria" tamBotao="140px" texto="Veja mais" />
 
       </div>
 
