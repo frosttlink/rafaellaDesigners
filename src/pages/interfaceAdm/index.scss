@@ -25,7 +25,6 @@
     &.compacto {
       min-width: 50px;
 
-
       ul li {
         justify-content: center;
         width: auto;
@@ -220,7 +219,6 @@
       font-weight: 700;
       border-radius: 8px;
       outline: none;
-
     }
 
     & input::placeholder {
@@ -290,7 +288,6 @@
         font-weight: 700;
       }
 
-
       input {
         background-color: $color_pink_search;
         padding: 15px 25px;
@@ -298,7 +295,6 @@
         outline: none;
         border-radius: 8px;
         font-weight: 700;
-
       }
 
       input::placeholder {
@@ -371,7 +367,7 @@
 
         tr {
           td {
-            border-bottom: 2px solid $color_pink_text
+            border-bottom: 2px solid $color_pink_text;
           }
         }
 
@@ -403,6 +399,91 @@
   }
 
   .listagem-agenda {
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+
+      background-color: rgba(0, 0, 0, 0.5);
+
+      & .modal-content {
+        background: $color_pink_base;
+        color: $color_pink_text;
+        padding: 40px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+
+        h2 {
+          margin-bottom: 30px;
+        }
+      }
+
+      & .icon-close {
+        cursor: pointer;
+        font-size: 24px;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+      }
+    }
+
+    .container-agendamento {
+      display: flex;
+      flex-direction: row;
+      gap: 45px;
+      padding: 20px;
+      width: 80%;
+      border-radius: 8px;
+
+      background-color: $color_pink_card_agenda;
+
+      & .data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        border-radius: 8px;
+
+        background-color: $color_pink_card_data_agenda;
+      }
+
+      & .content {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        justify-content: center;
+      }
+    }
+
+    .listar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 150px;
+      gap: 15px;
+      padding: 10px;
+      font-weight: 700;
+      border-radius: 8px;
+      color: $color_white;
+      background-color: $color_pink_shock;
+      transition-duration: 0.4s;
+
+      a {
+        text-decoration: none;
+        color: $color_white;
+      }
+    }
+
     .adicionar-agenda {
       background-color: $color_background_agenda;
       padding: 40px;
@@ -410,8 +491,11 @@
     }
 
     .agendamentos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       background-color: $color_background_agenda;
-      padding: 90px 40px;
+      padding: 50px;
       border-radius: 8px;
       margin-bottom: 25px;
 
@@ -422,6 +506,8 @@
     }
 
     .agenda-form {
+      display: flex;
+      flex-direction: column;
 
       .nome,
       .servico,
@@ -516,11 +602,11 @@
           border-radius: 100%;
         }
 
-        input:checked+.slider {
+        input:checked + .slider {
           background-color: $color_pink_input_before;
         }
 
-        input:checked+.slider:before {
+        input:checked + .slider:before {
           transform: translateX(36px);
         }
       }
@@ -543,8 +629,6 @@
       }
     }
   }
-
-  .listagem-editar {}
 
   .listagem-clientes {
     table {
@@ -604,7 +688,7 @@
 
         tr {
           td {
-            border-bottom: 2px solid $color_pink_text
+            border-bottom: 2px solid $color_pink_text;
           }
         }
 

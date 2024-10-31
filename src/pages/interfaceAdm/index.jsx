@@ -11,6 +11,8 @@ import {
   Tag,
   Plus,
   Trash,
+  X,
+  Edit,
 } from "lucide-react";
 import "./index.scss";
 import { useState } from "react";
@@ -18,9 +20,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
-  const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [menuCompacto, setMenuCompacto] = useState(false);
   const [verFormulario, setVerFormulario] = useState(false);
+  const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [imagem, setImagem] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [novoProduto, setNovoProduto] = useState({
@@ -30,6 +32,19 @@ export default function InterfaceAdm() {
     quantidade: "",
   });
 
+  const [atendimentoDomicilio, setAtendimentoDomicilio] = useState(false);
+  const [agendamentos, setAgendamentos] = useState([]);
+  const [novoAgendamento, setNovoAgendamento] = useState({
+    nomeCliente: "",
+    numeroCliente: "",
+    cepCliente: "",
+    servico: "",
+    dataHora: "",
+    formaPagamento: "",
+    domicilio: false,
+  });
+
+  const [modalAberto, setModalAberto] = useState(false);
   const navigate = useNavigate();
 
   const escolherArquivo = (e) => {
@@ -53,11 +68,6 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
-  function inputChange(e) {
-    const { name, value } = e.target;
-    setNovoProduto({ ...novoProduto, [name]: value });
-  }
-
   function addProduto() {
     const produto = {
       ...novoProduto,
@@ -71,6 +81,38 @@ export default function InterfaceAdm() {
     setNovoProduto({ nome: "", categoria: "", preco: "", quantidade: "" });
     setImagem(null);
   }
+
+  function inputChange(e) {
+    const { name, value } = e.target;
+    setNovoProduto({ ...novoProduto, [name]: value });
+  }
+
+  function addAgendamento() {
+    const agendamento = {
+      ...novoAgendamento,
+      id: agendamentos.length + 1,
+      domicilio: atendimentoDomicilio,
+    };
+    setAgendamentos([...agendamentos, agendamento]);
+    setNovoAgendamento({
+      nomeCliente: "",
+      numeroCliente: "",
+      cepCliente: "",
+      servico: "",
+      dataHora: "",
+      formaPagamento: "",
+      domicilio: false,
+    });
+    setAtendimentoDomicilio(false);
+  }
+
+  function handleAgendamentoChange(e) {
+    const { name, value } = e.target;
+    setNovoAgendamento({ ...novoAgendamento, [name]: value });
+  }
+
+  const abrirModal = () => setModalAberto(true);
+  const fecharModal = () => setModalAberto(false);
 
   return (
     <div className="interface-adm">
@@ -112,6 +154,172 @@ export default function InterfaceAdm() {
         </div>
 
         <div className="formularios">
+          {menuOpcao === "agenda" && (
+            <div className="listagem-agenda">
+              <div className="agendamentos">
+                {agendamentos.length === 0 ? (
+                  <h4>Nenhum agendamento encontrado</h4>
+                ) : (
+                  <>
+                    <div key={agendamentos[agendamentos.length - 1].id} className="container-agendamento" >
+                      <div className="data">
+                        <h1>
+                          {new Date(
+                            agendamentos[agendamentos.length - 1].dataHora,
+                          ).getDate()}
+                        </h1>
+                        <p>
+                          {new Date(
+                            agendamentos[agendamentos.length - 1].dataHora,
+                          ).toLocaleString("pt-BR", { month: "long" })}
+                        </p>
+                      </div>
+                      <div className="content">
+                        <h1>{agendamentos[agendamentos.length - 1].servico}</h1>
+                        <h3>
+                          {agendamentos[agendamentos.length - 1].nomeCliente}
+                        </h3>
+                        {agendamentos[agendamentos.length - 1].domicilio && (
+                          <p>Atendimento a domicilio</p>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+                <button className="listar" onClick={abrirModal}>
+                  Listar todos
+                </button>
+              </div>
+
+              {modalAberto && (
+                <div className="modal">
+                  <div className="modal-content">
+
+                    <span className="close" onClick={fecharModal}>
+                      <X className="icon-close" />
+                    </span>
+
+                    <h2>Todos os Agendamentos</h2>
+                    {agendamentos.length === 0 ? (
+                      <p>Nenhum agendamento encontrado.</p>
+                    ) : (
+                      <div className="agendamentos-lista">
+                        {agendamentos.map((agendamento) => (
+                          <div
+                            key={agendamento.id}
+                            className="container-agendamento"
+                          >
+                            <div className="data">
+                              <h1>
+                                {new Date(agendamento.dataHora).getDate()}
+                              </h1>
+                              <p>
+                                {new Date(agendamento.dataHora).toLocaleString(
+                                  "pt-BR",
+                                  { month: "long" },
+                                )}
+                              </p>
+                            </div>
+                            <div className="content">
+                              <h1>{agendamento.servico}</h1>
+                              <h3>{agendamento.nomeCliente}</h3>
+                              {agendamento.domicilio && (
+                                <p>Atendimento a domicilio</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              <div className="adicionar-agenda">
+                <form
+                  className="agenda-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    addAgendamento();
+                  }}
+                >
+                  <input
+                    type="text"
+                    name="nomeCliente"
+                    placeholder="Nome do cliente"
+                    className="nome"
+                    value={novoAgendamento.nomeCliente}
+                    onChange={handleAgendamentoChange}
+                  />
+                  <input
+                    type="text"
+                    name="numeroCliente"
+                    placeholder="Numero do cliente"
+                    className="nome"
+                    value={novoAgendamento.numeroCliente}
+                    onChange={handleAgendamentoChange}
+                  />
+
+                  {atendimentoDomicilio && (
+                    <input
+                      type="text"
+                      name="cepCliente"
+                      placeholder="CEP do cliente"
+                      className="nome"
+                      value={novoAgendamento.cepCliente}
+                      onChange={handleAgendamentoChange}
+                    />
+                  )}
+
+                  <div className="ser-dat">
+                    <input
+                      type="text"
+                      name="servico"
+                      placeholder="Serviço do cliente"
+                      className="servico"
+                      value={novoAgendamento.servico}
+                      onChange={handleAgendamentoChange}
+                    />
+                    <input
+                      type="datetime-local"
+                      name="dataHora"
+                      placeholder="Data e hora do serviço"
+                      className="dt-hr"
+                      value={novoAgendamento.dataHora}
+                      onChange={handleAgendamentoChange}
+                    />
+                  </div>
+
+                  <div className="atend-for">
+                    <div className="int-wrapper">
+                      <span className="int-label">Atendimento a domicilio</span>
+                      <label className="int">
+                        <input
+                          type="checkbox"
+                          checked={atendimentoDomicilio}
+                          onChange={() =>
+                            setAtendimentoDomicilio(!atendimentoDomicilio)
+                          }
+                        />
+                        <span className="slider"></span>
+                      </label>
+                    </div>
+                    <input
+                      type="text"
+                      name="formaPagamento"
+                      placeholder="Forma de pagamento"
+                      className="forma"
+                      value={novoAgendamento.formaPagamento}
+                      onChange={handleAgendamentoChange}
+                    />
+                  </div>
+                  <center>
+                    <button className="age">Agendar</button>
+                  </center>
+                </form>
+              </div>
+            </div>
+          )}
+
           {menuOpcao === "estoque" && (
             <div className="listagem-estoque">
               {!verFormulario && (
@@ -239,52 +447,6 @@ export default function InterfaceAdm() {
             </div>
           )}
 
-          {menuOpcao === "agenda" && (
-            <div className="listagem-agenda">
-              <div className="agendamentos">
-                <h4>Nenhum horário agendado</h4>
-              </div>
-              <div className="adicionar-agenda">
-                <form className="agenda-form">
-                  <input
-                    type="text"
-                    placeholder="Nome do cliente"
-                    className="nome"
-                  />
-                  <div className="ser-dat">
-                    <input
-                      type="text"
-                      placeholder="Serviço do cliente"
-                      className="servico"
-                    />
-                    <input
-                      type="datetime-local"
-                      placeholder="Data e hora do serviço"
-                      className="dt-hr"
-                    />
-                  </div>
-                  <div className="atend-for">
-                    <div className="int-wrapper">
-                      <span className="int-label">Atendimento a domicilio</span>
-                      <label className="int">
-                        <input type="checkbox" value={false} />
-                        <span className="slider"></span>
-                      </label>
-                    </div>
-                    <input
-                      type="number"
-                      placeholder="Forma de pagamento"
-                      className="forma"
-                    />
-                  </div>
-                  <center>
-                    <button className="age">Agendar</button>
-                  </center>
-                </form>
-              </div>
-            </div>
-          )}
-
           {menuOpcao === "clientes" && (
             <div className="listagem-clientes">
               <div className="lista-produto">
@@ -294,7 +456,11 @@ export default function InterfaceAdm() {
                       <th>Nome</th>
                       <th>Celular</th>
                       <th>Ações</th>
-                      <th><Link className="add"> <Plus className="icon"/> Adicionar </Link></th>
+                      <th>
+                        <Link className="add">
+                          <Plus className="icon" /> Adicionar
+                        </Link>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
