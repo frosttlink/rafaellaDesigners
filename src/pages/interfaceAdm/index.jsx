@@ -17,9 +17,7 @@ import {
 import "./index.scss";
 import axios from "axios";
 import { useState } from "react";
-
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Await, Link, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import { Buffer } from "buffer";
 
@@ -33,8 +31,8 @@ export default function InterfaceAdm() {
   const [produtos, setProdutos] = useState([]);
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
-    categoria: "",
-    preco: "",
+    tipo: "",
+    valor: "",
     quantidade: "",
     imagem:""
   });
@@ -77,7 +75,6 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
-
   const { id } = useParams();
   console.log(id);
 
@@ -102,20 +99,16 @@ export default function InterfaceAdm() {
       alert("Produto alterado.")
     }
     
-  function addProduto() {
-    //const url = `http://localhost:5010/produto?x-access-token=${token}`;
-    //let resp = await axios.post(url, paramCorpo);
-    // alert('Produto adicionado. Id:' + resp.data.novoId);
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
-      preco: parseFloat(novoProduto.preco),
+      preco: parseFloat(novoProduto.valor),
       quantidade: parseInt(novoProduto.quantidade, 10),
       imagem: imagem || "/assets/images/imagemFake.svg",
     };
     setProdutos([...produtos, produto]);
     setVerFormulario(false);
-    setNovoProduto({ nome: "", categoria: "", preco: "", quantidade: "" });
+    setNovoProduto({ nome: "", tipo: "", valor: "", quantidade: "" });
     setImagem(null);
   }
 
@@ -170,24 +163,15 @@ export default function InterfaceAdm() {
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
-  const [token, setToken] = useState(null);
-
+  const [token, setToken] = useState(null); 
 
 
   
-
   useEffect(() => {
     const token = localStorage.getItem('usuario');
 
-
     if (token) setToken(token);
 }, []);
-    if (!token) {
-      navigate('/');
-    } else {
-      // consultar(token);
-    }
-  }, []);
 
 
 async function sair(){
@@ -329,7 +313,6 @@ async function sair(){
                     name="nomeCliente"
                     placeholder="Nome do cliente"
                     className="nome"
-                    required
                     value={novoAgendamento.nomeCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -338,7 +321,6 @@ async function sair(){
                     name="numeroCliente"
                     placeholder="Numero do cliente"
                     className="nome"
-                    required
                     value={novoAgendamento.numeroCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -360,7 +342,6 @@ async function sair(){
                       name="servico"
                       placeholder="Serviço do cliente"
                       className="servico"
-                      required
                       value={novoAgendamento.servico}
                       onChange={handleAgendamentoChange}
                     />
@@ -369,7 +350,6 @@ async function sair(){
                       name="dataHora"
                       placeholder="Data e hora do serviço"
                       className="dt-hr"
-                      required
                       value={novoAgendamento.dataHora}
                       onChange={handleAgendamentoChange}
                     />
@@ -394,7 +374,6 @@ async function sair(){
                       name="formaPagamento"
                       placeholder="Forma de pagamento"
                       className="forma"
-                      required
                       value={novoAgendamento.formaPagamento}
                       onChange={handleAgendamentoChange}
                     />
@@ -412,12 +391,9 @@ async function sair(){
               {!verFormulario && (
                 <div className="barra-pesquisa">
                   <div className="barra">
-
                     <input type="text" placeholder="Pesquisar..." />
                     <button onClick={buscar}><Search className="icon" /></button>
                     
-                    <input type="text" placeholder="Pesquisar..." required />
-                    <Search className="icon" />
                   </div>
                   <div className="acao">
                     <h4>
@@ -449,14 +425,9 @@ async function sair(){
                       name="nome"
                       placeholder="Nome do produto"
                       className="nome"
-
                       value={novoProduto.nome} 
                       onChange={e => setNovoProduto(prev => ({ ...prev, nome: e.target.value }))}
 
-                      required
-
-                      value={novoProduto.nome}
-                      onChange={inputChange}
                     />
                     <div className="osDiferentes">
                       <input
@@ -467,10 +438,6 @@ async function sair(){
                         value={novoProduto.tipo}
                         onChange={e => setNovoProduto(prev => ({ ...prev, tipo: e.target.value }))}
 
-                        required
-
-                        value={novoProduto.categoria}
-                        onChange={inputChange}
                       />
                       <input
                         type="number"
@@ -479,17 +446,13 @@ async function sair(){
                         className="preco"
                         value={novoProduto.valor}
                         onChange={e => setNovoProduto(prev => ({ ...prev, valor: e.target.value }))}
-                        required
-                        value={novoProduto.preco}
-                        onChange={inputChange}
+
                       />
                       <input
                         type="number"
                         name="quantidade"
                         placeholder="Quantidade"
                         className="qtd"
-                        required
-
                         value={novoProduto.quantidade}
                         onChange={e => setNovoProduto(prev => ({ ...prev, quantidade: e.target.value }))}
 
@@ -501,7 +464,6 @@ async function sair(){
                         id="fileInput"
                         className="file-input"
                         accept="image/*"
-
                         onChange={multiFunction}
                       />
                       <label htmlFor="fileInput">
