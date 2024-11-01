@@ -15,8 +15,9 @@ import {
   Edit,
 } from "lucide-react";
 import "./index.scss";
+import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Await, Link, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 
 export default function InterfaceAdm() {
@@ -54,6 +55,7 @@ export default function InterfaceAdm() {
   };
 
   function alterarImagem(e) {
+ 
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -70,6 +72,9 @@ export default function InterfaceAdm() {
   }
 
   function addProduto() {
+    //const url = `http://localhost:5010/produto?x-access-token=${token}`;
+    //let resp = await axios.post(url, paramCorpo);
+   // alert('Produto adicionado. Id:' + resp.data.novoId);
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
@@ -126,7 +131,7 @@ useEffect(() => {
     if (!token) { 
         navigate('/');
     } else {
-        // consultar(token); 
+      // consultar(token);
     }
 }, []);
 
