@@ -17,8 +17,10 @@ import {
 import "./index.scss";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from 'react';
+import { Buffer } from "buffer";
+
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -32,17 +34,18 @@ export default function InterfaceAdm() {
     tipo: "",
     valor: "",
     quantidade: "",
+    imagem:""
   });
 
   const [atendimentoDomicilio, setAtendimentoDomicilio] = useState(false);
   const [agendamentos, setAgendamentos] = useState([]);
   const [novoAgendamento, setNovoAgendamento] = useState({
     nomeCliente: "",
-    numeroCliente: "",
     cepCliente: "",
     servico: "",
-    dataHora: "",
-    formaPagamento: "",
+    Hora: "",
+    data:"",
+    endereco: "",
     domicilio: false,
   });
 
@@ -55,12 +58,13 @@ export default function InterfaceAdm() {
   };
 
   function alterarImagem(e) {
- 
+
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagem(reader.result);
+       
       };
       reader.readAsDataURL(file);
     }
@@ -71,11 +75,30 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
+  const { id } = useParams();
+  console.log(id);
+
   async function addProduto() {
-    let paramCorpo = 
-    const url = `http://localhost:5010/produto?x-access-token=${token}`;
-    let resp = await axios.post(url, paramCorpo);
-    alert('Produto adicionado. Id:' + resp.data.novoId);
+    let paramCorpo = {
+      "nome": novoProduto.nome,
+      "tipo": novoProduto.tipo,
+      "valor": novoProduto.valor,
+      "quantidade": novoProduto.quantidade,
+      "imagem": imagem
+    }
+    if (id == undefined){
+      const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
+      let resp = await axios.post(url, paramCorpo);
+      alert('Produto adicionado. Id: ' + resp.data.novoID);
+
+    } 
+    else{
+      const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
+      let resp = await axios.put(url, paramCorpo);
+
+      alert("Produto alterado.")
+    }
+    
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
@@ -89,28 +112,47 @@ export default function InterfaceAdm() {
     setImagem(null);
   }
 
+  async function addAgendamento() {
+    try {
+        let paramCorpo = {
+          "cliente":novoAgendamento.nomeCliente,
+          "cepCliente": novoAgendamento.cepCliente,
+          "servico": novoAgendamento.servico,
+          "Hora": novoAgendamento.Hora,
+          "data": novoAgendamento.data,
+          "domicilio": novoAgendamento.domicilio
+        }
+
+        if (id == undefined) {
+            // CRIAR
+            const url = `http://localhost:5050//agendamento/?x-access-token=${token}`;
+            await axios.post(url, paramCorpo);
+
+            navigate('/consultar')
+        } else {
+            // ALTERAR
+            const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
+            await axios.put(url, paramCorpo);
+
+            navigate('/')
+        }
+    } catch (error) {
+        alert(error.message)
+    }
+}
+  async function buscar(){
+    const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
+    let resp = await axios.get(url);
+    console.log(resp.data);
+    setNovoProduto(resp.data);
+    console.log(produtos);
+    
+  };
+
+
   function inputChange(e) {
     const { name, value } = e.target;
     setNovoProduto({ ...novoProduto, [name]: value });
-  }
-
-  function addAgendamento() {
-    const agendamento = {
-      ...novoAgendamento,
-      id: agendamentos.length + 1,
-      domicilio: atendimentoDomicilio,
-    };
-    setAgendamentos([...agendamentos, agendamento]);
-    setNovoAgendamento({
-      nomeCliente: "",
-      numeroCliente: "",
-      cepCliente: "",
-      servico: "",
-      dataHora: "",
-      formaPagamento: "",
-      domicilio: false,
-    });
-    setAtendimentoDomicilio(false);
   }
 
   function handleAgendamentoChange(e) {
@@ -125,16 +167,17 @@ export default function InterfaceAdm() {
 
 
   
-useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem('usuario');
-    setToken(token);
 
-    if (!token) { 
-        navigate('/');
-    } else {
-      // consultar(token);
-    }
+    if (token) setToken(token);
 }, []);
+
+
+async function sair(){
+  localStorage.setItem("usuario", null)
+  navigate('/')
+}
 
 
   return (
@@ -171,7 +214,7 @@ useEffect(() => {
             </li>
           </ul>
 
-          <button onClick={() => navigate("/")} className="sair">
+          <button onClick={sair} className="sair">
             {!menuCompacto && "Sair"}
           </button>
         </div>
@@ -349,7 +392,8 @@ useEffect(() => {
                 <div className="barra-pesquisa">
                   <div className="barra">
                     <input type="text" placeholder="Pesquisar..." />
-                    <Search className="icon" />
+                    <button onClick={buscar}><Search className="icon" /></button>
+                    
                   </div>
                   <div className="acao">
                     <h4>
@@ -371,7 +415,6 @@ useEffect(() => {
                     className="estoque-form"
                     onSubmit={(e) => {
                       e.preventDefault();
-                      addProduto();
                     }}
                   >
                     <Link onClick={() => setVerFormulario(false)}>
@@ -382,8 +425,9 @@ useEffect(() => {
                       name="nome"
                       placeholder="Nome do produto"
                       className="nome"
-                      value={novoProduto.nome}
-                      onChange={inputChange}
+                      value={novoProduto.nome} 
+                      onChange={e => setNovoProduto(prev => ({ ...prev, nome: e.target.value }))}
+
                     />
                     <div className="osDiferentes">
                       <input
@@ -392,7 +436,8 @@ useEffect(() => {
                         placeholder="Categoria"
                         className="categoria"
                         value={novoProduto.tipo}
-                        onChange={inputChange}
+                        onChange={e => setNovoProduto(prev => ({ ...prev, tipo: e.target.value }))}
+
                       />
                       <input
                         type="number"
@@ -400,7 +445,8 @@ useEffect(() => {
                         placeholder="Preço"
                         className="preco"
                         value={novoProduto.valor}
-                        onChange={inputChange}
+                        onChange={e => setNovoProduto(prev => ({ ...prev, valor: e.target.value }))}
+
                       />
                       <input
                         type="number"
@@ -408,7 +454,8 @@ useEffect(() => {
                         placeholder="Quantidade"
                         className="qtd"
                         value={novoProduto.quantidade}
-                        onChange={inputChange}
+                        onChange={e => setNovoProduto(prev => ({ ...prev, quantidade: e.target.value }))}
+
                       />
                     </div>
                     <div className="custom-file-input">
@@ -424,7 +471,7 @@ useEffect(() => {
                         <Image className="icon" />
                       </label>
                     </div>
-                    <button className="reg">Registrar</button>
+                    <button className="reg" onClick={addProduto}>Registrar</button>
                   </form>
                 )}
 
@@ -449,21 +496,21 @@ useEffect(() => {
                       </tr>
                     </thead>
                     <tbody>
-                      {produtos.map((produto) => (
-                        <tr key={produto.id}>
-                          <td className="produto">
-                            <img src={produto.imagem} alt="" />
-                            {produto.nome}
-                          </td>
-                          <td>{produto.categoria}</td>
-                          <td className="qtd">{produto.quantidade}</td>
-                          <td>R${Number(produto.preco).toFixed(2)}</td>
-                          <td className="action">
-                            <SquarePen /> <Trash />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+                  {novoProduto.length > 0 && novoProduto?.map((produto) => (
+                    <tr key={produto.id}>
+                      <td className="produto">
+                        <img src={produto.img_produto == null ? null : Buffer.from(produto.img_produto.data).toString()} alt="" />
+                        {produto.nm_produto}
+                      </td>
+                      <td>{produto.ds_tipo}</td> {/* Mudado de categoria para tipo */}
+                      <td className="qtd">{produto.qtd_produto}</td>
+                      <td>R${Number(produto.vl_produto).toFixed(2)}</td> {/* Mudado de preco para valor */}
+                      <td className="action">
+                        <SquarePen /> <Trash />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
                   </table>
                 </div>
               )}

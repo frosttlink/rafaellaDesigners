@@ -14,6 +14,7 @@ export default function Navegacao() {
         <Route path="/adm" element={ <Adm/> }/>
         <Route path="/sobre" element={ <Sobre/> }/>
         <Route path="/interfaceAdm" element={ <InterfaceAdm/> }/>
+        <Route path="/interfaceAdm/:id" element={<InterfaceAdm />} />
         <Route path="/servicos" element={ <DetalhesServicos/> }/>
         <Route path="/galeria" element={ <Galeria/> }/>
       </Routes>
