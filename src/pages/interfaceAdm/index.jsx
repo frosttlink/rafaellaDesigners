@@ -55,7 +55,7 @@ export default function InterfaceAdm() {
   };
 
   function alterarImagem(e) {
- 
+
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -74,7 +74,7 @@ export default function InterfaceAdm() {
   function addProduto() {
     //const url = `http://localhost:5010/produto?x-access-token=${token}`;
     //let resp = await axios.post(url, paramCorpo);
-   // alert('Produto adicionado. Id:' + resp.data.novoId);
+    // alert('Produto adicionado. Id:' + resp.data.novoId);
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
@@ -120,20 +120,20 @@ export default function InterfaceAdm() {
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
-  const [token, setToken] = useState(null); 
+  const [token, setToken] = useState(null);
 
 
-  
-useEffect(() => {
+
+  useEffect(() => {
     const token = localStorage.getItem('usuario');
     setToken(token);
 
-    if (!token) { 
-        navigate('/');
+    if (!token) {
+      navigate('/');
     } else {
       // consultar(token);
     }
-}, []);
+  }, []);
 
 
   return (
@@ -269,6 +269,7 @@ useEffect(() => {
                     name="nomeCliente"
                     placeholder="Nome do cliente"
                     className="nome"
+                    required
                     value={novoAgendamento.nomeCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -277,6 +278,7 @@ useEffect(() => {
                     name="numeroCliente"
                     placeholder="Numero do cliente"
                     className="nome"
+                    required
                     value={novoAgendamento.numeroCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -298,6 +300,7 @@ useEffect(() => {
                       name="servico"
                       placeholder="Serviço do cliente"
                       className="servico"
+                      required
                       value={novoAgendamento.servico}
                       onChange={handleAgendamentoChange}
                     />
@@ -306,6 +309,7 @@ useEffect(() => {
                       name="dataHora"
                       placeholder="Data e hora do serviço"
                       className="dt-hr"
+                      required
                       value={novoAgendamento.dataHora}
                       onChange={handleAgendamentoChange}
                     />
@@ -330,6 +334,7 @@ useEffect(() => {
                       name="formaPagamento"
                       placeholder="Forma de pagamento"
                       className="forma"
+                      required
                       value={novoAgendamento.formaPagamento}
                       onChange={handleAgendamentoChange}
                     />
@@ -347,7 +352,7 @@ useEffect(() => {
               {!verFormulario && (
                 <div className="barra-pesquisa">
                   <div className="barra">
-                    <input type="text" placeholder="Pesquisar..." />
+                    <input type="text" placeholder="Pesquisar..." required />
                     <Search className="icon" />
                   </div>
                   <div className="acao">
@@ -381,6 +386,8 @@ useEffect(() => {
                       name="nome"
                       placeholder="Nome do produto"
                       className="nome"
+                      required
+
                       value={novoProduto.nome}
                       onChange={inputChange}
                     />
@@ -390,6 +397,8 @@ useEffect(() => {
                         name="categoria"
                         placeholder="Categoria"
                         className="categoria"
+                        required
+
                         value={novoProduto.categoria}
                         onChange={inputChange}
                       />
@@ -398,6 +407,8 @@ useEffect(() => {
                         name="preco"
                         placeholder="Preço"
                         className="preco"
+                        required
+
                         value={novoProduto.preco}
                         onChange={inputChange}
                       />
@@ -406,6 +417,8 @@ useEffect(() => {
                         name="quantidade"
                         placeholder="Quantidade"
                         className="qtd"
+                        required
+
                         value={novoProduto.quantidade}
                         onChange={inputChange}
                       />
@@ -416,6 +429,7 @@ useEffect(() => {
                         id="fileInput"
                         className="file-input"
                         accept="image/*"
+
                         onChange={multiFunction}
                       />
                       <label htmlFor="fileInput">
