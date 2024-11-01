@@ -17,6 +17,7 @@ import {
 import "./index.scss";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -113,6 +114,22 @@ export default function InterfaceAdm() {
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
+
+  const [token, setToken] = useState(null); 
+
+
+  
+useEffect(() => {
+    const token = localStorage.getItem('usuario');
+    setToken(token);
+
+    if (!token) { 
+        navigate('/');
+    } else {
+        // consultar(token); 
+    }
+}, []);
+
 
   return (
     <div className="interface-adm">
