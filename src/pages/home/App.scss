@@ -24,6 +24,11 @@
     .busque {
       width: 740px;
       margin-bottom: -10px;
+      display: block;
+    }
+
+    .busqueMin {
+      display: none;
     }
   }
 
@@ -74,7 +79,7 @@
       top: 20px;
 
       background-color: $color_gray;
-      
+
       position: absolute;
       z-index: 0;
     }
@@ -85,7 +90,11 @@
       right: 34px;
       z-index: 1;
       font-weight: 700;
-    } 
+    }
+  }
+
+  .encontra {
+    margin-bottom: 70px;
   }
 
   .vantagens {
@@ -95,12 +104,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 30px;    
+      gap: 30px;
     }
-  }
-
-  .encontra {
-    margin-bottom: 45px;
   }
 
   @media (max-width: 1640px) {
@@ -108,5 +113,33 @@
       display: none;
     }
   }
-}
 
+  @media (max-width: 1024px) {
+    .slogan {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .busque {
+        display: none;
+      }
+
+      .busqueMin {
+        display: block;
+        width: 640px;
+        margin-top: -150px;
+      }
+
+      p {
+        text-align: center;
+      }
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+  }
+
+  @media (max-width: 768px) {
+  }
+}

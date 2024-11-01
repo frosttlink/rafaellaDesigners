@@ -26,13 +26,12 @@ export default function Adm(){
         }
         else{
             toast.success('Login realizado');
-            localStorage.setItem("usuario",resp.data.token)
+            localStorage.setItem("usuario", resp.data.token)
             navigate('/')
             
         }
     
     }
-    
 
     return(
         <div className='adm-pagina'>
