@@ -5,7 +5,7 @@ export default function DicasSection() {
   return (
     <div className="dicas" id="dicas">
 
-      <img src="/assets/images/square.svg" alt="" />
+      <img src="/assets/images/square.svg" alt="" className="mujer"/>
       <div className="pele">
         <img src="/assets/images/dica.svg" alt="" />
         
@@ -22,7 +22,9 @@ export default function DicasSection() {
           saudável. Seguindo essas dicas, você terá uma pele mais radiante!
         </p>
 
-        <ButtonVeja linkDestino="/galeria" tamBotao="140px" texto="Veja mais" />
+        <div className="botaoDicas">
+          <ButtonVeja tamBotao="140px" texto="Veja mais"/>
+        </div>
 
       </div>
 

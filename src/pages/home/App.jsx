@@ -38,7 +38,7 @@ export default function Home() {
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja tamBotao="140px" texto="Veja mais" marginBottom="150px" className="vejamais" />
+        <ButtonVeja  linkDestino="/galeria" tamBotao="140px" texto="Veja mais" marginBottom="150px" className="vejamais" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,7 +73,7 @@ export default function Home() {
         className="slogan-service"
       >
         <img src="/assets/images/services.svg" alt="" />
-        <p>
+        <p className="prg-service">
           Oferecemos cuidados especializados para realçar sua beleza, desde
           alongamento de cílios, design de sobrancelhas até epilação. Usamos
           produtos de alta qualidade para garantir resultados duradouros e
@@ -91,15 +91,15 @@ export default function Home() {
         >
           <Swiper
             slidesPerView={1}
-            spaceBetween={20}
+            spaceBetween={250}
             breakpoints={{
               640: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 3,
-                spaceBetween: 20,
+                slidesPerView: 2,
+                spaceBetween: 30,
               },
             }}
           >
@@ -186,7 +186,7 @@ export default function Home() {
         {isMobile ? (
           <Swiper
             slidesPerView={1}
-            spaceBetween={20}
+            spaceBetween={200}
             breakpoints={{
               640: {
                 slidesPerView: 2,
