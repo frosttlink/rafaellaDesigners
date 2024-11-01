@@ -91,14 +91,14 @@ export default function Home() {
         >
           <Swiper
             slidesPerView={1}
-            spaceBetween={150}
+            spaceBetween={250}
             breakpoints={{
               640: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 3,
+                slidesPerView: 2,
                 spaceBetween: 30,
               },
             }}
