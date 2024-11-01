@@ -17,7 +17,13 @@ import Depoimentos from "../../components/depoimentsSection";
 
 import { motion } from "framer-motion";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import { useMediaQuery } from "react-responsive";
+
 export default function Home() {
+  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+
   return (
     <div className="pagina-home">
       <Toaster position="top-center" reverseOrder={false} />
@@ -25,18 +31,27 @@ export default function Home() {
       <AgendarButton />
       <div className="slogan">
         <img src="/assets/images/busque.svg" alt="" className="busque" />
+        <img src="/assets/images/busqueMin.svg" alt="" className="busqueMin" />
         <p>
           Transforme seu olhar com cílios e sobrancelhas perfeitos
           <br />
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja tamBotao="140px" texto="Veja mais" />
-        <center>
-          <a href="#dicas">
-            <ChevronDown className="roll" />
-          </a>
-        </center>
+        <ButtonVeja tamBotao="140px" texto="Veja mais" marginBottom="150px" className="vejamais" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <center>
+            <a href="#dicas">
+              <ChevronDown className="roll" />
+            </a>
+          </center>
+        </motion.div>
       </div>
 
       <motion.div
@@ -66,32 +81,82 @@ export default function Home() {
         </p>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="cards"
-      >
-        <CardService
-          caminho="/assets/images/image.svg"
-          preco="R$1"
-          caminhoServico="/assets/images/cilios.svg"
-          texto="Serviço de estética de cílios envolve alongamento, lifting ou tintura para realçar os cílios, tornando-os mais longos, volumosos e definidos, com resultados naturais e duradouros."
-        />
-        <CardService
-          caminho="/assets/images/image2.svg"
-          preco="R$1"
-          caminhoServico="/assets/images/sobrancelha.svg"
-          texto="Serviço de estética de sobrancelhas inclui design, micropigmentação ou tintura para definir e realçar o formato das sobrancelhas, garantindo uma aparência harmoniosa e bem cuidada."
-        />
-        <CardService
-          caminho="/assets/images/image3.svg"
-          preco="R$1"
-          caminhoServico="/assets/images/epilacao.svg"
-          texto="A epilação é o processo de remoção dos pelos pela raiz, utilizando métodos como cera quente, pinça, ou aparelhos elétricos. Ao contrário da depilação, que apenas corta o pelo na superfície."
-        />
-      </motion.div>
+      {isMobile ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="cards"
+        >
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={20}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+            }}
+          >
+            <SwiperSlide>
+              <CardService
+                caminho="/assets/images/image.svg"
+                preco="R$1"
+                caminhoServico="/assets/images/cilios.svg"
+                texto="Serviço de estética de cílios envolve alongamento, lifting ou tintura para realçar os cílios, tornando-os mais longos, volumosos e definidos, com resultados naturais e duradouros."
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CardService
+                caminho="/assets/images/image2.svg"
+                preco="R$1"
+                caminhoServico="/assets/images/sobrancelha.svg"
+                texto="Serviço de estética de sobrancelhas inclui design, micropigmentação ou tintura para definir e realçar o formato das sobrancelhas, garantindo uma aparência harmoniosa e bem cuidada."
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CardService
+                caminho="/assets/images/image3.svg"
+                preco="R$1"
+                caminhoServico="/assets/images/epilacao.svg"
+                texto="A epilação é o processo de remoção dos pelos pela raiz, utilizando métodos como cera quente, pinça, ou aparelhos elétricos. Ao contrário da depilação, que apenas corta o pelo na superfície."
+              />
+            </SwiperSlide>
+          </Swiper>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="cards"
+        >
+          <CardService
+            caminho="/assets/images/image.svg"
+            preco="R$1"
+            caminhoServico="/assets/images/cilios.svg"
+            texto="Serviço de estética de cílios envolve alongamento, lifting ou tintura para realçar os cílios, tornando-os mais longos, volumosos e definidos, com resultados naturais e duradouros."
+          />
+          <CardService
+            caminho="/assets/images/image2.svg"
+            preco="R$1"
+            caminhoServico="/assets/images/sobrancelha.svg"
+            texto="Serviço de estética de sobrancelhas inclui design, micropigmentação ou tintura para definir e realçar o formato das sobrancelhas, garantindo uma aparência harmoniosa e bem cuidada."
+          />
+          <CardService
+            caminho="/assets/images/image3.svg"
+            preco="R$1"
+            caminhoServico="/assets/images/epilacao.svg"
+            texto="A epilação é o processo de remoção dos pelos pela raiz, utilizando métodos como cera quente, pinça, ou aparelhos elétricos. Ao contrário da depilação, que apenas corta o pelo na superfície."
+          />
+        </motion.div>
+      )}
       <center>
         <ButtonVeja linkDestino="/servicos" texto="Veja os detalhes" />
       </center>
@@ -118,23 +183,63 @@ export default function Home() {
           <img src="/assets/images/encontra.svg" alt="" className="encontra" />
         </center>
 
-        <div className="cards_encontra">
-          <CardEncontra
-            icone={ShieldCheckIcon}
-            imagem="certi.svg"
-            texto="Tenho certificação em design de sobrancelhas e extensão de cílios, garantindo um atendimento profissional e qualificado."
-          />
-          <CardEncontra
-            icone={CircleDollarSign}
-            imagem="preco.svg"
-            texto="Ofereço serviços de sobrancelhas e cílios com preços acessíveis, sem comprometer a qualidade e o cuidado."
-          />
-          <CardEncontra
-            icone={ShoppingBasket}
-            imagem="produto.svg"
-            texto="Uso produtos de qualidade para garantir os melhores resultados em sobrancelhas e cílios, sempre mantendo preços acessíveis."
-          />
-        </div>
+        {isMobile ? (
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={20}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+            className="cards_encontra"
+          >
+            <SwiperSlide>
+              <CardEncontra
+                icone={ShieldCheckIcon}
+                imagem="certi.svg"
+                texto="Tenho certificação em design de sobrancelhas e extensão de cílios, garantindo um atendimento profissional e qualificado."
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CardEncontra
+                icone={CircleDollarSign}
+                imagem="preco.svg"
+                texto="Ofereço serviços de sobrancelhas e cílios com preços acessíveis, sem comprometer a qualidade e o cuidado."
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CardEncontra
+                icone={ShoppingBasket}
+                imagem="produto.svg"
+                texto="Uso produtos de qualidade para garantir os melhores resultados em sobrancelhas e cílios, sempre mantendo preços acessíveis."
+              />
+            </SwiperSlide>
+          </Swiper>
+        ) : (
+          <div className="cards_encontra">
+            <CardEncontra
+              icone={ShieldCheckIcon}
+              imagem="certi.svg"
+              texto="Tenho certificação em design de sobrancelhas e extensão de cílios, garantindo um atendimento profissional e qualificado."
+            />
+            <CardEncontra
+              icone={CircleDollarSign}
+              imagem="preco.svg"
+              texto="Ofereço serviços de sobrancelhas e cílios com preços acessíveis, sem comprometer a qualidade e o cuidado."
+            />
+            <CardEncontra
+              icone={ShoppingBasket}
+              imagem="produto.svg"
+              texto="Uso produtos de qualidade para garantir os melhores resultados em sobrancelhas e cílios, sempre mantendo preços acessíveis."
+            />
+          </div>
+        )}
       </motion.div>
 
       <Rodape />

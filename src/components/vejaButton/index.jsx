@@ -4,7 +4,7 @@ import "./index.scss";
 export default function ButtonVeja(props) {
   const vejaDetalhes = {
     width: props.tamBotao || "323px",
-    marginBottom: "280px",
+    marginBottom: props.marginBottom || "280px",
   };
 
   return (
