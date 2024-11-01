@@ -17,7 +17,7 @@ import {
 import "./index.scss";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Await, Link, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 
 export default function InterfaceAdm() {
@@ -29,8 +29,8 @@ export default function InterfaceAdm() {
   const [produtos, setProdutos] = useState([]);
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
-    tipo: "",
-    valor: "",
+    categoria: "",
+    preco: "",
     quantidade: "",
   });
 
@@ -71,21 +71,20 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
-  async function addProduto() {
-    let paramCorpo = 
-    const url = `http://localhost:5010/produto?x-access-token=${token}`;
-    let resp = await axios.post(url, paramCorpo);
-    alert('Produto adicionado. Id:' + resp.data.novoId);
+  function addProduto() {
+    //const url = `http://localhost:5010/produto?x-access-token=${token}`;
+    //let resp = await axios.post(url, paramCorpo);
+   // alert('Produto adicionado. Id:' + resp.data.novoId);
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
-      preco: parseFloat(novoProduto.valor),
+      preco: parseFloat(novoProduto.preco),
       quantidade: parseInt(novoProduto.quantidade, 10),
       imagem: imagem || "/assets/images/imagemFake.svg",
     };
     setProdutos([...produtos, produto]);
     setVerFormulario(false);
-    setNovoProduto({ nome: "", tipo: "", valor: "", quantidade: "" });
+    setNovoProduto({ nome: "", categoria: "", preco: "", quantidade: "" });
     setImagem(null);
   }
 
@@ -391,7 +390,7 @@ useEffect(() => {
                         name="categoria"
                         placeholder="Categoria"
                         className="categoria"
-                        value={novoProduto.tipo}
+                        value={novoProduto.categoria}
                         onChange={inputChange}
                       />
                       <input
@@ -399,7 +398,7 @@ useEffect(() => {
                         name="preco"
                         placeholder="Preço"
                         className="preco"
-                        value={novoProduto.valor}
+                        value={novoProduto.preco}
                         onChange={inputChange}
                       />
                       <input
