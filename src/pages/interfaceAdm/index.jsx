@@ -87,13 +87,13 @@ export default function InterfaceAdm() {
       "imagem": imagem
     }
     if (id == undefined){
-      const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
+      const url = `http://4.172.207.208:5009/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
       alert('Produto adicionado. Id: ' + resp.data.novoID);
 
     } 
     else{
-      const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
+      const url = `http://4.172.207.208:5009/alterar/pee/${id}?x-access-token=${token}`;
       let resp = await axios.put(url, paramCorpo);
 
       alert("Produto alterado.")
@@ -125,13 +125,13 @@ export default function InterfaceAdm() {
 
         if (id == undefined) {
             // CRIAR
-            const url = `http://localhost:5050//agendamento/?x-access-token=${token}`;
+            const url = `http://4.172.207.208:5009//agendamento/?x-access-token=${token}`;
             await axios.post(url, paramCorpo);
 
             navigate('/consultar')
         } else {
             // ALTERAR
-            const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
+            const url = `http://4.172.207.208:5009/agendamento/${id}?x-access-token=${token}`;
             await axios.put(url, paramCorpo);
 
             navigate('/')
@@ -141,7 +141,7 @@ export default function InterfaceAdm() {
     }
 }
   async function buscar(){
-    const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
+    const url = `http://4.172.207.208:5009/procurar/inner/?x-access-token=${token}`;
     let resp = await axios.get(url);
     console.log(resp.data);
     setNovoProduto(resp.data);
