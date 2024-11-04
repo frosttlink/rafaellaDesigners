@@ -313,6 +313,7 @@ async function sair(){
                     name="nomeCliente"
                     placeholder="Nome do cliente"
                     className="nome"
+                    required
                     value={novoAgendamento.nomeCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -321,6 +322,7 @@ async function sair(){
                     name="numeroCliente"
                     placeholder="Numero do cliente"
                     className="nome"
+                    required
                     value={novoAgendamento.numeroCliente}
                     onChange={handleAgendamentoChange}
                   />
@@ -342,6 +344,7 @@ async function sair(){
                       name="servico"
                       placeholder="Serviço do cliente"
                       className="servico"
+                      required
                       value={novoAgendamento.servico}
                       onChange={handleAgendamentoChange}
                     />
@@ -350,6 +353,7 @@ async function sair(){
                       name="dataHora"
                       placeholder="Data e hora do serviço"
                       className="dt-hr"
+                      required
                       value={novoAgendamento.dataHora}
                       onChange={handleAgendamentoChange}
                     />
@@ -374,6 +378,7 @@ async function sair(){
                       name="formaPagamento"
                       placeholder="Forma de pagamento"
                       className="forma"
+                      required
                       value={novoAgendamento.formaPagamento}
                       onChange={handleAgendamentoChange}
                     />
@@ -425,6 +430,7 @@ async function sair(){
                       name="nome"
                       placeholder="Nome do produto"
                       className="nome"
+                      required
                       value={novoProduto.nome} 
                       onChange={e => setNovoProduto(prev => ({ ...prev, nome: e.target.value }))}
 
@@ -435,6 +441,7 @@ async function sair(){
                         name="categoria"
                         placeholder="Categoria"
                         className="categoria"
+                        required
                         value={novoProduto.tipo}
                         onChange={e => setNovoProduto(prev => ({ ...prev, tipo: e.target.value }))}
 
@@ -444,6 +451,7 @@ async function sair(){
                         name="preco"
                         placeholder="Preço"
                         className="preco"
+                        required
                         value={novoProduto.valor}
                         onChange={e => setNovoProduto(prev => ({ ...prev, valor: e.target.value }))}
 
@@ -452,6 +460,7 @@ async function sair(){
                         type="number"
                         name="quantidade"
                         placeholder="Quantidade"
+                        required
                         className="qtd"
                         value={novoProduto.quantidade}
                         onChange={e => setNovoProduto(prev => ({ ...prev, quantidade: e.target.value }))}
