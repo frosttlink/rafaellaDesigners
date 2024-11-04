@@ -262,6 +262,13 @@
   }
 
   .listagem-estoque {
+
+    .buscar {
+      height: 45px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
     .barra-pesquisa {
       display: flex;
       flex-direction: row;

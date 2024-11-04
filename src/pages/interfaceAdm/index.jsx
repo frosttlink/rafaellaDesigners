@@ -392,7 +392,7 @@ async function sair(){
                 <div className="barra-pesquisa">
                   <div className="barra">
                     <input type="text" placeholder="Pesquisar..." />
-                    <button onClick={buscar}><Search className="icon" /></button>
+                    <button className="buscar" onClick={buscar}><Search className="icon" /></button>
                     
                   </div>
                   <div className="acao">

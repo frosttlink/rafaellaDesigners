@@ -36,8 +36,8 @@ export default function Adm(){
     return(
         <div className='adm-pagina'>
             <Toaster
-            position="top-center"
-            reverseOrder={false}
+                position="top-center"
+                reverseOrder={false}
             />
             <div className='fundo'>
                 <div className='borbo'>
