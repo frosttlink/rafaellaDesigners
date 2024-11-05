@@ -34,7 +34,7 @@ export default function InterfaceAdm() {
     tipo: "",
     valor: "",
     quantidade: "",
-    imagem:""
+    imagem: ""
   });
 
   const [atendimentoDomicilio, setAtendimentoDomicilio] = useState(false);
@@ -44,7 +44,7 @@ export default function InterfaceAdm() {
     cepCliente: "",
     servico: "",
     Hora: "",
-    data:"",
+    data: "",
     endereco: "",
     domicilio: false,
   });
@@ -64,7 +64,7 @@ export default function InterfaceAdm() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagem(reader.result);
-       
+
       };
       reader.readAsDataURL(file);
     }
@@ -86,19 +86,19 @@ export default function InterfaceAdm() {
       "quantidade": novoProduto.quantidade,
       "imagem": imagem
     }
-    if (id == undefined){
-      const url = `http://4.172.207.208:5009/adicionar/pee?x-access-token=${token}`;
+    if (id == undefined) {
+      const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
       alert('Produto adicionado. Id: ' + resp.data.novoID);
 
-    } 
-    else{
-      const url = `http://4.172.207.208:5009/alterar/pee/${id}?x-access-token=${token}`;
+    }
+    else {
+      const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
       let resp = await axios.put(url, paramCorpo);
 
       alert("Produto alterado.")
     }
-    
+
     const produto = {
       ...novoProduto,
       id: produtos.length + 1,
@@ -114,39 +114,39 @@ export default function InterfaceAdm() {
 
   async function addAgendamento() {
     try {
-        let paramCorpo = {
-          "cliente":novoAgendamento.nomeCliente,
-          "cepCliente": novoAgendamento.cepCliente,
-          "servico": novoAgendamento.servico,
-          "Hora": novoAgendamento.Hora,
-          "data": novoAgendamento.data,
-          "domicilio": novoAgendamento.domicilio
-        }
+      let paramCorpo = {
+        "cliente": novoAgendamento.nomeCliente,
+        "cepCliente": novoAgendamento.cepCliente,
+        "servico": novoAgendamento.servico,
+        "Hora": novoAgendamento.Hora,
+        "data": novoAgendamento.data,
+        "domicilio": novoAgendamento.domicilio
+      }
 
-        if (id == undefined) {
-            // CRIAR
-            const url = `http://4.172.207.208:5009//agendamento/?x-access-token=${token}`;
-            await axios.post(url, paramCorpo);
+      if (id == undefined) {
+        // CRIAR
+        const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
+        await axios.post(url, paramCorpo);
 
-            navigate('/consultar')
-        } else {
-            // ALTERAR
-            const url = `http://4.172.207.208:5009/agendamento/${id}?x-access-token=${token}`;
-            await axios.put(url, paramCorpo);
+        navigate('/consultar')
+      } else {
+        // ALTERAR
+        const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
+        await axios.put(url, paramCorpo);
 
-            navigate('/')
-        }
+        navigate('/')
+      }
     } catch (error) {
-        alert(error.message)
+      alert(error.message)
     }
-}
-  async function buscar(){
-    const url = `http://4.172.207.208:5009/procurar/inner/?x-access-token=${token}`;
+  }
+  async function buscar() {
+    const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
     let resp = await axios.get(url);
     console.log(resp.data);
     setNovoProduto(resp.data);
     console.log(produtos);
-    
+
   };
 
 
@@ -163,21 +163,21 @@ export default function InterfaceAdm() {
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
-  const [token, setToken] = useState(null); 
+  const [token, setToken] = useState(null);
 
 
-  
+
   useEffect(() => {
     const token = localStorage.getItem('usuario');
 
     if (token) setToken(token);
-}, []);
+  }, []);
 
 
-async function sair(){
-  localStorage.setItem("usuario", null)
-  navigate('/')
-}
+  async function sair() {
+    localStorage.setItem("usuario", null)
+    navigate('/')
+  }
 
 
   return (
@@ -398,7 +398,7 @@ async function sair(){
                   <div className="barra">
                     <input type="text" placeholder="Pesquisar..." />
                     <button className="buscar" onClick={buscar}><Search className="icon" /></button>
-                    
+
                   </div>
                   <div className="acao">
                     <h4>
@@ -431,7 +431,7 @@ async function sair(){
                       placeholder="Nome do produto"
                       className="nome"
                       required
-                      value={novoProduto.nome} 
+                      value={novoProduto.nome}
                       onChange={e => setNovoProduto(prev => ({ ...prev, nome: e.target.value }))}
 
                     />
@@ -505,21 +505,21 @@ async function sair(){
                       </tr>
                     </thead>
                     <tbody>
-                  {novoProduto.length > 0 && novoProduto?.map((produto) => (
-                    <tr key={produto.id}>
-                      <td className="produto">
-                        <img src={produto.img_produto == null ? null : Buffer.from(produto.img_produto.data).toString()} alt="" />
-                        {produto.nm_produto}
-                      </td>
-                      <td>{produto.ds_tipo}</td> {/* Mudado de categoria para tipo */}
-                      <td className="qtd">{produto.qtd_produto}</td>
-                      <td>R${Number(produto.vl_produto).toFixed(2)}</td> {/* Mudado de preco para valor */}
-                      <td className="action">
-                        <SquarePen /> <Trash />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                      {novoProduto.length > 0 && novoProduto?.map((produto) => (
+                        <tr key={produto.id}>
+                          <td className="produto">
+                            <img src={produto.img_produto == null ? null : Buffer.from(produto.img_produto.data).toString()} alt="" />
+                            {produto.nm_produto}
+                          </td>
+                          <td>{produto.tp_produto}</td>
+                          <td className="qtd">{produto.qtd_produto}</td>
+                          <td>R${Number(produto.vl_produto).toFixed(2)}</td>
+                          <td className="action">
+                            <SquarePen /> <Trash />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
                   </table>
                 </div>
               )}
