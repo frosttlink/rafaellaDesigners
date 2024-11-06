@@ -1,0 +1,16 @@
+@import "../../colors.scss";
+
+.pagina-notfound {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: $color_white;
+  background-color: $color_pink_base;
+  height: 100vh;
+
+  h1 {
+    font-size: 100px
+  }
+}

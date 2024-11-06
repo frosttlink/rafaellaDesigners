@@ -5,12 +5,14 @@ import Sobre from "./pages/sobre";
 import InterfaceAdm from "./pages/interfaceAdm";
 import DetalhesServicos from "./pages/servicos";
 import Galeria from "./components/galeria";
+import NotFound from "./pages/notFound";
 
 export default function Navegacao() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Home/> }/>
+        <Route path="/*" element={ <NotFound/> }/>
         <Route path="/adm" element={ <Adm/> }/>
         <Route path="/sobre" element={ <Sobre/> }/>
         <Route path="/interfaceAdm" element={ <InterfaceAdm/> }/>
