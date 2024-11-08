@@ -18,9 +18,8 @@ import "./index.scss";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { Buffer } from "buffer";
-
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -34,7 +33,7 @@ export default function InterfaceAdm() {
     tipo: "",
     valor: "",
     quantidade: "",
-    imagem: ""
+    imagem: "",
   });
 
   const [atendimentoDomicilio, setAtendimentoDomicilio] = useState(false);
@@ -50,6 +49,9 @@ export default function InterfaceAdm() {
   });
 
   const [modalAberto, setModalAberto] = useState(false);
+  const [modalClientesAberto, setModalClientesAberto] = useState(false);
+  const [modalFormularioClientesAberto, setModalFormularioClientesAberto] =
+    useState(false);
   const navigate = useNavigate();
 
   const escolherArquivo = (e) => {
@@ -58,13 +60,11 @@ export default function InterfaceAdm() {
   };
 
   function alterarImagem(e) {
-
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagem(reader.result);
-
       };
       reader.readAsDataURL(file);
     }
@@ -80,23 +80,21 @@ export default function InterfaceAdm() {
 
   async function addProduto() {
     let paramCorpo = {
-      "nome": novoProduto.nome,
-      "tipo": novoProduto.tipo,
-      "valor": novoProduto.valor,
-      "quantidade": novoProduto.quantidade,
-      "imagem": imagem
-    }
+      nome: novoProduto.nome,
+      tipo: novoProduto.tipo,
+      valor: novoProduto.valor,
+      quantidade: novoProduto.quantidade,
+      imagem: imagem,
+    };
     if (id == undefined) {
       const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
-      alert('Produto adicionado. Id: ' + resp.data.novoID);
-
-    }
-    else {
+      alert("Produto adicionado. Id: " + resp.data.novoID);
+    } else {
       const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
       let resp = await axios.put(url, paramCorpo);
 
-      alert("Produto alterado.")
+      alert("Produto alterado.");
     }
 
     const produto = {
@@ -115,40 +113,39 @@ export default function InterfaceAdm() {
   async function addAgendamento() {
     try {
       let paramCorpo = {
-        "cliente": novoAgendamento.nomeCliente,
-        "cepCliente": novoAgendamento.cepCliente,
-        "servico": novoAgendamento.servico,
-        "Hora": novoAgendamento.Hora,
-        "data": novoAgendamento.data,
-        "domicilio": novoAgendamento.domicilio
-      }
+        cliente: novoAgendamento.nomeCliente,
+        cepCliente: novoAgendamento.cepCliente,
+        servico: novoAgendamento.servico,
+        Hora: novoAgendamento.Hora,
+        data: novoAgendamento.data,
+        domicilio: novoAgendamento.domicilio,
+      };
 
       if (id == undefined) {
         // CRIAR
         const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
         await axios.post(url, paramCorpo);
 
-        navigate('/consultar')
+        navigate("/consultar");
       } else {
         // ALTERAR
         const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
         await axios.put(url, paramCorpo);
 
-        navigate('/')
+        navigate("/");
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
   }
+
   async function buscar() {
     const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
     let resp = await axios.get(url);
     console.log(resp.data);
     setNovoProduto(resp.data);
     console.log(produtos);
-
-  };
-
+  }
 
   function inputChange(e) {
     const { name, value } = e.target;
@@ -163,22 +160,26 @@ export default function InterfaceAdm() {
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
+  const abrirModalClientes = () => setModalClientesAberto(true);
+  const fecharModalClientes = () => setModalClientesAberto(false);
+
+  const abrirModalFormularioClientesAberto = () =>
+    setModalFormularioClientesAberto(true);
+  const fecharModalFormularioClientesAberto = () =>
+    setModalFormularioClientesAberto(false);
+
   const [token, setToken] = useState(null);
 
-
-
   useEffect(() => {
-    const token = localStorage.getItem('usuario');
+    const token = localStorage.getItem("usuario");
 
     if (token) setToken(token);
   }, []);
 
-
   async function sair() {
-    localStorage.setItem("usuario", null)
-    navigate('/')
+    localStorage.setItem("usuario", null);
+    navigate("/");
   }
-
 
   return (
     <div className="interface-adm">
@@ -227,16 +228,19 @@ export default function InterfaceAdm() {
                   <h4>Nenhum agendamento encontrado</h4>
                 ) : (
                   <>
-                    <div key={agendamentos[agendamentos.length - 1].id} className="container-agendamento" >
+                    <div
+                      key={agendamentos[agendamentos.length - 1].id}
+                      className="container-agendamento"
+                    >
                       <div className="data">
                         <h1>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora,
+                            agendamentos[agendamentos.length - 1].dataHora
                           ).getDate()}
                         </h1>
                         <p>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora,
+                            agendamentos[agendamentos.length - 1].dataHora
                           ).toLocaleString("pt-BR", { month: "long" })}
                         </p>
                       </div>
@@ -260,7 +264,6 @@ export default function InterfaceAdm() {
               {modalAberto && (
                 <div className="modal">
                   <div className="modal-content">
-
                     <span className="close" onClick={fecharModal}>
                       <X className="icon-close" />
                     </span>
@@ -282,7 +285,7 @@ export default function InterfaceAdm() {
                               <p>
                                 {new Date(agendamento.dataHora).toLocaleString(
                                   "pt-BR",
-                                  { month: "long" },
+                                  { month: "long" }
                                 )}
                               </p>
                             </div>
@@ -300,6 +303,77 @@ export default function InterfaceAdm() {
                   </div>
                 </div>
               )}
+
+              {modalClientesAberto && (
+                <div className="listagem-clientes">
+                  <div className="lista-produto">
+                    <span className="close" onClick={fecharModalClientes}>
+                      <X className="icon-close" />
+                    </span>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>Celular</th>
+                          <th>Ações</th>
+                          <th onClick={abrirModalFormularioClientesAberto}>
+                            <Link className="add">
+                              <Plus className="icon" /> Adicionar
+                            </Link>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Leonardo Debora Henrique</td>
+                          <td>11 9999-9999</td>
+                          <td className="action">
+                            <SquarePen /> <Trash />
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {modalFormularioClientesAberto && (
+                <div className="listagem-clientes">
+                  <div className="lista-produtos">
+                    <span
+                      className="close"
+                      onClick={fecharModalFormularioClientesAberto}
+                    >
+                      <X className="icon-close" />
+                    </span>
+                    <div className="inputs">
+                      <input
+                        type="text"
+                        name="nomeCliente"
+                        placeholder="Nome do cliente"
+                        className="nome"
+                        required
+                        value={novoAgendamento.nomeCliente}
+                        onChange={handleAgendamentoChange}
+                      />
+                      <input
+                        type="text"
+                        name="numeroCliente"
+                        placeholder="Numero do cliente"
+                        className="nome"
+                        required
+                        value={novoAgendamento.numeroCliente}
+                        onChange={handleAgendamentoChange}
+                      />
+                    </div>
+                    <center>
+                      <button className="cad">Cadastrar</button>
+                    </center>
+                  </div>
+                </div>
+              )}
+
               <div className="adicionar-agenda">
                 <form
                   className="agenda-form"
@@ -316,6 +390,7 @@ export default function InterfaceAdm() {
                     required
                     value={novoAgendamento.nomeCliente}
                     onChange={handleAgendamentoChange}
+                    onClick={abrirModalClientes}
                   />
                   <input
                     type="text"
@@ -328,14 +403,34 @@ export default function InterfaceAdm() {
                   />
 
                   {atendimentoDomicilio && (
-                    <input
-                      type="text"
-                      name="cepCliente"
-                      placeholder="CEP do cliente"
-                      className="nome"
-                      value={novoAgendamento.cepCliente}
-                      onChange={handleAgendamentoChange}
-                    />
+                    <div className="inputs-atendimento">
+                      <input
+                        type="text"
+                        name="cepCliente"
+                        placeholder="Nome da rua"
+                        className="input-nome-maior"
+                        value={novoAgendamento.cepCliente}
+                        onChange={handleAgendamentoChange}
+                      />
+                      
+                      <input
+                        type="text"
+                        name="cepCliente"
+                        placeholder="Cep do cliente"
+                        className="input-nome"
+                        value={novoAgendamento.cepCliente}
+                        onChange={handleAgendamentoChange}
+                      />
+
+                      <input
+                        type="text"
+                        name="cepCliente"
+                        placeholder="Numero da casa"
+                        className="input-nome"
+                        value={novoAgendamento.cepCliente}
+                        onChange={handleAgendamentoChange}
+                      />
+                    </div>
                   )}
 
                   <div className="ser-dat">
@@ -373,15 +468,6 @@ export default function InterfaceAdm() {
                         <span className="slider"></span>
                       </label>
                     </div>
-                    <input
-                      type="text"
-                      name="formaPagamento"
-                      placeholder="Forma de pagamento"
-                      className="forma"
-                      required
-                      value={novoAgendamento.formaPagamento}
-                      onChange={handleAgendamentoChange}
-                    />
                   </div>
                   <center>
                     <button className="age">Agendar</button>
@@ -397,8 +483,9 @@ export default function InterfaceAdm() {
                 <div className="barra-pesquisa">
                   <div className="barra">
                     <input type="text" placeholder="Pesquisar..." />
-                    <button className="buscar" onClick={buscar}><Search className="icon" /></button>
-
+                    <button className="buscar" onClick={buscar}>
+                      <Search className="icon" />
+                    </button>
                   </div>
                   <div className="acao">
                     <h4>
@@ -432,8 +519,12 @@ export default function InterfaceAdm() {
                       className="nome"
                       required
                       value={novoProduto.nome}
-                      onChange={e => setNovoProduto(prev => ({ ...prev, nome: e.target.value }))}
-
+                      onChange={(e) =>
+                        setNovoProduto((prev) => ({
+                          ...prev,
+                          nome: e.target.value,
+                        }))
+                      }
                     />
                     <div className="osDiferentes">
                       <input
@@ -443,8 +534,12 @@ export default function InterfaceAdm() {
                         className="categoria"
                         required
                         value={novoProduto.tipo}
-                        onChange={e => setNovoProduto(prev => ({ ...prev, tipo: e.target.value }))}
-
+                        onChange={(e) =>
+                          setNovoProduto((prev) => ({
+                            ...prev,
+                            tipo: e.target.value,
+                          }))
+                        }
                       />
                       <input
                         type="number"
@@ -453,8 +548,12 @@ export default function InterfaceAdm() {
                         className="preco"
                         required
                         value={novoProduto.valor}
-                        onChange={e => setNovoProduto(prev => ({ ...prev, valor: e.target.value }))}
-
+                        onChange={(e) =>
+                          setNovoProduto((prev) => ({
+                            ...prev,
+                            valor: e.target.value,
+                          }))
+                        }
                       />
                       <input
                         type="number"
@@ -463,8 +562,12 @@ export default function InterfaceAdm() {
                         required
                         className="qtd"
                         value={novoProduto.quantidade}
-                        onChange={e => setNovoProduto(prev => ({ ...prev, quantidade: e.target.value }))}
-
+                        onChange={(e) =>
+                          setNovoProduto((prev) => ({
+                            ...prev,
+                            quantidade: e.target.value,
+                          }))
+                        }
                       />
                     </div>
                     <div className="custom-file-input">
@@ -480,7 +583,9 @@ export default function InterfaceAdm() {
                         <Image className="icon" />
                       </label>
                     </div>
-                    <button className="reg" onClick={addProduto}>Registrar</button>
+                    <button className="reg" onClick={addProduto}>
+                      Registrar
+                    </button>
                   </form>
                 )}
 
@@ -505,55 +610,34 @@ export default function InterfaceAdm() {
                       </tr>
                     </thead>
                     <tbody>
-                      {novoProduto.length > 0 && novoProduto?.map((produto) => (
-                        <tr key={produto.id}>
-                          <td className="produto">
-                            <img src={produto.img_produto == null ? null : Buffer.from(produto.img_produto.data).toString()} alt="" />
-                            {produto.nm_produto}
-                          </td>
-                          <td>{produto.tp_produto}</td>
-                          <td className="qtd">{produto.qtd_produto}</td>
-                          <td>R${Number(produto.vl_produto).toFixed(2)}</td>
-                          <td className="action">
-                            <SquarePen /> <Trash />
-                          </td>
-                        </tr>
-                      ))}
+                      {novoProduto.length > 0 &&
+                        novoProduto?.map((produto) => (
+                          <tr key={produto.id}>
+                            <td className="produto">
+                              <img
+                                src={
+                                  produto.img_produto == null
+                                    ? null
+                                    : Buffer.from(
+                                        produto.img_produto.data
+                                      ).toString()
+                                }
+                                alt=""
+                              />
+                              {produto.nm_produto}
+                            </td>
+                            <td>{produto.tp_produto}</td>
+                            <td className="qtd">{produto.qtd_produto}</td>
+                            <td>R${Number(produto.vl_produto).toFixed(2)}</td>
+                            <td className="action">
+                              <SquarePen /> <Trash />
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
               )}
-            </div>
-          )}
-
-          {menuOpcao === "clientes" && (
-            <div className="listagem-clientes">
-              <div className="lista-produto">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Celular</th>
-                      <th>Ações</th>
-                      <th>
-                        <Link className="add">
-                          <Plus className="icon" /> Adicionar
-                        </Link>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Leonardo Debora Henrique</td>
-                      <td>11 9999-9999</td>
-                      <td className="action">
-                        <SquarePen /> <Trash />
-                      </td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
           )}
         </div>
