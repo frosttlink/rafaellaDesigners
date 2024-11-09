@@ -19,7 +19,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Buffer } from "buffer";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -98,12 +98,12 @@ export default function InterfaceAdm() {
     if (id == undefined) {
       const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
-      alert("Produto adicionado. Id: " + resp.data.novoID);
+      toast.success("Produto adicionado. Id: " + resp.data.novoID);
     } else {
       const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
       let resp = await axios.put(url, paramCorpo);
 
-      alert("Produto alterado.");
+      toast.success("Produto alterado.");
     }
 
     const produto = {
@@ -130,13 +130,13 @@ export default function InterfaceAdm() {
 
     try {
       if (id == undefined) {
-        const url = `http://localhost:5050/cliente/pee?x-access-token=${token}`;
+        const url = `http://localhost:5050/cliente?x-access-token=${token}`;
         let resp = await axios.post(url, paramCorpo);
-        alert("Cliente adicionado. Id: " + resp.data.novoID);
+        toast.success("Cliente adicionado. Id: " + resp.data.idCliente);
       } else {
-        const url = `http://localhost:5050/cliente/pee/${id}?x-access-token=${token}`;
+        const url = `http://localhost:5050/cliente/${id}?x-access-token=${token}`;
         let resp = await axios.put(url, paramCorpo);
-        alert("Cliente Alterado");
+        toast.success("Cliente Alterado");
       }
     } catch (error) {
       console.log("Erro na requisição:", error);
@@ -149,18 +149,17 @@ export default function InterfaceAdm() {
         console.log("Erro desconhecido:", error.message);
       }
     }
-    
 
     const cliente = {
       ...novoCliente,
       id: clientes.length + 1,
-      nome: (novoCliente.nome),
+      nome: novoCliente.nome,
       celular: parseFloat(novoCliente.telefone),
       cep: parseFloat(novoCliente.cep),
-      rua: (novoCliente.rua),
+      rua: novoCliente.rua,
       numero: parseFloat(novoCliente.casaNumero),
     };
-    setClientes([... clientes, cliente])
+    setClientes([...clientes, cliente]);
     setModalFormularioClientesAberto(false);
     setNovoProduto({ nome: "", celular: "", cep: "", rua: "", numero: "" });
   }
@@ -175,22 +174,22 @@ export default function InterfaceAdm() {
   //       data: novoAgendamento.data,
   //       domicilio: novoAgendamento.domicilio,
   //     };
-  
+
   //     if (id == undefined) {
   //       // CRIAR
   //       const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
   //       await axios.post(url, paramCorpo);
-  
+
   //       navigate("/consultar");
   //     } else {
   //       // ALTERAR
   //       const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
   //       await axios.put(url, paramCorpo);
-  
+
   //       navigate("/");
   //     }
   //   } catch (error) {
-  //     alert(error.message);
+  //     toast.success(error.message);
   //   }
   // }
 
@@ -244,6 +243,7 @@ export default function InterfaceAdm() {
 
   return (
     <div className="interface-adm">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="secao">
         <div className={`menu ${menuCompacto ? "compacto" : ""}`}>
           <header onClick={() => setMenuCompacto(!menuCompacto)}>
@@ -385,16 +385,16 @@ export default function InterfaceAdm() {
                         </tr>
                       </thead>
                       <tbody>
-                        {novoCliente.length > 0 && 
+                        {novoCliente.length > 0 &&
                           novoCliente?.map((cliente) => (
                             <tr key={cliente.id}>
-                            <td>{cliente.nm_cliente}</td>
-                            <td>{cliente.ds_telefone}</td>
-                            <td className="action">
-                              <SquarePen /> <Trash />
-                            </td>
-                            <td></td>
-                          </tr>
+                              <td>{cliente.nm_cliente}</td>
+                              <td>{cliente.ds_telefone}</td>
+                              <td className="action">
+                                <SquarePen /> <Trash />
+                              </td>
+                              <td></td>
+                            </tr>
                           ))}
                       </tbody>
                     </table>
