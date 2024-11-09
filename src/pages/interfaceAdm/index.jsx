@@ -12,7 +12,6 @@ import {
   Plus,
   Trash,
   X,
-  Edit,
 } from "lucide-react";
 import "./index.scss";
 import axios from "axios";
@@ -20,6 +19,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Buffer } from "buffer";
+import toast from "react-hot-toast";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -28,6 +28,7 @@ export default function InterfaceAdm() {
   const [nomeArquivo, setNomeArquivo] = useState("Nenhum arquivo selecionado");
   const [imagem, setImagem] = useState(null);
   const [produtos, setProdutos] = useState([]);
+  const [clientes, setClientes] = useState([]);
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
     tipo: "",
@@ -52,7 +53,14 @@ export default function InterfaceAdm() {
   const [modalClientesAberto, setModalClientesAberto] = useState(false);
   const [modalFormularioClientesAberto, setModalFormularioClientesAberto] =
     useState(false);
-  const navigate = useNavigate();
+
+  const [novoCliente, setNovoCliente] = useState({
+    nome: "",
+    telefone: "",
+    cep: "",
+    rua: "",
+    casaNumero: "",
+  });
 
   const escolherArquivo = (e) => {
     const file = e.target.files[0];
@@ -76,6 +84,7 @@ export default function InterfaceAdm() {
   }
 
   const { id } = useParams();
+  const navigate = useNavigate();
   console.log(id);
 
   async function addProduto() {
@@ -110,34 +119,80 @@ export default function InterfaceAdm() {
     setImagem(null);
   }
 
-  async function addAgendamento() {
+  async function addCliente() {
+    let paramCorpo = {
+      nome: novoCliente.nome,
+      telefone: novoCliente.telefone,
+      cep: novoCliente.cep,
+      rua: novoCliente.rua,
+      casaNumero: novoCliente.casaNumero,
+    };
+
     try {
-      let paramCorpo = {
-        cliente: novoAgendamento.nomeCliente,
-        cepCliente: novoAgendamento.cepCliente,
-        servico: novoAgendamento.servico,
-        Hora: novoAgendamento.Hora,
-        data: novoAgendamento.data,
-        domicilio: novoAgendamento.domicilio,
-      };
-
       if (id == undefined) {
-        // CRIAR
-        const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
-        await axios.post(url, paramCorpo);
-
-        navigate("/consultar");
+        const url = `http://localhost:5050/cliente/pee?x-access-token=${token}`;
+        let resp = await axios.post(url, paramCorpo);
+        alert("Cliente adicionado. Id: " + resp.data.novoID);
       } else {
-        // ALTERAR
-        const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
-        await axios.put(url, paramCorpo);
-
-        navigate("/");
+        const url = `http://localhost:5050/cliente/pee/${id}?x-access-token=${token}`;
+        let resp = await axios.put(url, paramCorpo);
+        alert("Cliente Alterado");
       }
     } catch (error) {
-      alert(error.message);
+      console.log("Erro na requisição:", error);
+      if (error.response) {
+        console.log("Resposta do servidor:", error.response.data);
+        console.log("Status do erro:", error.response.status);
+      } else if (error.request) {
+        console.log("Erro na requisição:", error.request);
+      } else {
+        console.log("Erro desconhecido:", error.message);
+      }
     }
+    
+
+    const cliente = {
+      ...novoCliente,
+      id: clientes.length + 1,
+      nome: (novoCliente.nome),
+      celular: parseFloat(novoCliente.telefone),
+      cep: parseFloat(novoCliente.cep),
+      rua: (novoCliente.rua),
+      numero: parseFloat(novoCliente.casaNumero),
+    };
+    setClientes([... clientes, cliente])
+    setModalFormularioClientesAberto(false);
+    setNovoProduto({ nome: "", celular: "", cep: "", rua: "", numero: "" });
   }
+
+  // async function addAgendamento() {
+  //   try {
+  //     let paramCorpo = {
+  //       cliente: novoAgendamento.nomeCliente,
+  //       cepCliente: novoAgendamento.cepCliente,
+  //       servico: novoAgendamento.servico,
+  //       Hora: novoAgendamento.Hora,
+  //       data: novoAgendamento.data,
+  //       domicilio: novoAgendamento.domicilio,
+  //     };
+  
+  //     if (id == undefined) {
+  //       // CRIAR
+  //       const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
+  //       await axios.post(url, paramCorpo);
+  
+  //       navigate("/consultar");
+  //     } else {
+  //       // ALTERAR
+  //       const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
+  //       await axios.put(url, paramCorpo);
+  
+  //       navigate("/");
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // }
 
   async function buscar() {
     const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
@@ -157,6 +212,11 @@ export default function InterfaceAdm() {
     setNovoAgendamento({ ...novoAgendamento, [name]: value });
   }
 
+  function handleClienteChange(e) {
+    const { name, value } = e.target;
+    setNovoCliente({ ...novoCliente, [name]: value });
+  }
+
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
@@ -165,6 +225,7 @@ export default function InterfaceAdm() {
 
   const abrirModalFormularioClientesAberto = () =>
     setModalFormularioClientesAberto(true);
+
   const fecharModalFormularioClientesAberto = () =>
     setModalFormularioClientesAberto(false);
 
@@ -235,12 +296,12 @@ export default function InterfaceAdm() {
                       <div className="data">
                         <h1>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora
+                            agendamentos[agendamentos.length - 1].dataHora,
                           ).getDate()}
                         </h1>
                         <p>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora
+                            agendamentos[agendamentos.length - 1].dataHora,
                           ).toLocaleString("pt-BR", { month: "long" })}
                         </p>
                       </div>
@@ -285,7 +346,7 @@ export default function InterfaceAdm() {
                               <p>
                                 {new Date(agendamento.dataHora).toLocaleString(
                                   "pt-BR",
-                                  { month: "long" }
+                                  { month: "long" },
                                 )}
                               </p>
                             </div>
@@ -324,14 +385,17 @@ export default function InterfaceAdm() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Leonardo Debora Henrique</td>
-                          <td>11 9999-9999</td>
-                          <td className="action">
-                            <SquarePen /> <Trash />
-                          </td>
-                          <td></td>
-                        </tr>
+                        {novoCliente.length > 0 && 
+                          novoCliente?.map((cliente) => (
+                            <tr key={cliente.id}>
+                            <td>{cliente.nm_cliente}</td>
+                            <td>{cliente.ds_telefone}</td>
+                            <td className="action">
+                              <SquarePen /> <Trash />
+                            </td>
+                            <td></td>
+                          </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -350,25 +414,37 @@ export default function InterfaceAdm() {
                     <div className="inputs">
                       <input
                         type="text"
-                        name="nomeCliente"
+                        name="nomeClienteModal"
                         placeholder="Nome do cliente"
                         className="nome"
                         required
-                        value={novoAgendamento.nomeCliente}
-                        onChange={handleAgendamentoChange}
+                        value={novoCliente.nome}
+                        onChange={(e) =>
+                          setNovoCliente((prev) => ({
+                            ...prev,
+                            nome: e.target.value,
+                          }))
+                        }
                       />
                       <input
                         type="text"
-                        name="numeroCliente"
+                        name="numeroClienteModal"
                         placeholder="Numero do cliente"
-                        className="nome"
+                        className="numero"
                         required
-                        value={novoAgendamento.numeroCliente}
-                        onChange={handleAgendamentoChange}
+                        value={novoCliente.telefone}
+                        onChange={(e) =>
+                          setNovoCliente((prev) => ({
+                            ...prev,
+                            telefone: e.target.value,
+                          }))
+                        }
                       />
                     </div>
                     <center>
-                      <button className="cad">Cadastrar</button>
+                      <button onClick={addCliente} className="cad">
+                        Cadastrar
+                      </button>
                     </center>
                   </div>
                 </div>
@@ -379,7 +455,6 @@ export default function InterfaceAdm() {
                   className="agenda-form"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    addAgendamento();
                   }}
                 >
                   <input
@@ -412,7 +487,7 @@ export default function InterfaceAdm() {
                         value={novoAgendamento.cepCliente}
                         onChange={handleAgendamentoChange}
                       />
-                      
+
                       <input
                         type="text"
                         name="cepCliente"
@@ -619,7 +694,7 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data
+                                        produto.img_produto.data,
                                       ).toString()
                                 }
                                 alt=""
