@@ -83,6 +83,11 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
+  function cadastrarCliente(e) {
+    buscarCliente(e);
+    addCliente(e);
+  }
+
   const { id } = useParams();
   const navigate = useNavigate();
   console.log(id);
@@ -129,15 +134,31 @@ export default function InterfaceAdm() {
     };
 
     try {
-      if (id == undefined) {
+      let resp;
+      if (id === undefined) {
         const url = `http://localhost:5050/cliente?x-access-token=${token}`;
-        let resp = await axios.post(url, paramCorpo);
+        resp = await axios.post(url, paramCorpo);
         toast.success("Cliente adicionado. Id: " + resp.data.idCliente);
       } else {
         const url = `http://localhost:5050/cliente/${id}?x-access-token=${token}`;
-        let resp = await axios.put(url, paramCorpo);
+        resp = await axios.put(url, paramCorpo);
         toast.success("Cliente Alterado");
       }
+
+      const cliente = {
+        ...novoCliente,
+        id: resp.data.idCliente,
+      };
+      setClientes((prevClientes) => [...prevClientes, cliente]);
+
+      setModalFormularioClientesAberto(false);
+      setNovoCliente({
+        nome: "",
+        telefone: "",
+        cep: "",
+        rua: "",
+        casaNumero: "",
+      });
     } catch (error) {
       console.log("Erro na requisição:", error);
       if (error.response) {
@@ -149,19 +170,6 @@ export default function InterfaceAdm() {
         console.log("Erro desconhecido:", error.message);
       }
     }
-
-    const cliente = {
-      ...novoCliente,
-      id: clientes.length + 1,
-      nome: novoCliente.nome,
-      celular: parseFloat(novoCliente.telefone),
-      cep: parseFloat(novoCliente.cep),
-      rua: novoCliente.rua,
-      numero: parseFloat(novoCliente.casaNumero),
-    };
-    setClientes([...clientes, cliente]);
-    setModalFormularioClientesAberto(false);
-    setNovoProduto({ nome: "", celular: "", cep: "", rua: "", numero: "" });
   }
 
   // async function addAgendamento() {
@@ -199,6 +207,14 @@ export default function InterfaceAdm() {
     console.log(resp.data);
     setNovoProduto(resp.data);
     console.log(produtos);
+  }
+
+  async function buscarCliente() {
+    const url = `http://localhost:5050/cliente?x-access-token=${token}`;
+    let resp = await axios.get(url);
+    console.log(resp.data);
+    setNovoCliente(resp.data);
+    console.log(clientes);
   }
 
   function inputChange(e) {
@@ -322,49 +338,6 @@ export default function InterfaceAdm() {
                 </button>
               </div>
 
-              {modalAberto && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <span className="close" onClick={fecharModal}>
-                      <X className="icon-close" />
-                    </span>
-
-                    <h2>Todos os Agendamentos</h2>
-                    {agendamentos.length === 0 ? (
-                      <p>Nenhum agendamento encontrado.</p>
-                    ) : (
-                      <div className="agendamentos-lista">
-                        {agendamentos.map((agendamento) => (
-                          <div
-                            key={agendamento.id}
-                            className="container-agendamento"
-                          >
-                            <div className="data">
-                              <h1>
-                                {new Date(agendamento.dataHora).getDate()}
-                              </h1>
-                              <p>
-                                {new Date(agendamento.dataHora).toLocaleString(
-                                  "pt-BR",
-                                  { month: "long" },
-                                )}
-                              </p>
-                            </div>
-                            <div className="content">
-                              <h1>{agendamento.servico}</h1>
-                              <h3>{agendamento.nomeCliente}</h3>
-                              {agendamento.domicilio && (
-                                <p>Atendimento a domicilio</p>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
               {modalClientesAberto && (
                 <div className="listagem-clientes">
                   <div className="lista-produto">
@@ -385,17 +358,16 @@ export default function InterfaceAdm() {
                         </tr>
                       </thead>
                       <tbody>
-                        {novoCliente.length > 0 &&
-                          novoCliente?.map((cliente) => (
-                            <tr key={cliente.id}>
-                              <td>{cliente.nm_cliente}</td>
-                              <td>{cliente.ds_telefone}</td>
-                              <td className="action">
-                                <SquarePen /> <Trash />
-                              </td>
-                              <td></td>
-                            </tr>
-                          ))}
+                        {clientes.map((cliente) => (
+                          <tr key={cliente.id}>
+                            <td>{cliente.nome}</td>
+                            <td>{cliente.telefone}</td>
+                            <td className="action">
+                              <SquarePen /> <Trash />
+                            </td>
+                            <td></td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -427,7 +399,7 @@ export default function InterfaceAdm() {
                         }
                       />
                       <input
-                        type="text"
+                        type="number"
                         name="numeroClienteModal"
                         placeholder="Numero do cliente"
                         className="numero"
@@ -442,7 +414,7 @@ export default function InterfaceAdm() {
                       />
                     </div>
                     <center>
-                      <button onClick={addCliente} className="cad">
+                      <button onClick={cadastrarCliente} className="cad">
                         Cadastrar
                       </button>
                     </center>
