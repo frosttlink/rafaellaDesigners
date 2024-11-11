@@ -242,9 +242,17 @@ export default function InterfaceAdm() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("usuario");
+    async function verificarToken(){
+      try {
+        const token = localStorage.getItem("usuario");
+        let url = `http://localhost:5050/verificarToken?x-access-token=${token}`
+        await axios.get(url);
+      } catch (error) {
+        navigate("/adm")
+      }
+    }
 
-    if (token) setToken(token);
+    verificarToken()
   }, []);
 
   async function sair() {
