@@ -247,6 +247,8 @@ export default function InterfaceAdm() {
         const token = localStorage.getItem("usuario");
         let url = `http://localhost:5050/verificarToken?x-access-token=${token}`
         await axios.get(url);
+
+        setToken(token);
       } catch (error) {
         navigate("/adm")
       }
