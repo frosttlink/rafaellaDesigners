@@ -83,11 +83,6 @@ export default function InterfaceAdm() {
     alterarImagem(e);
   }
 
-  function cadastrarCliente(e) {
-    buscarCliente(e);
-    addCliente(e);
-  }
-
   const { id } = useParams();
   const navigate = useNavigate();
   console.log(id);
@@ -213,7 +208,7 @@ export default function InterfaceAdm() {
     const url = `http://localhost:5050/cliente?x-access-token=${token}`;
     let resp = await axios.get(url);
     console.log(resp.data);
-    setNovoCliente(resp.data);
+    setClientes(resp.data);
     console.log(clientes);
   }
 
@@ -355,16 +350,22 @@ export default function InterfaceAdm() {
                               <Plus className="icon" /> Adicionar
                             </Link>
                           </th>
+                          <th onClick={buscarCliente}>
+                            <Link className="add">
+                              <Search className="icon"/> Buscar
+                            </Link>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         {clientes.map((cliente) => (
-                          <tr key={cliente.id}>
-                            <td>{cliente.nome}</td>
-                            <td>{cliente.telefone}</td>
+                          <tr className="clientesAdd" key={cliente.id_cliente}>
+                            <td>{cliente.nm_cliente}</td>
+                            <td>{cliente.ds_telefone}</td>
                             <td className="action">
                               <SquarePen /> <Trash />
                             </td>
+                            <td></td>
                             <td></td>
                           </tr>
                         ))}
@@ -414,7 +415,7 @@ export default function InterfaceAdm() {
                       />
                     </div>
                     <center>
-                      <button onClick={cadastrarCliente} className="cad">
+                      <button onClick={addCliente} className="cad">
                         Cadastrar
                       </button>
                     </center>

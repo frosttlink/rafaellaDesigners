@@ -553,6 +553,10 @@
         top: 10px;
         right: 15px;
       }
+
+      & .clientesAdd:hover {
+        background-color: $color_background_agenda;
+      }
     }
 
     .container-agendamento {
