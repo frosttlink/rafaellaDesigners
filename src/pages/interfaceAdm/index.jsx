@@ -29,6 +29,7 @@ export default function InterfaceAdm() {
   const [imagem, setImagem] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const servicos = ["Cílios", "Epilação", "Sobrancelha"];
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
     tipo: "",
@@ -42,7 +43,7 @@ export default function InterfaceAdm() {
   const [novoAgendamento, setNovoAgendamento] = useState({
     nomeCliente: "",
     cepCliente: "",
-    servico: "",
+    servico: servicos[0],
     Hora: "",
     data: "",
     endereco: "",
@@ -167,34 +168,63 @@ export default function InterfaceAdm() {
     }
   }
 
-  // async function addAgendamento() {
-  //   try {
-  //     let paramCorpo = {
-  //       cliente: novoAgendamento.nomeCliente,
-  //       cepCliente: novoAgendamento.cepCliente,
-  //       servico: novoAgendamento.servico,
-  //       Hora: novoAgendamento.Hora,
-  //       data: novoAgendamento.data,
-  //       domicilio: novoAgendamento.domicilio,
-  //     };
+  const buscarEnderecoPorCEP = async (cep) => {
+    if (!cep || cep.length !== 8) {
+      toast.error("CEP inválido.");
+      return;
+    }
 
-  //     if (id == undefined) {
-  //       // CRIAR
-  //       const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
-  //       await axios.post(url, paramCorpo);
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
-  //       navigate("/consultar");
-  //     } else {
-  //       // ALTERAR
-  //       const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
-  //       await axios.put(url, paramCorpo);
+      if (response.data.erro) {
+        toast.error("CEP não encontrado.");
+        return;
+      }
 
-  //       navigate("/");
-  //     }
-  //   } catch (error) {
-  //     toast.success(error.message);
-  //   }
-  // }
+      setNovoAgendamento((prev) => ({
+        ...prev,
+        rua: response.data.logradouro,
+        bairro: response.data.bairro,
+        cidade: response.data.localidade,
+        uf: response.data.uf,
+      }));
+    } catch (error) {
+      console.log(error);
+      toast.error("Erro ao buscar o endereço.");
+    }
+  };
+
+
+  async function addAgendamento() {
+    try {
+      let paramCorpo = {
+        cliente: novoAgendamento.nomeCliente,
+        cepCliente: novoAgendamento.cepCliente,
+        servico: novoAgendamento.servico,
+        Hora: novoAgendamento.Hora,
+        data: novoAgendamento.data,
+        domicilio: novoAgendamento.domicilio,
+      };
+
+      if (id == undefined) {
+        // CRIAR
+        const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
+        await axios.post(url, paramCorpo);
+
+        navigate("/consultar");
+      } else {
+        // ALTERAR
+        const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
+        await axios.put(url, paramCorpo);
+
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Erro ao salvar agendamento: " + error.message);
+    }
+  }
+
 
   async function buscar() {
     const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
@@ -212,6 +242,15 @@ export default function InterfaceAdm() {
     console.log(clientes);
   }
 
+  function preencherFormularioComCliente(cliente) {
+    setNovoAgendamento({
+      ...novoAgendamento,
+      nomeCliente: cliente.nm_cliente,
+      numeroCliente: cliente.ds_telefone,
+    })
+    fecharModalClientes()
+  }
+
   function inputChange(e) {
     const { name, value } = e.target;
     setNovoProduto({ ...novoProduto, [name]: value });
@@ -226,6 +265,7 @@ export default function InterfaceAdm() {
     const { name, value } = e.target;
     setNovoCliente({ ...novoCliente, [name]: value });
   }
+
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
@@ -242,7 +282,7 @@ export default function InterfaceAdm() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    async function verificarToken(){
+    async function verificarToken() {
       try {
         const token = localStorage.getItem("usuario");
         let url = `http://localhost:5050/verificarToken?x-access-token=${token}`
@@ -362,14 +402,18 @@ export default function InterfaceAdm() {
                           </th>
                           <th onClick={buscarCliente}>
                             <Link className="add">
-                              <Search className="icon"/> Buscar
+                              <Search className="icon" /> Buscar
                             </Link>
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         {clientes.map((cliente) => (
-                          <tr className="clientesAdd" key={cliente.id_cliente}>
+                          <tr
+                            className="clientesAdd"
+                            key={cliente.id_cliente}
+                            onClick={() => preencherFormularioComCliente(cliente)}
+                          >
                             <td>{cliente.nm_cliente}</td>
                             <td>{cliente.ds_telefone}</td>
                             <td className="action">
@@ -379,6 +423,7 @@ export default function InterfaceAdm() {
                             <td></td>
                           </tr>
                         ))}
+
                       </tbody>
                     </table>
                   </div>
@@ -432,6 +477,50 @@ export default function InterfaceAdm() {
                   </div>
                 </div>
               )}
+              
+              {modalAberto && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={fecharModal}>
+                      <X className="icon-close" />
+                    </span>
+                    <h2>Todos os Agendamentos</h2>
+                    {agendamentos.length === 0 ? (
+                      <p>Nenhum agendamento encontrado.</p>
+                    ) : (
+                      <div className="agendamentos-lista">
+                        {agendamentos.map((agendamento) => (
+                          <div
+                            key={agendamento.id}
+                            className="container-agendamento"
+                          >
+                            <div className="data">
+                              <h1>
+                                {new Date(agendamento.dataHora).getDate()}
+                              </h1>
+                              <p>
+                                {new Date(agendamento.dataHora).toLocaleString(
+                                  "pt-BR",
+                                  { month: "long" },
+                                )}
+                              </p>
+                            </div>
+                            <div className="content">
+                              <h1>{agendamento.servico}</h1>
+                              <h3>{agendamento.nomeCliente}</h3>
+                              {agendamento.domicilio && (
+                                <p>Atendimento a domicilio</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+
 
               <div className="adicionar-agenda">
                 <form
@@ -465,42 +554,58 @@ export default function InterfaceAdm() {
                       <input
                         type="text"
                         name="cepCliente"
+                        placeholder="CEP do cliente"
+                        className="input-nome"
+                        value={novoAgendamento.cepCliente}
+                        onChange={(e) => {
+                          const cep = e.target.value;
+                          setNovoAgendamento((prev) => ({
+                            ...prev,
+                            cepCliente: cep,
+                          }));
+
+                          if (cep.length === 8) {
+                            buscarEnderecoPorCEP(cep);
+                          }
+                        }}
+                      />
+
+                      <input
+                        type="text"
+                        name="rua"
                         placeholder="Nome da rua"
                         className="input-nome-maior"
-                        value={novoAgendamento.cepCliente}
+                        value={novoAgendamento.rua}
                         onChange={handleAgendamentoChange}
                       />
 
                       <input
                         type="text"
-                        name="cepCliente"
-                        placeholder="Cep do cliente"
+                        name="numeroCasa"
+                        placeholder="Número da casa"
                         className="input-nome"
-                        value={novoAgendamento.cepCliente}
-                        onChange={handleAgendamentoChange}
-                      />
-
-                      <input
-                        type="text"
-                        name="cepCliente"
-                        placeholder="Numero da casa"
-                        className="input-nome"
-                        value={novoAgendamento.cepCliente}
+                        value={novoAgendamento.numeroCasa}
                         onChange={handleAgendamentoChange}
                       />
                     </div>
                   )}
 
                   <div className="ser-dat">
-                    <input
-                      type="text"
+                    <select
                       name="servico"
-                      placeholder="Serviço do cliente"
-                      className="servico"
-                      required
                       value={novoAgendamento.servico}
-                      onChange={handleAgendamentoChange}
-                    />
+                      onChange={(e) =>
+                        setNovoAgendamento({ ...novoAgendamento, servico: e.target.value })
+                      }
+                      className="servico"
+                    >
+                      {servicos.map((servico, index) => (
+                        <option key={index} value={servico}>
+                          {servico}
+                        </option>
+                      ))}
+                    </select>
+
                     <input
                       type="datetime-local"
                       name="dataHora"
@@ -519,19 +624,20 @@ export default function InterfaceAdm() {
                         <input
                           type="checkbox"
                           checked={atendimentoDomicilio}
-                          onChange={() =>
-                            setAtendimentoDomicilio(!atendimentoDomicilio)
-                          }
+                          onChange={() => setAtendimentoDomicilio(!atendimentoDomicilio)}
                         />
                         <span className="slider"></span>
                       </label>
                     </div>
                   </div>
+
                   <center>
-                    <button className="age">Agendar</button>
+                    <button onClick={addAgendamento} className="age">Agendar</button>
                   </center>
                 </form>
               </div>
+
+
             </div>
           )}
 
@@ -677,8 +783,8 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data,
-                                      ).toString()
+                                      produto.img_produto.data,
+                                    ).toString()
                                 }
                                 alt=""
                               />

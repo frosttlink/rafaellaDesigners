@@ -445,7 +445,7 @@
 
     .inputs-atendimento {
       display: flex;
-  
+
       & .input-nome {
         background-color: $color_pink_base;
         color: $color_pink_text;
@@ -471,7 +471,7 @@
         margin-right: 20px;
       }
     }
-  
+
 
     .listagem-clientes {
       display: flex;
@@ -524,7 +524,7 @@
         transform: scale(1.05);
         background-color: $color_pink_input_before;
       }
-    
+
 
       & .lista-produto {
         background: $color_pink_base;
@@ -656,6 +656,16 @@
           width: 550px;
         }
 
+        .servico:focus {
+          outline: none;
+          border-color: $color_pink_input;
+        }
+
+        .servico:hover {
+          background-color: $color_pink_search;
+          border-color: darken($color_pink_base, 10%);
+        }
+
         .dt-hr {
           width: 340px;
         }
@@ -726,11 +736,11 @@
           border-radius: 100%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
           background-color: $color_pink_input_before;
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
           transform: translateX(36px);
         }
       }
