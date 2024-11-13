@@ -250,7 +250,7 @@ export default function InterfaceAdm() {
 
         setToken(token);
       } catch (error) {
-        navigate("/adm")
+        navigate("/")
       }
     }
 
