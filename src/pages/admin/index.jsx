@@ -6,6 +6,11 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 
+
+
+
+
+
 export default function Adm(){
 
     const [nome,setNome] = useState('');
