@@ -11,14 +11,14 @@ export default function Navegacao() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <Home/> }/>
-        <Route path="/*" element={ <NotFound/> }/>
-        <Route path="/adm" element={ <Adm/> }/>
-        <Route path="/sobre" element={ <Sobre/> }/>
-        <Route path="/interfaceAdm" element={ <InterfaceAdm/> }/>
+        <Route path="/" element={<Home />} />
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/adm" element={<Adm />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/interfaceAdm" element={<InterfaceAdm />} />
         <Route path="/interfaceAdm/:id" element={<InterfaceAdm />} />
-        <Route path="/servicos" element={ <DetalhesServicos/> }/>
-        <Route path="/galeria" element={ <Galeria/> }/>
+        <Route path="/servicos" element={<DetalhesServicos />} />
+        <Route path="/galeria" element={<Galeria />} />
       </Routes>
     </BrowserRouter>
   );

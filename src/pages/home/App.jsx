@@ -38,7 +38,13 @@ export default function Home() {
           Realçamos sua beleza natural, destacando o que há de mais encantador
           em você.
         </p>
-        <ButtonVeja  linkDestino="/galeria" tamBotao="140px" texto="Veja mais" marginBottom="150px" className="vejamais" />
+        <ButtonVeja
+          linkDestino="/galeria"
+          tamBotao="140px"
+          texto="Veja mais"
+          marginBottom="150px"
+          className="vejamais"
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

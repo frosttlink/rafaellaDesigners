@@ -7,10 +7,10 @@
   padding: 3px 75px;
 
   &.not-home {
-    background-color: $color_pink_shadow; 
+    background-color: $color_pink_shadow;
 
     .active {
-      color: $color_pink_shock; 
+      color: $color_pink_shock;
     }
   }
 
@@ -24,10 +24,10 @@
     font-size: 17px;
     font-family: Roboto;
     font-weight: 700;
-    color: #fff; 
+    color: #fff;
 
     &.active {
-      color: #FFB6CB;
+      color: #ffb6cb;
     }
   }
 }

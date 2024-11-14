@@ -195,7 +195,6 @@ export default function InterfaceAdm() {
     }
   };
 
-
   const addAgendamento = async () => {
     try {
       const clienteData = {
@@ -215,7 +214,6 @@ export default function InterfaceAdm() {
         clienteId = clienteResponse.data.id;
       }
 
-
       const agendamentoData = {
         data: novoAgendamento.dataHora,
         domicilio: atendimentoDomicilio,
@@ -225,7 +223,6 @@ export default function InterfaceAdm() {
 
       const urlAgendamento = `http://localhost:5050/agendamento?x-access-token=${token}`;
       await axios.post(urlAgendamento, agendamentoData);
-
 
       const agendamento = {
         ...novoAgendamento,
@@ -251,8 +248,6 @@ export default function InterfaceAdm() {
     }
   };
 
-
-
   async function buscar() {
     const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
     let resp = await axios.get(url);
@@ -274,8 +269,8 @@ export default function InterfaceAdm() {
       ...novoAgendamento,
       nomeCliente: cliente.nm_cliente,
       telefone: cliente.ds_telefone,
-    })
-    fecharModalClientes()
+    });
+    fecharModalClientes();
   }
 
   function inputChange(e) {
@@ -311,16 +306,16 @@ export default function InterfaceAdm() {
     async function verificarToken() {
       try {
         const token = localStorage.getItem("usuario");
-        let url = `http://localhost:5050/verificarToken?x-access-token=${token}`
+        let url = `http://localhost:5050/verificarToken?x-access-token=${token}`;
         await axios.get(url);
 
         setToken(token);
       } catch (error) {
-        navigate("/")
+        navigate("/");
       }
     }
 
-    verificarToken()
+    verificarToken();
   }, []);
 
   async function sair() {
@@ -383,12 +378,12 @@ export default function InterfaceAdm() {
                       <div className="data">
                         <h1>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora,
+                            agendamentos[agendamentos.length - 1].dataHora
                           ).getDate()}
                         </h1>
                         <p>
                           {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora,
+                            agendamentos[agendamentos.length - 1].dataHora
                           ).toLocaleString("pt-BR", { month: "long" })}
                         </p>
                       </div>
@@ -438,7 +433,9 @@ export default function InterfaceAdm() {
                           <tr
                             className="clientesAdd"
                             key={cliente.id_cliente}
-                            onClick={() => preencherFormularioComCliente(cliente)}
+                            onClick={() =>
+                              preencherFormularioComCliente(cliente)
+                            }
                           >
                             <td>{cliente.nm_cliente}</td>
                             <td>{cliente.ds_telefone}</td>
@@ -449,7 +446,6 @@ export default function InterfaceAdm() {
                             <td></td>
                           </tr>
                         ))}
-
                       </tbody>
                     </table>
                   </div>
@@ -527,7 +523,7 @@ export default function InterfaceAdm() {
                               <p>
                                 {new Date(agendamento.dataHora).toLocaleString(
                                   "pt-BR",
-                                  { month: "long" },
+                                  { month: "long" }
                                 )}
                               </p>
                             </div>
@@ -545,8 +541,6 @@ export default function InterfaceAdm() {
                   </div>
                 </div>
               )}
-
-
 
               <div className="adicionar-agenda">
                 <form
@@ -621,7 +615,12 @@ export default function InterfaceAdm() {
                     <select
                       name="servico"
                       value={novoAgendamento.servico}
-                      onChange={(e) => setNovoAgendamento({ ...novoAgendamento, servico: e.target.value })}
+                      onChange={(e) =>
+                        setNovoAgendamento({
+                          ...novoAgendamento,
+                          servico: e.target.value,
+                        })
+                      }
                       className="servico"
                     >
                       {servicos.map((servico, index) => (
@@ -649,7 +648,9 @@ export default function InterfaceAdm() {
                         <input
                           type="checkbox"
                           checked={atendimentoDomicilio}
-                          onChange={() => setAtendimentoDomicilio(!atendimentoDomicilio)}
+                          onChange={() =>
+                            setAtendimentoDomicilio(!atendimentoDomicilio)
+                          }
                         />
                         <span className="slider"></span>
                       </label>
@@ -657,12 +658,12 @@ export default function InterfaceAdm() {
                   </div>
 
                   <center>
-                    <button type="submit" className="age">Agendar</button>
+                    <button type="submit" className="age">
+                      Agendar
+                    </button>
                   </center>
                 </form>
               </div>
-
-
             </div>
           )}
 
@@ -808,8 +809,8 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                      produto.img_produto.data,
-                                    ).toString()
+                                        produto.img_produto.data
+                                      ).toString()
                                 }
                                 alt=""
                               />

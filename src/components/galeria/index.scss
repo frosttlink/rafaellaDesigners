@@ -10,29 +10,29 @@
   height: 100vh;
   background-color: $color_pink_shadow;
   position: relative;
-  
+
   .photo {
-      position: absolute;
-      opacity: 0;
-      transition: opacity 1s ease;
-      width: auto;
-      height: auto;
-      
-      &.active {
-          opacity: 1;
-          width: 80%;
-          max-height: 80%;
-      }
-      
-      &:nth-child(odd) {
-          width: 60%;
-          max-height: 60%;
-      }
-      
-      &:nth-child(even) {
-          width: 70%;
-          max-height: 70%;
-      }
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease;
+    width: auto;
+    height: auto;
+
+    &.active {
+      opacity: 1;
+      width: 80%;
+      max-height: 80%;
+    }
+
+    &:nth-child(odd) {
+      width: 60%;
+      max-height: 60%;
+    }
+
+    &:nth-child(even) {
+      width: 70%;
+      max-height: 70%;
+    }
   }
 
   .veja {

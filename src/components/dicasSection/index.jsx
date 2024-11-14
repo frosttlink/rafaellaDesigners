@@ -1,18 +1,17 @@
-import ButtonVeja from "../vejaButton"
-import "./index.scss"
+import ButtonVeja from "../vejaButton";
+import "./index.scss";
 
 export default function DicasSection() {
   return (
     <div className="dicas" id="dicas">
-
-      <img src="/assets/images/square.svg" alt="" className="mujer"/>
+      <img src="/assets/images/square.svg" alt="" className="mujer" />
       <div className="pele">
         <img src="/assets/images/dica.svg" alt="" />
-        
+
         <p>
-          Mantenha sua pele hidratada! Beba pelo menos 2 litros de água por
-          dia para manter a pele elástica. Use um hidratante adequado ao seu
-          tipo de pele diariamente, especialmente após o banho.
+          Mantenha sua pele hidratada! Beba pelo menos 2 litros de água por dia
+          para manter a pele elástica. Use um hidratante adequado ao seu tipo de
+          pele diariamente, especialmente após o banho.
         </p>
         <p className="ult">
           Máscaras hidratantes com ingredientes como aloe vera ou óleo de coco
@@ -23,11 +22,9 @@ export default function DicasSection() {
         </p>
 
         <div className="botaoDicas">
-          <ButtonVeja tamBotao="140px" texto="Veja mais"/>
+          <ButtonVeja tamBotao="140px" texto="Veja mais" />
         </div>
-
       </div>
-
     </div>
-  )
+  );
 }

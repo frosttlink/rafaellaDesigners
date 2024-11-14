@@ -262,7 +262,6 @@
   }
 
   .listagem-estoque {
-
     .buscar {
       height: 45px;
       border-top-left-radius: 0px;
@@ -405,7 +404,6 @@
     }
   }
 
-
   .listagem-agenda {
     .modal {
       display: flex;
@@ -472,7 +470,6 @@
       }
     }
 
-
     .listagem-clientes {
       display: flex;
       justify-content: center;
@@ -524,7 +521,6 @@
         transform: scale(1.05);
         background-color: $color_pink_input_before;
       }
-
 
       & .lista-produto {
         background: $color_pink_base;
@@ -736,11 +732,11 @@
           border-radius: 100%;
         }
 
-        input:checked+.slider {
+        input:checked + .slider {
           background-color: $color_pink_input_before;
         }
 
-        input:checked+.slider:before {
+        input:checked + .slider:before {
           transform: translateX(36px);
         }
       }
