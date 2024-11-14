@@ -196,34 +196,61 @@ export default function InterfaceAdm() {
   };
 
 
-  async function addAgendamento() {
+  const addAgendamento = async () => {
     try {
-      let paramCorpo = {
-        cliente: novoAgendamento.nomeCliente,
-        cepCliente: novoAgendamento.cepCliente,
-        servico: novoAgendamento.servico,
-        Hora: novoAgendamento.Hora,
-        data: novoAgendamento.data,
-        domicilio: novoAgendamento.domicilio,
+      const clienteData = {
+        nome: novoAgendamento.nomeCliente,
+        telefone: novoAgendamento.telefone,
+        cep: novoAgendamento.cepCliente,
+        rua: novoAgendamento.rua,
+        casaNumero: novoAgendamento.numeroCasa,
       };
 
-      if (id == undefined) {
-        // CRIAR
-        const url = `http://localhost:5050/agendamento/?x-access-token=${token}`;
-        await axios.post(url, paramCorpo);
-
-        navigate("/consultar");
+      let clienteId;
+      if (novoAgendamento.idCliente) {
+        clienteId = novoAgendamento.idCliente;
       } else {
-        // ALTERAR
-        const url = `http://localhost:5050/agendamento/${id}?x-access-token=${token}`;
-        await axios.put(url, paramCorpo);
-
-        navigate("/");
+        const urlCliente = `http://localhost:5050/cliente?x-access-token=${token}`;
+        const clienteResponse = await axios.post(urlCliente, clienteData);
+        clienteId = clienteResponse.data.id;
       }
+
+
+      const agendamentoData = {
+        data: novoAgendamento.dataHora,
+        domicilio: atendimentoDomicilio,
+        servico: novoAgendamento.servico,
+        idCliente: clienteId,
+      };
+
+      const urlAgendamento = `http://localhost:5050/agendamento?x-access-token=${token}`;
+      await axios.post(urlAgendamento, agendamentoData);
+
+
+      const agendamento = {
+        ...novoAgendamento,
+        id: agendamentos.length + 1,
+      };
+
+      setAgendamentos([...agendamentos, agendamento]);
+      setVerFormulario(false);
+      setNovoAgendamento({
+        nomeCliente: "",
+        telefone: "",
+        cepCliente: "",
+        rua: "",
+        numeroCasa: "",
+        servico: "",
+        dataHora: "",
+      });
+
+      toast.success("Agendamento realizado com sucesso!");
     } catch (error) {
-      toast.error("Erro ao salvar agendamento: " + error.message);
+      console.error("Erro ao agendar:", error);
+      toast.error("Erro ao agendar. Tente novamente.");
     }
-  }
+  };
+
 
 
   async function buscar() {
@@ -246,7 +273,7 @@ export default function InterfaceAdm() {
     setNovoAgendamento({
       ...novoAgendamento,
       nomeCliente: cliente.nm_cliente,
-      numeroCliente: cliente.ds_telefone,
+      telefone: cliente.ds_telefone,
     })
     fecharModalClientes()
   }
@@ -265,7 +292,6 @@ export default function InterfaceAdm() {
     const { name, value } = e.target;
     setNovoCliente({ ...novoCliente, [name]: value });
   }
-
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
@@ -456,7 +482,7 @@ export default function InterfaceAdm() {
                       />
                       <input
                         type="number"
-                        name="numeroClienteModal"
+                        name="telefoneModal"
                         placeholder="Numero do cliente"
                         className="numero"
                         required
@@ -477,7 +503,7 @@ export default function InterfaceAdm() {
                   </div>
                 </div>
               )}
-              
+
               {modalAberto && (
                 <div className="modal">
                   <div className="modal-content">
@@ -527,6 +553,7 @@ export default function InterfaceAdm() {
                   className="agenda-form"
                   onSubmit={(e) => {
                     e.preventDefault();
+                    addAgendamento();
                   }}
                 >
                   <input
@@ -541,11 +568,11 @@ export default function InterfaceAdm() {
                   />
                   <input
                     type="text"
-                    name="numeroCliente"
-                    placeholder="Numero do cliente"
+                    name="telefone"
+                    placeholder="Número do cliente"
                     className="nome"
                     required
-                    value={novoAgendamento.numeroCliente}
+                    value={novoAgendamento.telefone}
                     onChange={handleAgendamentoChange}
                   />
 
@@ -594,9 +621,7 @@ export default function InterfaceAdm() {
                     <select
                       name="servico"
                       value={novoAgendamento.servico}
-                      onChange={(e) =>
-                        setNovoAgendamento({ ...novoAgendamento, servico: e.target.value })
-                      }
+                      onChange={(e) => setNovoAgendamento({ ...novoAgendamento, servico: e.target.value })}
                       className="servico"
                     >
                       {servicos.map((servico, index) => (
@@ -632,7 +657,7 @@ export default function InterfaceAdm() {
                   </div>
 
                   <center>
-                    <button onClick={addAgendamento} className="age">Agendar</button>
+                    <button type="submit" className="age">Agendar</button>
                   </center>
                 </form>
               </div>
