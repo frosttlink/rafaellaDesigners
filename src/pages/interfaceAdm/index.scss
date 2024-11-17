@@ -558,10 +558,13 @@
     .container-agendamento {
       display: flex;
       flex-direction: row;
-      gap: 45px;
+      align-items: center;
+      gap: 20px; ; 
       padding: 20px;
       width: 80%;
       border-radius: 8px;
+      margin-bottom: 10px;
+      position: relative;
 
       background-color: $color_pink_card_agenda;
 
@@ -581,6 +584,30 @@
         flex-direction: column;
         text-align: left;
         justify-content: center;
+        margin-right: 70px;
+      }
+
+      &.atend {
+        display: flex;
+        flex-direction: row;
+      }
+
+      & .realizado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background-color: $color_pink_rede;
+        color: $color_white;
+        padding: 10px 20px;
+        height: 50px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        position: absolute; 
+        right: -120px;
+        top: 50%; 
+        transform: translateY(-50%); 
       }
     }
 

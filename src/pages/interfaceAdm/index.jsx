@@ -12,6 +12,7 @@ import {
   Plus,
   Trash,
   X,
+  Check,
 } from "lucide-react";
 import "./index.scss";
 import axios from "axios";
@@ -323,6 +324,23 @@ export default function InterfaceAdm() {
     navigate("/");
   }
 
+  async function carregarAgendamentos() {
+    try {
+      let url = `http://localhost:5050/agendamento?x-access-token=${token}`;
+      let resp = await axios.get(url);
+      setAgendamentos(resp.data);
+      console.log(resp.data);
+    } catch (erro) {
+      alert(erro);
+    }
+  }
+
+  useEffect(() => {
+    if (modalAberto) {
+      carregarAgendamentos();
+    }
+  }, [modalAberto]);
+
   return (
     <div className="interface-adm">
       <Toaster position="top-center" reverseOrder={false} />
@@ -350,12 +368,6 @@ export default function InterfaceAdm() {
             >
               <Layers className="icon" /> {!menuCompacto && "Estoque"}
             </li>
-            <li
-              onClick={() => setmenuOpcao("clientes")}
-              className={menuOpcao === "clientes" ? "active" : ""}
-            >
-              <UserRound className="icon" /> {!menuCompacto && "Clientes"}
-            </li>
           </ul>
 
           <button onClick={sair} className="sair">
@@ -372,28 +384,38 @@ export default function InterfaceAdm() {
                 ) : (
                   <>
                     <div
-                      key={agendamentos[agendamentos.length - 1].id}
+                      key={agendamentos[agendamentos.length - 1].id_agendamento}
                       className="container-agendamento"
                     >
                       <div className="data">
                         <h1>
-                          {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora
-                          ).getDate()}
+                          {agendamentos[agendamentos.length - 1].dt_agendamento
+                            ? new Date(
+                                agendamentos[
+                                  agendamentos.length - 1
+                                ].dt_agendamento,
+                              ).getDate()
+                            : "Sem data"}
                         </h1>
                         <p>
-                          {new Date(
-                            agendamentos[agendamentos.length - 1].dataHora
-                          ).toLocaleString("pt-BR", { month: "long" })}
+                          {agendamentos[agendamentos.length - 1].dt_agendamento
+                            ? new Date(
+                                agendamentos[
+                                  agendamentos.length - 1
+                                ].dt_agendamento,
+                              ).toLocaleString("pt-BR", { month: "long" })
+                            : "Sem mês"}
                         </p>
                       </div>
                       <div className="content">
-                        <h1>{agendamentos[agendamentos.length - 1].servico}</h1>
-                        <h3>
-                          {agendamentos[agendamentos.length - 1].nomeCliente}
-                        </h3>
-                        {agendamentos[agendamentos.length - 1].domicilio && (
-                          <p>Atendimento a domicilio</p>
+                        <h1>
+                          {agendamentos[agendamentos.length - 1].nm_servico ||
+                            "Sem serviço"}
+                        </h1>
+                        {agendamentos[agendamentos.length - 1].bl_domicilio && (
+                          <div className="atend">
+                            <p>Atendimento a domicilio</p> <Check />
+                          </div>
                         )}
                       </div>
                     </div>
@@ -513,27 +535,34 @@ export default function InterfaceAdm() {
                       <div className="agendamentos-lista">
                         {agendamentos.map((agendamento) => (
                           <div
-                            key={agendamento.id}
+                            key={agendamento.id_agendamento}
                             className="container-agendamento"
                           >
                             <div className="data">
                               <h1>
-                                {new Date(agendamento.dataHora).getDate()}
+                                {agendamento.dt_agendamento
+                                  ? new Date(
+                                      agendamento.dt_agendamento,
+                                    ).getDate()
+                                  : "Sem data"}
                               </h1>
                               <p>
-                                {new Date(agendamento.dataHora).toLocaleString(
-                                  "pt-BR",
-                                  { month: "long" }
-                                )}
+                                {agendamento.dt_agendamento
+                                  ? new Date(
+                                      agendamento.dt_agendamento,
+                                    ).toLocaleString("pt-BR", { month: "long" })
+                                  : "Sem mês"}
                               </p>
                             </div>
                             <div className="content">
-                              <h1>{agendamento.servico}</h1>
-                              <h3>{agendamento.nomeCliente}</h3>
-                              {agendamento.domicilio && (
-                                <p>Atendimento a domicilio</p>
+                              <h1>{agendamento.nm_servico || "Sem serviço"}</h1>
+                              {agendamento.bl_domicilio && (
+                                <div className="atend">
+                                  <p>Atendimento a domicilio</p> <Check />
+                                </div>
                               )}
                             </div>
+                            <button className="realizado">Realizado</button>
                           </div>
                         ))}
                       </div>
@@ -809,7 +838,7 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data
+                                        produto.img_produto.data,
                                       ).toString()
                                 }
                                 alt=""
