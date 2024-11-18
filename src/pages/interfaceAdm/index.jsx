@@ -21,6 +21,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Buffer } from "buffer";
 import toast, { Toaster } from "react-hot-toast";
+import InputMask from "react-input-mask";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -53,8 +54,8 @@ export default function InterfaceAdm() {
 
   const [modalAberto, setModalAberto] = useState(false);
   const [modalClientesAberto, setModalClientesAberto] = useState(false);
-  const [modalFormularioClientesAberto, setModalFormularioClientesAberto] =
-    useState(false);
+  const [modalFormularioClientesAberto, setModalFormularioClientesAberto] = useState(false);
+  const [clienteParaAlterar, setClienteParaAlterar] = useState(null);
 
   const [novoCliente, setNovoCliente] = useState({
     nome: "",
@@ -301,6 +302,16 @@ export default function InterfaceAdm() {
   const fecharModalFormularioClientesAberto = () =>
     setModalFormularioClientesAberto(false);
 
+  const abrirModalAlterarCliente = (cliente) => {
+    setClienteParaAlterar(cliente);
+    setModalFormularioClientesAberto(true);
+  };
+
+  const fecharModalAlterarClientes = () => {
+    setModalFormularioClientesAberto(false);
+    setClienteParaAlterar(null);
+  };
+
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -340,6 +351,43 @@ export default function InterfaceAdm() {
       carregarAgendamentos();
     }
   }, [modalAberto]);
+
+  async function deletarCliente(id_cliente) {
+    try {
+      const url = `http://localhost:5050/cliente?x-access-token=${token}&id_cliente=${id_cliente}`;
+      const resp = await axios.delete(url);
+      console.log("Cliente deletado com sucesso", resp);
+      buscarCliente();
+    } catch (error) {
+      console.error("Erro ao deletar cliente:", error);
+    }
+  }
+
+  async function alterarCliente(cliente) {
+    try {
+      const url = `http://localhost:5050/cliente?x-access-token=${token}`;
+      const { id_cliente, nm_cliente, ds_telefone, ds_cep, nm_rua } = clienteParaAlterar;
+
+      const resp = await axios.put(url, {
+        id_cliente,
+        nm_cliente,
+        ds_telefone,
+        ds_cep,
+        nm_rua
+      });
+
+      console.log("Cliente alterado com sucesso", resp);
+      buscarCliente();
+      fecharModalAlterarClientes();
+    } catch (error) {
+      console.error("Erro ao alterar cliente:", error);
+    }
+  }
+
+  const evitarAdicionarClienteNoAgendamento = (e) => {
+    e.stopPropagation();
+  };
+
 
   return (
     <div className="interface-adm">
@@ -391,27 +439,23 @@ export default function InterfaceAdm() {
                         <h1>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                                agendamentos[
-                                  agendamentos.length - 1
-                                ].dt_agendamento,
-                              ).getDate()
+                              agendamentos[agendamentos.length - 1].dt_agendamento
+                            ).getDate()
                             : "Sem data"}
                         </h1>
                         <p>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                                agendamentos[
-                                  agendamentos.length - 1
-                                ].dt_agendamento,
-                              ).toLocaleString("pt-BR", { month: "long" })
+                              agendamentos[agendamentos.length - 1].dt_agendamento
+                            ).toLocaleString("pt-BR", { month: "long" })
                             : "Sem mês"}
                         </p>
                       </div>
                       <div className="content">
                         <h1>
-                          {agendamentos[agendamentos.length - 1].nm_servico ||
-                            "Sem serviço"}
+                          {agendamentos[agendamentos.length - 1].nm_servico || "Sem serviço"}
                         </h1>
+                        <h3>{agendamentos[agendamentos.length - 1].nm_cliente || "Nome desconhecido"}</h3>
                         {agendamentos[agendamentos.length - 1].bl_domicilio && (
                           <div className="atend">
                             <p>Atendimento a domicilio</p> <Check />
@@ -476,51 +520,126 @@ export default function InterfaceAdm() {
 
               {modalFormularioClientesAberto && (
                 <div className="listagem-clientes">
-                  <div className="lista-produtos">
-                    <span
-                      className="close"
-                      onClick={fecharModalFormularioClientesAberto}
-                    >
-                      <X className="icon-close" />
-                    </span>
-                    <div className="inputs">
-                      <input
-                        type="text"
-                        name="nomeClienteModal"
-                        placeholder="Nome do cliente"
-                        className="nome"
-                        required
-                        value={novoCliente.nome}
-                        onChange={(e) =>
-                          setNovoCliente((prev) => ({
-                            ...prev,
-                            nome: e.target.value,
-                          }))
-                        }
-                      />
-                      <input
-                        type="number"
-                        name="telefoneModal"
-                        placeholder="Numero do cliente"
-                        className="numero"
-                        required
-                        value={novoCliente.telefone}
-                        onChange={(e) =>
-                          setNovoCliente((prev) => ({
-                            ...prev,
-                            telefone: e.target.value,
-                          }))
-                        }
-                      />
+                  {/* Modal de alteração de cliente */}
+                  {modalFormularioClientesAberto && clienteParaAlterar && (
+                    <div className="modal-alterar-cliente">
+                      <div className="modal-conteudo">
+                        <span className="close" onClick={fecharModalAlterarClientes}>
+                          <X className="icon-close" />
+                        </span>
+                        <h2>Alterar Cliente</h2>
+                        <form>
+                          <div>
+                            <label htmlFor="nm_cliente">Nome:</label>
+                            <input
+                              id="nm_cliente"
+                              type="text"
+                              value={clienteParaAlterar.nm_cliente}
+                              onChange={(e) =>
+                                setClienteParaAlterar({ ...clienteParaAlterar, nm_cliente: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="ds_telefone">Celular:</label>
+                            <input
+                              id="ds_telefone"
+                              type="text"
+                              value={clienteParaAlterar.ds_telefone}
+                              onChange={(e) =>
+                                setClienteParaAlterar({ ...clienteParaAlterar, ds_telefone: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="ds_cep">CEP:</label>
+                            <input
+                              id="ds_cep"
+                              type="text"
+                              value={clienteParaAlterar.ds_cep}
+                              onChange={(e) =>
+                                setClienteParaAlterar({ ...clienteParaAlterar, ds_cep: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="nm_rua">Rua:</label>
+                            <input
+                              id="nm_rua"
+                              type="text"
+                              value={clienteParaAlterar.nm_rua}
+                              onChange={(e) =>
+                                setClienteParaAlterar({ ...clienteParaAlterar, nm_rua: e.target.value })
+                              }
+                            />
+                          </div>
+                          <button type="button" onClick={alterarCliente}>Confirmar Alteração</button>
+                        </form>
+                      </div>
                     </div>
-                    <center>
-                      <button onClick={addCliente} className="cad">
-                        Cadastrar
-                      </button>
-                    </center>
+                  )}
+
+                  {/* Lista de clientes */}
+                  <div className="lista-produto">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>Celular</th>
+                          <th>Ações</th>
+                          <th onClick={abrirModalFormularioClientesAberto}>
+                            <Link className="add">
+                              <Plus className="icon" /> Adicionar
+                            </Link>
+                          </th>
+                          <th onClick={buscarCliente}>
+                            <Link className="add">
+                              <Search className="icon" /> Buscar
+                            </Link>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {clientes.map((cliente) => (
+                          <tr
+                            className="clientesAdd"
+                            key={cliente.id_cliente}
+                            onClick={() => preencherFormularioComCliente(cliente)} // Ao clicar na linha, adicionar no agendamento
+                          >
+                            <td>{cliente.nm_cliente}</td>
+                            <td>{cliente.ds_telefone}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    {/* Seção de Ações */}
+                    <div className="acoes-clientes">
+                      {clientes.map((cliente) => (
+                        <div className="acoes-cliente" key={cliente.id_cliente}>
+                          <SquarePen
+                            className="icon-edit"
+                            onClick={(e) => {
+                              evitarAdicionarClienteNoAgendamento(e); // Impede a propagação
+                              abrirModalAlterarCliente(cliente);
+                            }}
+                          />
+                          <Trash
+                            className="icon-delete"
+                            onClick={(e) => {
+                              evitarAdicionarClienteNoAgendamento(e); // Impede a propagação
+                              deletarCliente(cliente.id_cliente);
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
+
 
               {modalAberto && (
                 <div className="modal">
@@ -542,20 +661,21 @@ export default function InterfaceAdm() {
                               <h1>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
-                                    ).getDate()
+                                    agendamento.dt_agendamento,
+                                  ).getDate()
                                   : "Sem data"}
                               </h1>
                               <p>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
-                                    ).toLocaleString("pt-BR", { month: "long" })
+                                    agendamento.dt_agendamento,
+                                  ).toLocaleString("pt-BR", { month: "long" })
                                   : "Sem mês"}
                               </p>
                             </div>
                             <div className="content">
                               <h1>{agendamento.nm_servico || "Sem serviço"}</h1>
+                              <h4>{agendamentos[agendamentos.length - 1].nm_cliente || "Nome desconhecido"}</h4>
                               {agendamento.bl_domicilio && (
                                 <div className="atend">
                                   <p>Atendimento a domicilio</p> <Check />
@@ -838,8 +958,8 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data,
-                                      ).toString()
+                                      produto.img_produto.data,
+                                    ).toString()
                                 }
                                 alt=""
                               />

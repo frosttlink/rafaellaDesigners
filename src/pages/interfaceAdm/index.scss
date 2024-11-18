@@ -480,6 +480,7 @@
       right: 0;
       bottom: 0;
       z-index: 1000;
+      overflow-y: auto;
 
       background-color: rgba(0, 0, 0, 0.5);
 
@@ -530,6 +531,8 @@
         width: 80%;
         max-width: 1200px;
         position: relative;
+        overflow-y: auto;
+        max-height: 90%;
       }
 
       & .lista-produtos {
@@ -540,6 +543,8 @@
         width: 80%;
         max-width: 700px;
         position: relative;
+        overflow-y: auto;
+        max-height: 90%;
       }
 
       & .icon-close {
@@ -559,12 +564,14 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 20px; ; 
+      gap: 20px;
+      ;
       padding: 20px;
       width: 80%;
       border-radius: 8px;
       margin-bottom: 10px;
       position: relative;
+      color: $color_pink_text;
 
       background-color: $color_pink_card_agenda;
 
@@ -604,10 +611,10 @@
         border-radius: 8px;
         font-weight: 700;
         cursor: pointer;
-        position: absolute; 
+        position: absolute;
         right: -120px;
-        top: 50%; 
-        transform: translateY(-50%); 
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
 
@@ -759,11 +766,11 @@
           border-radius: 100%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
           background-color: $color_pink_input_before;
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
           transform: translateX(36px);
         }
       }
