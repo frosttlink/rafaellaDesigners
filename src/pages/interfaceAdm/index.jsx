@@ -427,6 +427,7 @@ export default function InterfaceAdm() {
     }
   }
 
+
   return (
     <div className="interface-adm">
       <Toaster position="top-center" reverseOrder={false} />
