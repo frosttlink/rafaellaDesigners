@@ -1,0 +1,22 @@
+@import "../../colors.scss";
+
+.pagina-dicas{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 75px;
+    flex-direction: column;
+  .logo {
+   
+  }
+
+  &.not-home {
+    background-color: $color_pink_shadow;
+
+    .active {
+      color: $color_pink_shock;
+    }
+  }
+
+
+}

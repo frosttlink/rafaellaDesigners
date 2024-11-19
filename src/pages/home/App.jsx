@@ -248,7 +248,7 @@ export default function Home() {
         )}
       </motion.div>
 
-      <Rodape />
+      <Rodape/>
     </div>
   );
 }
