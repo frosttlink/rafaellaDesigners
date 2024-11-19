@@ -21,6 +21,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Buffer } from "buffer";
 import toast, { Toaster } from "react-hot-toast";
+import InputMask from "react-input-mask";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -156,6 +157,8 @@ export default function InterfaceAdm() {
         rua: "",
         casaNumero: "",
       });
+
+      buscarCliente()
     } catch (error) {
       console.log("Erro na requisição:", error);
       if (error.response) {
@@ -284,11 +287,6 @@ export default function InterfaceAdm() {
     setNovoAgendamento({ ...novoAgendamento, [name]: value });
   }
 
-  function handleClienteChange(e) {
-    const { name, value } = e.target;
-    setNovoCliente({ ...novoCliente, [name]: value });
-  }
-
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
@@ -340,6 +338,38 @@ export default function InterfaceAdm() {
       carregarAgendamentos();
     }
   }, [modalAberto]);
+
+  async function deletarCliente(idCliente) {
+    try {
+      await axios.delete(
+        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`
+      );
+      toast.success("Cliente deletado com sucesso!");
+
+      setClientes((prev) =>
+        prev.filter((cliente) => cliente.id_cliente !== idCliente)
+      );
+
+      abrirModalClientes();
+    } catch (error) {
+      console.error("Erro ao deletar cliente:", error);
+      toast.error("Erro ao deletar cliente.");
+    }
+  }
+
+  async function alterarCliente(idCliente) {
+    try {
+      await axios.put(
+        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`
+      );
+      toast.success("Cliente alterado com sucesso!")
+
+      
+    } catch (error) {
+      console.error("Erro ao alterar cliente:", error);
+      toast.error("Erro ao alterar cliente.");
+    }
+  }
 
   return (
     <div className="interface-adm">
@@ -393,7 +423,7 @@ export default function InterfaceAdm() {
                             ? new Date(
                                 agendamentos[
                                   agendamentos.length - 1
-                                ].dt_agendamento,
+                                ].dt_agendamento
                               ).getDate()
                             : "Sem data"}
                         </h1>
@@ -402,7 +432,7 @@ export default function InterfaceAdm() {
                             ? new Date(
                                 agendamentos[
                                   agendamentos.length - 1
-                                ].dt_agendamento,
+                                ].dt_agendamento
                               ).toLocaleString("pt-BR", { month: "long" })
                             : "Sem mês"}
                         </p>
@@ -462,7 +492,21 @@ export default function InterfaceAdm() {
                             <td>{cliente.nm_cliente}</td>
                             <td>{cliente.ds_telefone}</td>
                             <td className="action">
-                              <SquarePen /> <Trash />
+                              <button
+                                onClick={() =>
+                                  alterarCliente(cliente.id_cliente)
+                                }
+                              >
+                                <SquarePen />
+                              </button>
+
+                              <button
+                                onClick={() =>
+                                  deletarCliente(cliente.id_cliente)
+                                }
+                              >
+                                <Trash />
+                              </button>
                             </td>
                             <td></td>
                             <td></td>
@@ -498,20 +542,26 @@ export default function InterfaceAdm() {
                           }))
                         }
                       />
-                      <input
-                        type="number"
-                        name="telefoneModal"
-                        placeholder="Numero do cliente"
-                        className="numero"
-                        required
+                      <InputMask
+                        mask="(99) 99999-9999"
                         value={novoCliente.telefone}
+                        placeholder="Numero de clientes"
                         onChange={(e) =>
                           setNovoCliente((prev) => ({
                             ...prev,
                             telefone: e.target.value,
                           }))
                         }
-                      />
+                      >
+                        {(inputProps) => (
+                          <input
+                            {...inputProps}
+                            type="text"
+                            className="numero"
+                            required
+                          />
+                        )}
+                      </InputMask>
                     </div>
                     <center>
                       <button onClick={addCliente} className="cad">
@@ -542,14 +592,14 @@ export default function InterfaceAdm() {
                               <h1>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
+                                      agendamento.dt_agendamento
                                     ).getDate()
                                   : "Sem data"}
                               </h1>
                               <p>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
+                                      agendamento.dt_agendamento
                                     ).toLocaleString("pt-BR", { month: "long" })
                                   : "Sem mês"}
                               </p>
@@ -838,7 +888,7 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data,
+                                        produto.img_produto.data
                                       ).toString()
                                 }
                                 alt=""

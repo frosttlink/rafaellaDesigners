@@ -38,7 +38,6 @@ export default function Adm() {
         <div className="login">
           <div className="foto">
             <img className="user" src="/assets/images/user.svg" alt="" />
-            <h1 className="usuario">@usuario</h1>
           </div>
 
           <div className="inputs">
@@ -58,9 +57,6 @@ export default function Adm() {
             <Lock className="iconem" />
           </div>
           <button onClick={entrar}>Entrar</button>
-          <center>
-            <Link className="linkado">Esqueceu a senha?</Link>
-          </center>
         </div>
       </div>
     </div>
