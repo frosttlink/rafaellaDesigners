@@ -158,7 +158,7 @@ export default function InterfaceAdm() {
         casaNumero: "",
       });
 
-      buscarCliente()
+      buscarCliente();
     } catch (error) {
       console.log("Erro na requisição:", error);
       if (error.response) {
@@ -357,17 +357,68 @@ export default function InterfaceAdm() {
     }
   }
 
-  async function alterarCliente(idCliente) {
+  async function alterarCliente(idCliente, dadosAtualizados) {
     try {
-      await axios.put(
-        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`
+      const response = await axios.put(
+        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`,
+        dadosAtualizados
       );
-      toast.success("Cliente alterado com sucesso!")
 
-      
+      if (response.status === 200) {
+        toast.success("Cliente alterado com sucesso!");
+
+        // Atualizando a lista de clientes no estado
+        const clientesAtualizados = clientes.map((cliente) =>
+          cliente.id_cliente === idCliente
+            ? { ...cliente, ...dadosAtualizados }
+            : cliente
+        );
+        setClientes(clientesAtualizados);
+
+        // Fechar o modal e resetar o estado para o modo de adicionar
+        fecharModalFormularioClientesAberto();
+        setNovoCliente({ nome: "", telefone: "", id_cliente: null }); // Resetando os dados
+      }
     } catch (error) {
       console.error("Erro ao alterar cliente:", error);
       toast.error("Erro ao alterar cliente.");
+    }
+  }
+
+  // Função para enviar os dados alterados ao backend
+  const enviarAlteracao = () => {
+    if (novoCliente.id_cliente) {
+      // Se já existe um ID (modo de alteração)
+      alterarCliente(novoCliente.id_cliente, {
+        nm_cliente: novoCliente.nome,
+        ds_telefone: novoCliente.telefone,
+      });
+    } else {
+      // Se não existe um ID (modo de adição)
+      addCliente();
+    }
+  };
+
+  function abrirFormularioAlteracao(idCliente) {
+    // Encontrar o cliente pelo ID
+    const clienteParaAlterar = clientes.find(
+      (cliente) => cliente.id_cliente === idCliente
+    );
+
+    // Verificar se o cliente foi encontrado
+    if (clienteParaAlterar) {
+      // Preencher os campos do formulário com os dados do cliente
+      setNovoCliente({
+        id_cliente: clienteParaAlterar.id_cliente, // Mantém o ID para atualização
+        nome: clienteParaAlterar.nm_cliente,
+        telefone: clienteParaAlterar.ds_telefone,
+      });
+
+      // Abrir o modal de formulário de alteração
+      abrirModalFormularioClientesAberto();
+    } else {
+      // Caso o cliente não seja encontrado
+      console.error("Cliente não encontrado.");
     }
   }
 
@@ -494,7 +545,7 @@ export default function InterfaceAdm() {
                             <td className="action">
                               <button
                                 onClick={() =>
-                                  alterarCliente(cliente.id_cliente)
+                                  abrirFormularioAlteracao(cliente.id_cliente)
                                 }
                               >
                                 <SquarePen />
@@ -545,7 +596,7 @@ export default function InterfaceAdm() {
                       <InputMask
                         mask="(99) 99999-9999"
                         value={novoCliente.telefone}
-                        placeholder="Numero de clientes"
+                        placeholder="Número de clientes"
                         onChange={(e) =>
                           setNovoCliente((prev) => ({
                             ...prev,
@@ -564,8 +615,8 @@ export default function InterfaceAdm() {
                       </InputMask>
                     </div>
                     <center>
-                      <button onClick={addCliente} className="cad">
-                        Cadastrar
+                      <button onClick={enviarAlteracao} className="cad">
+                        {novoCliente.id_cliente ? "Alterar" : "Cadastrar"}
                       </button>
                     </center>
                   </div>
