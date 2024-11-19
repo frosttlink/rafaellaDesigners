@@ -12,7 +12,7 @@ export default function Cabecalho() {
 
   return (
     <div className={`comp-cabecalho ${home ? "" : "not-home"}`}>
-      <img src="/assets/images/logo.svg" alt="Logo" />
+      <img className="logo" src="/assets/images/logo.svg" alt="Logo" />
       <div className="navigation">
         <Link className={home ? "active" : ""} to="/">
           Home

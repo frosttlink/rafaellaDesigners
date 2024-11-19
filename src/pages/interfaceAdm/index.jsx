@@ -261,11 +261,13 @@ export default function InterfaceAdm() {
   }
 
   async function buscarCliente() {
-    const url = `http://localhost:5050/cliente?x-access-token=${token}`;
-    let resp = await axios.get(url);
-    console.log(resp.data);
-    setClientes(resp.data);
-    console.log(clientes);
+    try {
+      const response = await axios.get(`http://localhost:5050/cliente?x-access-token=${token}`);
+      setClientes(response.data);  
+    } catch (error) {
+      console.error("Erro ao buscar cliente:", error);
+      toast.error("Erro ao buscar cliente.");
+    }
   }
 
   function preencherFormularioComCliente(cliente) {
@@ -363,10 +365,10 @@ export default function InterfaceAdm() {
         `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`,
         dadosAtualizados
       );
-
+  
       if (response.status === 200) {
         toast.success("Cliente alterado com sucesso!");
-
+  
         // Atualizando a lista de clientes no estado
         const clientesAtualizados = clientes.map((cliente) =>
           cliente.id_cliente === idCliente
@@ -374,10 +376,13 @@ export default function InterfaceAdm() {
             : cliente
         );
         setClientes(clientesAtualizados);
-
+  
         // Fechar o modal e resetar o estado para o modo de adicionar
         fecharModalFormularioClientesAberto();
-        setNovoCliente({ nome: "", telefone: "", id_cliente: null }); // Resetando os dados
+        setNovoCliente({ nome: '', telefone: '', id_cliente: null }); // Resetando os dados
+  
+        // Buscar novamente os clientes do servidor para garantir que temos os dados mais recentes
+        buscarCliente();
       }
     } catch (error) {
       console.error("Erro ao alterar cliente:", error);
