@@ -12,6 +12,7 @@ import {
   Trash,
   X,
   Check,
+  Pencil,
 } from "lucide-react";
 import "./index.scss";
 import axios from "axios";
@@ -21,6 +22,7 @@ import { useEffect } from "react";
 import { Buffer } from "buffer";
 import toast, { Toaster } from "react-hot-toast";
 import InputMask from "react-input-mask";
+import { div } from "framer-motion/client";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -493,6 +495,10 @@ export default function InterfaceAdm() {
               className={menuOpcao === "estoque" ? "active" : ""}
             >
               <Layers className="icon" /> {!menuCompacto && "Estoque"}
+            </li>
+            <li onClick={() => setmenuOpcao("editar")}
+              className= {menuOpcao === "editar" ? "active": ""}>
+                <Pencil className="icon" />{!menuCompacto && "Editar"}
             </li>
           </ul>
 
@@ -1040,6 +1046,10 @@ export default function InterfaceAdm() {
                 </div>
               )}
             </div>
+          )}
+          {menuOpcao === "editar" && (
+           <div><h1>come rato</h1></div>
+
           )}
         </div>
       </div>
