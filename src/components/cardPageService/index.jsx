@@ -12,7 +12,8 @@ export default function Service(props) {
         <img src={props.imgTexto} alt="Texto da imagem" className="cilio" />
         <p>{props.texto1}</p>
         <p>{props.texto2}</p>
-        <button>Agendar</button>
+        <a
+        href="https://api.whatsapp.com/send/?phone=5511975220906&text&type=phone_number&app_absent=0">Agendar</a>
         </div>
         
       </div>

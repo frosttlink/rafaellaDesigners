@@ -79,6 +79,9 @@
     margin-bottom: -2px;
     align-items: center;
     justify-content: space-around;
+    overflow: hidden;
+    position: relative;
+    
   }
 
   /* Estilos para a imagem */
@@ -89,15 +92,16 @@
   /* Ajusta a imagem com rotação, garantindo que ela ocupe a área de forma adequada */
   .img2 {
     rotate: 90deg;
-    width: 600px;
-    height: 100%;
-    margin-left:-100px;
+    width:  600px;
+    height: 550px;
     
+    object-fit: cover;
+    margin-left: -30px;
   }
 
   /* Ajusta o conteúdo de texto */
   .textos {
-
+    margin: 20px;
   }
 
   /* Estilos do texto e outros elementos */
@@ -109,7 +113,7 @@
 
   }
 
-  button {
+  a {
     margin-top: 30px;
     margin-left: 20px;
     margin-bottom: 20px;
@@ -124,5 +128,6 @@
     color: $color_white;
     background-color: $color_pink_shock;
     transition-duration: 0.4s;
+    text-decoration: none;
   }
 }
