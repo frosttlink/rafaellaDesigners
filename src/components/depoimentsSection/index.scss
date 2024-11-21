@@ -15,6 +15,7 @@
   .depoiments {
     margin-left: 170px;
     margin-bottom: 30px;
+    text-align: left; // Garantia de alinhamento padrão
   }
 
   .line_one {
@@ -55,6 +56,8 @@
     border-radius: 100%;
   }
 
+  /* Responsividade */
+
   @media (max-width: 1640px) {
     .depoimento {
       text-align: center;
@@ -64,12 +67,78 @@
 
     .depoiments {
       text-align: center;
+      margin-left: 0; // Centraliza o texto
     }
 
     .depoidor {
       display: flex;
       align-items: center;
       justify-content: center;
+      left: 200px; // Ajusta posição
+    }
+  }
+
+  @media (max-width: 1024px) {
+    align-items: center; // Centraliza conteúdo
+    .depoimento {
+      position: relative;
+      top: auto;
+      left: auto;
+      max-width: 80%;
+      font-size: 18px; // Reduz o tamanho do texto
+      margin-top: 20px;
+    }
+
+    .olho_depo {
+      top: 30px; // Reposiciona em telas menores
+      right: 50px;
+    }
+
+    .depoidor {
+      position: relative;
+      top: auto;
+      left: auto;
+      margin-top: 15px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+
+    .depoiments {
+      margin: 0 15px;
+      text-align: center;
+    }
+
+    .depoimento {
+      font-size: 16px; // Reduz mais para telas pequenas
+      margin-top: 10px;
+    }
+
+    .depoidor {
+      gap: 8px; // Reduz o espaçamento entre os elementos
+    }
+
+    .circle {
+      width: 35px; // Reduz tamanho do círculo
+      height: 35px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .olho_depo {
+      display: none; // Esconde o elemento decorativo para espaço
+    }
+
+    .depoimento {
+      font-size: 14px;
+      max-width: 90%; // Garante espaçamento lateral
+    }
+
+    .depoidor {
+      flex-direction: column;
+      text-align: center;
     }
   }
 }

@@ -5,7 +5,6 @@ export default function Depoimentos() {
     <div className="depo">
       <img src="/assets/images/depo.svg" alt="" className="depoiments" />
       <img src="/assets/images/faixa.svg" alt="" className="line_one" />
-      <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo" />
       <p className="depoimento">
         Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu.
         Lacus urna bibendum sagittis sit risus sagittis viverra mattis.
