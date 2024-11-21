@@ -6,16 +6,10 @@ export default function Depoimentos() {
       <img src="/assets/images/depo.svg" alt="" className="depoiments" />
       <img src="/assets/images/faixa.svg" alt="" className="line_one" />
       <p className="depoimento">
-        Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu.
-        Lacus urna bibendum sagittis sit risus sagittis viverra mattis.
-        Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut
-        consequat posuere id.
+        Fiz meu design de sobrancelhas com a Rafaella Designers e o resultado superou todas as minhas expectativas! Ela é extremamente profissional, atenciosa e entende exatamente o que cada cliente precisa. As sobrancelhas ficaram perfeitas, com um formato natural e harmonioso. A qualidade do trabalho e a segurança me impressionar
         <br />
         <br />
-        Lorem ipsum dolor sit amet consectetur. At netus libero sit neque arcu.
-        Lacus urna bibendum sagittis sit risus sagittis viverra mattis.
-        Adipiscing risus nunc aliquet commodo eu tellus. Magnis pellentesque ut
-        consequat posuere id.
+
       </p>
 
       <div className="depoidor">
