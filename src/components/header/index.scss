@@ -28,11 +28,11 @@
     gap: 30px;
 
     @media (max-width: 768px) {
-      gap: 15px; // Reduzir espaçamento entre itens
+      gap: 15px; 
     }
 
     @media (max-width: 576px) {
-      display: none; // Esconder o menu em telas pequenas para substituir por um ícone
+      display: none; 
     }
   }
 
@@ -48,11 +48,10 @@
     }
 
     @media (max-width: 768px) {
-      font-size: 15px; // Reduzir o tamanho da fonte
+      font-size: 15px; 
     }
   }
 
-  // Menu colapsável para telas pequenas
   .menu-toggle {
     display: none;
 
@@ -65,7 +64,7 @@
   }
 
   .mobile-navigation {
-    display: none; // Menu inicialmente escondido
+    display: none; 
     flex-direction: column;
     position: absolute;
     top: 60px;
@@ -87,7 +86,7 @@
     }
   }
 
-  // Mostrar menu quando ativado
+
   &.menu-open .mobile-navigation {
     display: flex;
   }

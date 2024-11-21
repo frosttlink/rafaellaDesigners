@@ -56,7 +56,7 @@
     border-radius: 100%;
   }
 
-  /* Responsividade */
+
 
   @media (max-width: 1640px) {
     .depoimento {
@@ -67,30 +67,30 @@
 
     .depoiments {
       text-align: center;
-      margin-left: 0; // Centraliza o texto
+      margin-left: 0; 
     }
 
     .depoidor {
       display: flex;
       align-items: center;
       justify-content: center;
-      left: 200px; // Ajusta posição
+      left: 200px; 
     }
   }
 
   @media (max-width: 1024px) {
-    align-items: center; // Centraliza conteúdo
+    align-items: center; 
     .depoimento {
       position: relative;
       top: auto;
       left: auto;
       max-width: 80%;
-      font-size: 18px; // Reduz o tamanho do texto
+      font-size: 18px; 
       margin-top: 20px;
     }
 
     .olho_depo {
-      top: 30px; // Reposiciona em telas menores
+      top: 30px; 
       right: 50px;
     }
 
@@ -112,28 +112,28 @@
     }
 
     .depoimento {
-      font-size: 16px; // Reduz mais para telas pequenas
+      font-size: 16px; 
       margin-top: 10px;
     }
 
     .depoidor {
-      gap: 8px; // Reduz o espaçamento entre os elementos
+      gap: 8px; 
     }
 
     .circle {
-      width: 35px; // Reduz tamanho do círculo
+      width: 35px; 
       height: 35px;
     }
   }
 
   @media (max-width: 576px) {
     .olho_depo {
-      display: none; // Esconde o elemento decorativo para espaço
+      display: none; 
     }
 
     .depoimento {
       font-size: 14px;
-      max-width: 90%; // Garante espaçamento lateral
+      max-width: 90%; 
     }
 
     .depoidor {

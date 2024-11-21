@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
 
-  /* Estilos gerais para os contêineres */
+ 
   .container1, .container3 {
     display: flex;
     flex-direction: column;
@@ -16,14 +16,13 @@
     border-radius: 8px;
     margin: 70px;
     position: relative;
-    overflow: hidden; /* Garante que as imagens que ultrapassam o limite sejam cortadas */
-    height: 850px; /* Define uma altura fixa para o contêiner */
-
-    /* Estilos para a imagem */
+    overflow: hidden; 
+    height: 850px;
+    
     .imge {
       width: 100%;
-      height: 2500px; /* A altura da imagem pode ser ajustada aqui */
-      overflow: hidden; /* Garante que a parte cortada da imagem não apareça */
+      height: 2500px; 
+      overflow: hidden; 
       object-fit: center;
       
       
@@ -34,8 +33,8 @@
       width: 100%;
       height: 200%;
       margin-bottom: 2000px;
-      object-fit: cover; /* Faz com que a imagem preencha todo o contêiner, cortando o excesso */
-      object-position: center; /* Garante que o centro da imagem seja o foco */
+      object-fit: cover;
+      object-position: center; 
       display: flex;
       align-self: center;
       
@@ -49,7 +48,7 @@
     p {
       margin-left: 20px;
       padding: 10px;
-       /* Cor do texto */
+       
     }
 
     button {
@@ -84,12 +83,10 @@
     
   }
 
-  /* Estilos para a imagem */
-  .imge {
+ 
 
-  }
 
-  /* Ajusta a imagem com rotação, garantindo que ela ocupe a área de forma adequada */
+
   .img2 {
     rotate: 90deg;
     width:  600px;
@@ -99,12 +96,12 @@
     margin-left: -30px;
   }
 
-  /* Ajusta o conteúdo de texto */
+
   .textos {
     margin: 20px;
   }
 
-  /* Estilos do texto e outros elementos */
+ 
   .cilio {
 
   }
