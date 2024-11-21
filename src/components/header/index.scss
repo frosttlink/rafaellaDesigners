@@ -6,6 +6,10 @@
   align-items: center;
   padding: 3px 75px;
 
+  .logo {
+    margin-right: -150px;
+  }
+
   &.not-home {
     background-color: $color_pink_shadow;
 

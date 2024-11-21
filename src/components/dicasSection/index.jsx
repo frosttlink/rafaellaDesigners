@@ -1,7 +1,7 @@
 import ButtonVeja from "../vejaButton";
 import "./index.scss";
 
-export default function DicasSection() {
+export default function DicasSection(props) {
   return (
     <div className="dicas" id="dicas">
       <img src="/assets/images/square.svg" alt="" className="mujer" />
@@ -22,7 +22,12 @@ export default function DicasSection() {
         </p>
 
         <div className="botaoDicas">
-          <ButtonVeja tamBotao="140px" texto="Veja mais" />
+          <ButtonVeja 
+          tamBotao="140px" 
+          texto="Veja mais"
+          linkDestino="/dicas"
+          
+          />
         </div>
       </div>
     </div>

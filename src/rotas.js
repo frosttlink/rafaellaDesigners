@@ -6,6 +6,7 @@ import InterfaceAdm from "./pages/interfaceAdm";
 import DetalhesServicos from "./pages/servicos";
 import Galeria from "./components/galeria";
 import NotFound from "./pages/notFound";
+import Dicas from "./pages/pageDicas";
 
 export default function Navegacao() {
   return (
@@ -19,6 +20,8 @@ export default function Navegacao() {
         <Route path="/interfaceAdm/:id" element={<InterfaceAdm />} />
         <Route path="/servicos" element={<DetalhesServicos />} />
         <Route path="/galeria" element={<Galeria />} />
+        <Route path="/dicas" element={<Dicas />} />
+        
       </Routes>
     </BrowserRouter>
   );

@@ -12,8 +12,12 @@
   .icons {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 10px;
     font-weight: 700;
+
+    .instagram{
+      margin-right: 9px;
+    }
   }
 }

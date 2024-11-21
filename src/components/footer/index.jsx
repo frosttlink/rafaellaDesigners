@@ -5,7 +5,7 @@ export default function Rodape() {
   return (
     <div className="comp-rodape">
       <div className="icons">
-        <Instagram />
+        <Instagram className="instagram"/>
         <Twitter />
         <Facebook />
       </div>

@@ -4,7 +4,6 @@ import {
   Layers,
   SquarePen,
   Undo2,
-  UserRound,
   Image,
   Search,
   Filter,
@@ -33,7 +32,15 @@ export default function InterfaceAdm() {
   const [imagem, setImagem] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [clientes, setClientes] = useState([]);
-  const servicos = ["Cílios", "Epilação", "Sobrancelha"];
+  const servicos = [
+    "Selecione o serviço",
+    "Cílios - Volume Brasileiro",
+    "Cílios - Volume Fio a Fio",
+    "Cílios - Volume Fox",
+    "Sobrancelha - Design Personalizado",
+    "Sobrancelha - Design com Henna",
+    "Epilação",
+  ];
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
     tipo: "",
@@ -263,11 +270,15 @@ export default function InterfaceAdm() {
   }
 
   async function buscarCliente() {
-    const url = `http://localhost:5050/cliente?x-access-token=${token}`;
-    let resp = await axios.get(url);
-    console.log(resp.data);
-    setClientes(resp.data);
-    console.log(clientes);
+    try {
+      const response = await axios.get(
+        `http://localhost:5050/cliente?x-access-token=${token}`,
+      );
+      setClientes(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar cliente:", error);
+      toast.error("Erro ao buscar cliente.");
+    }
   }
 
   function preencherFormularioComCliente(cliente) {
@@ -277,11 +288,6 @@ export default function InterfaceAdm() {
       telefone: cliente.ds_telefone,
     });
     fecharModalClientes();
-  }
-
-  function inputChange(e) {
-    const { name, value } = e.target;
-    setNovoProduto({ ...novoProduto, [name]: value });
   }
 
   function handleAgendamentoChange(e) {
@@ -298,8 +304,14 @@ export default function InterfaceAdm() {
   const abrirModalFormularioClientesAberto = () =>
     setModalFormularioClientesAberto(true);
 
-  const fecharModalFormularioClientesAberto = () =>
+  const fecharModalFormularioClientesAberto = () => {
     setModalFormularioClientesAberto(false);
+    setNovoCliente({
+      id_cliente: null,
+      nome: "",
+      telefone: "",
+    });
+  };
 
   const [token, setToken] = useState(null);
 
@@ -344,12 +356,12 @@ export default function InterfaceAdm() {
   async function deletarCliente(idCliente) {
     try {
       await axios.delete(
-        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`
+        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`,
       );
       toast.success("Cliente deletado com sucesso!");
 
       setClientes((prev) =>
-        prev.filter((cliente) => cliente.id_cliente !== idCliente)
+        prev.filter((cliente) => cliente.id_cliente !== idCliente),
       );
 
       abrirModalClientes();
@@ -359,68 +371,101 @@ export default function InterfaceAdm() {
     }
   }
 
-  async function alterarCliente(idCliente, dadosAtualizados) {
+  async function deletarProduto(id) {
     try {
-      const response = await axios.put(
-        `http://localhost:5050/cliente/${idCliente}?x-access-token=${token}`,
-        dadosAtualizados
+      await axios.delete(
+        `http://localhost:5050/deletar/pee/${id}?x-access-token=${token}`,
+      );
+      toast.success("Produto deletado com sucesso!");
+
+      setProdutos((prev) => prev.filter((produto) => produto.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar produto:", error);
+      toast.error("Erro ao deletar produto.");
+    }
+  }
+
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5050/produto?x-access-token=${token}`,
+        );
+        setProdutos(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+        toast.error("Erro ao carregar produtos.");
+      }
+    };
+
+    fetchProdutos();
+  }, []);
+
+  async function alterarCliente(id, clienteAtualizado) {
+    try {
+      await axios.put(`http://localhost:5050/cliente/${id}`, clienteAtualizado);
+
+      setClientes((prevClientes) =>
+        prevClientes.map((cliente) =>
+          cliente.id_cliente === id
+            ? { ...cliente, ...clienteAtualizado }
+            : cliente,
+        ),
       );
 
-      if (response.status === 200) {
-        toast.success("Cliente alterado com sucesso!");
+      toast.success("Cliente alterado com sucesso!");
 
-        // Atualizando a lista de clientes no estado
-        const clientesAtualizados = clientes.map((cliente) =>
-          cliente.id_cliente === idCliente
-            ? { ...cliente, ...dadosAtualizados }
-            : cliente
-        );
-        setClientes(clientesAtualizados);
-
-        // Fechar o modal e resetar o estado para o modo de adicionar
-        fecharModalFormularioClientesAberto();
-        setNovoCliente({ nome: "", telefone: "", id_cliente: null }); // Resetando os dados
-      }
+      abrirModalClientes();
+      fecharModalFormularioClientesAberto();
     } catch (error) {
       console.error("Erro ao alterar cliente:", error);
       toast.error("Erro ao alterar cliente.");
     }
   }
 
-  // Função para enviar os dados alterados ao backend
   const enviarAlteracao = () => {
     if (novoCliente.id_cliente) {
-      // Se já existe um ID (modo de alteração)
       alterarCliente(novoCliente.id_cliente, {
         nm_cliente: novoCliente.nome,
         ds_telefone: novoCliente.telefone,
       });
     } else {
-      // Se não existe um ID (modo de adição)
       addCliente();
     }
   };
 
   function abrirFormularioAlteracao(idCliente) {
-    // Encontrar o cliente pelo ID
     const clienteParaAlterar = clientes.find(
-      (cliente) => cliente.id_cliente === idCliente
+      (cliente) => cliente.id_cliente === idCliente,
     );
 
-    // Verificar se o cliente foi encontrado
     if (clienteParaAlterar) {
-      // Preencher os campos do formulário com os dados do cliente
       setNovoCliente({
-        id_cliente: clienteParaAlterar.id_cliente, // Mantém o ID para atualização
+        id_cliente: clienteParaAlterar.id_cliente,
         nome: clienteParaAlterar.nm_cliente,
         telefone: clienteParaAlterar.ds_telefone,
       });
-
-      // Abrir o modal de formulário de alteração
       abrirModalFormularioClientesAberto();
-    } else {
-      // Caso o cliente não seja encontrado
-      console.error("Cliente não encontrado.");
+    }
+  }
+
+  async function marcarComoRealizado(idAgendamento) {
+    try {
+      await axios.put(
+        `http://localhost:5050/agendamento/${idAgendamento}?x-access-token=${token}`,
+        { bt_realizado: true },
+      );
+
+      setAgendamentos((prevAgendamentos) =>
+        prevAgendamentos.filter(
+          (agendamento) => agendamento.id_agendamento !== idAgendamento,
+        ),
+      );
+
+      toast.success("Agendamento realizado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar agendamento:", error);
+      toast.error("Erro ao marcar agendamento como realizado.");
     }
   }
 
@@ -480,7 +525,7 @@ export default function InterfaceAdm() {
                             ? new Date(
                                 agendamentos[
                                   agendamentos.length - 1
-                                ].dt_agendamento
+                                ].dt_agendamento,
                               ).getDate()
                             : "Sem data"}
                         </h1>
@@ -489,7 +534,7 @@ export default function InterfaceAdm() {
                             ? new Date(
                                 agendamentos[
                                   agendamentos.length - 1
-                                ].dt_agendamento
+                                ].dt_agendamento,
                               ).toLocaleString("pt-BR", { month: "long" })
                             : "Sem mês"}
                         </p>
@@ -550,19 +595,21 @@ export default function InterfaceAdm() {
                             <td>{cliente.ds_telefone}</td>
                             <td className="action">
                               <button
+                                className="iconAcation"
                                 onClick={() =>
                                   abrirFormularioAlteracao(cliente.id_cliente)
                                 }
                               >
-                                <SquarePen />
+                                <SquarePen className="iconAcation" />
                               </button>
 
                               <button
+                                className="iconAcation"
                                 onClick={() =>
                                   deletarCliente(cliente.id_cliente)
                                 }
                               >
-                                <Trash />
+                                <Trash className="iconAcation" />
                               </button>
                             </td>
                             <td></td>
@@ -639,7 +686,11 @@ export default function InterfaceAdm() {
                     {agendamentos.length === 0 ? (
                       <p>Nenhum agendamento encontrado.</p>
                     ) : (
-                      <div className="agendamentos-lista">
+                      <div
+                        className={`agendamentos-lista ${
+                          agendamentos.length > 5 ? "scrollable" : ""
+                        }`}
+                      >
                         {agendamentos.map((agendamento) => (
                           <div
                             key={agendamento.id_agendamento}
@@ -649,14 +700,14 @@ export default function InterfaceAdm() {
                               <h1>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento
+                                      agendamento.dt_agendamento,
                                     ).getDate()
                                   : "Sem data"}
                               </h1>
                               <p>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento
+                                      agendamento.dt_agendamento,
                                     ).toLocaleString("pt-BR", { month: "long" })
                                   : "Sem mês"}
                               </p>
@@ -668,8 +719,24 @@ export default function InterfaceAdm() {
                                   <p>Atendimento a domicilio</p> <Check />
                                 </div>
                               )}
+                              <div>
+                                <h3>
+                                  Nome do cliente: {agendamento.nm_cliente}
+                                </h3>
+                                <p>
+                                  Endereço:{" "}
+                                  {agendamento.nm_endereco || "No salão"}
+                                </p>
+                              </div>
                             </div>
-                            <button className="realizado">Realizado</button>
+                            <button
+                              className="realizado"
+                              onClick={() =>
+                                marcarComoRealizado(agendamento.id_agendamento)
+                              }
+                            >
+                              Realizado
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -945,7 +1012,7 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data
+                                        produto.img_produto.data,
                                       ).toString()
                                 }
                                 alt=""
@@ -956,7 +1023,21 @@ export default function InterfaceAdm() {
                             <td className="qtd">{produto.qtd_produto}</td>
                             <td>R${Number(produto.vl_produto).toFixed(2)}</td>
                             <td className="action">
-                              <SquarePen /> <Trash />
+                              <button
+                                className="iconAcation"
+                                onClick={() =>
+                                  abrirFormularioAlteracao(produto.id_cliente)
+                                }
+                              >
+                                <SquarePen className="iconAcation" />
+                              </button>
+
+                              <button
+                                className="iconAcation"
+                                onClick={() => deletarProduto(produto.id)}
+                              >
+                                <Trash className="iconAcation" />
+                              </button>
                             </td>
                           </tr>
                         ))}
