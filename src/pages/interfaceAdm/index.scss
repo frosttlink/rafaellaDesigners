@@ -423,8 +423,8 @@
         color: $color_pink_text;
         padding: 40px;
         border-radius: 8px;
-        width: 80%;
-        max-width: 600px;
+        width: 90%;
+        max-width: 1200px;
         position: relative;
 
         h2 {
@@ -432,6 +432,11 @@
         }
       }
 
+      & .agendamentos-lista {
+        max-height: 400px;
+        overflow-y: auto;  
+      }
+      
       & .icon-close {
         cursor: pointer;
         font-size: 24px;
@@ -559,6 +564,12 @@
         background-color: $color_background_agenda;
       }
     }
+
+    .iconAcation {
+      color: $color_pink_text;
+      background-color: transparent;
+      margin-right: 5px;
+    } 
 
     .container-agendamento {
       display: flex;

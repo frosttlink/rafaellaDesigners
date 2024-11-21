@@ -17,30 +17,31 @@
   font-family: Roboto;
   scroll-behavior: smooth;
   border-style: none;
-}
-
-body {
-  --sb-track-color: #fff1f5;
-  --sb-thumb-color: #ffb6cb;
-  --sb-size: 10px;
-}
-
-body::-webkit-scrollbar {
-  width: var(--sb-size);
-}
-
-body::-webkit-scrollbar-track {
-  background: var(--sb-track-color);
-  border-radius: 30px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: var(--sb-thumb-color);
-  border-radius: 30px;
-}
-
-@supports not selector(::-webkit-scrollbar) {
+  
   body {
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    --sb-track-color: #fff1f5;
+    --sb-thumb-color: #ffb6cb;
+    --sb-size: 10px;
+  }
+  
+  body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 30px;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 30px;
+  }
+  
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
   }
 }
+
