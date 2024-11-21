@@ -1,0 +1,128 @@
+@import "../../colors.scss";
+
+.conteudos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* Estilos gerais para os contêineres */
+  .container1, .container3 {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 1158px;
+    background-color: $color_pink_base;
+    border-radius: 8px;
+    margin: 70px;
+    position: relative;
+    overflow: hidden; /* Garante que as imagens que ultrapassam o limite sejam cortadas */
+    height: 850px; /* Define uma altura fixa para o contêiner */
+
+    /* Estilos para a imagem */
+    .imge {
+      width: 100%;
+      height: 2500px; /* A altura da imagem pode ser ajustada aqui */
+      overflow: hidden; /* Garante que a parte cortada da imagem não apareça */
+      object-fit: center;
+      
+      
+      
+    }
+
+    .img {
+      width: 100%;
+      height: 200%;
+      margin-bottom: 2000px;
+      object-fit: cover; /* Faz com que a imagem preencha todo o contêiner, cortando o excesso */
+      object-position: center; /* Garante que o centro da imagem seja o foco */
+      display: flex;
+      align-self: center;
+      
+    }
+    
+    .cilio {
+      width: 120px;
+      margin: 20px 0px 20px 30px;
+    }
+
+    p {
+      margin-left: 20px;
+      padding: 10px;
+       /* Cor do texto */
+    }
+
+    button {
+      margin-top: 30px;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      font-weight: 700;
+      border-radius: 8px;
+      border-style: none;
+      color: $color_white;
+      background-color: $color_pink_shock;
+      transition-duration: 0.4s;
+    }
+  }
+  .container2{
+    display: flex;
+    flex-direction: row;
+    background-color: $color_pink_base;
+    width: 1158px;
+    border-radius: 8px;
+    height: 600px;
+    margin-bottom: -2px;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  /* Estilos para a imagem */
+  .imge {
+
+  }
+
+  /* Ajusta a imagem com rotação, garantindo que ela ocupe a área de forma adequada */
+  .img2 {
+    rotate: 90deg;
+    width: 600px;
+    height: 100%;
+    margin-left:-100px;
+    
+  }
+
+  /* Ajusta o conteúdo de texto */
+  .textos {
+
+  }
+
+  /* Estilos do texto e outros elementos */
+  .cilio {
+
+  }
+
+  p {
+
+  }
+
+  button {
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    border-style: none;
+    color: $color_white;
+    background-color: $color_pink_shock;
+    transition-duration: 0.4s;
+  }
+}
