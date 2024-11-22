@@ -1,93 +1,69 @@
-import Service from "../../components/cardPageService";
 import Cabecalho from "../../components/header";
 import "./index.scss";
 
 export default function DetalhesServicos() {
-  return (
-    <div className="pagina-servicos">
-      <Cabecalho/>
-      
-      <Service
-      classNam="container1"
-      imgTexto="/assets/images/ciliosServicePage.svg"
-      imgBanner="/assets/images/image.svg"
-      img
-      texto1="            
-            Lorem ipsum dolor sit amet consectetur. Felis nunc proin
-            pellentesque mauris in parturient convallis ridiculus. Non pretium
-            sed eu duis libero neque arcu mi. Vestibulum tempor lacus morbi a
-            odio imperdiet gravida ultricies viverra. Et sagittis sapien nullam
-            scelerisque. In egestas sed lectus sed accumsan. Velit enim iaculis
-            id pharetra purus aliquet pulvinar elit ac. Venenatis semper commodo
-            non ut leo duis fermentum."
-      texto2="
-            Pellentesque lacus ligula cras lacus faucibus posuere netus laoreet
-            quis. Rhoncus nulla risus urna augue metus placerat volutpat
-            volutpat. Purus gravida feugiat sit id viverra ut id aliquam. Morbi
-            iaculis feugiat fermentum arcu nulla accumsan amet ut. Aliquam nisl
-            diam id blandit tellus fermentum a. Mauris ultrices magna in massa
-            at. Volutpat mi consectetur non fringilla leo egestas. Porta egestas
-            tortor habitant habitant purus venenatis at accumsan. Risus lacus
-            nisi ut vitae. Nulla velit morbi nibh nulla fringilla arcu aliquet.
-            Id lacinia mi sit pharetra.
-            "
-      />
-      <Service
-      classNam="container2"
-      imgclasse="img2"
-      imgTexto="/assets/images/sobrancelha.svg"
-      imgBanner="/assets/images/image2.svg"
-      img
-      texto1="            
-            Lorem ipsum dolor sit amet consectetur. Felis nunc proin
-            pellentesque mauris in parturient convallis ridiculus. Non pretium
-            sed eu duis libero neque arcu mi. Vestibulum tempor lacus morbi a
-            odio imperdiet gravida ultricies viverra. Et sagittis sapien nullam
-            scelerisque. In egestas sed lectus sed accumsan. Velit enim iaculis
-            id pharetra purus aliquet pulvinar elit ac. Venenatis semper commodo
-            non ut leo duis fermentum."
-      texto2="
-            Pellentesque lacus ligula cras lacus faucibus posuere netus laoreet
-            quis. Rhoncus nulla risus urna augue metus placerat volutpat
-            volutpat. Purus gravida feugiat sit id viverra ut id aliquam. Morbi
-            iaculis feugiat fermentum arcu nulla accumsan amet ut. Aliquam nisl
-            diam id blandit tellus fermentum a. Mauris ultrices magna in massa
-            at. Volutpat mi consectetur non fringilla leo egestas. Porta egestas
-            tortor habitant habitant purus venenatis at accumsan. Risus lacus
-            nisi ut vitae. Nulla velit morbi nibh nulla fringilla arcu aliquet.
-            Id lacinia mi sit pharetra.
-            "
-      />
+      return (
+            <div className="pagina-servicos">
+                  <Cabecalho />
 
-<Service
-      classNam="container3"
-      imgTexto="/assets/images/epilacao.svg"
-      imgBanner="/assets/images/image3.svg"
-      img
-      texto1="            
-            Lorem ipsum dolor sit amet consectetur. Felis nunc proin
-            pellentesque mauris in parturient convallis ridiculus. Non pretium
-            sed eu duis libero neque arcu mi. Vestibulum tempor lacus morbi a
-            odio imperdiet gravida ultricies viverra. Et sagittis sapien nullam
-            scelerisque. In egestas sed lectus sed accumsan. Velit enim iaculis
-            id pharetra purus aliquet pulvinar elit ac. Venenatis semper commodo
-            non ut leo duis fermentum."
-      texto2="
-            Pellentesque lacus ligula cras lacus faucibus posuere netus laoreet
-            quis. Rhoncus nulla risus urna augue metus placerat volutpat
-            volutpat. Purus gravida feugiat sit id viverra ut id aliquam. Morbi
-            iaculis feugiat fermentum arcu nulla accumsan amet ut. Aliquam nisl
-            diam id blandit tellus fermentum a. Mauris ultrices magna in massa
-            at. Volutpat mi consectetur non fringilla leo egestas. Porta egestas
-            tortor habitant habitant purus venenatis at accumsan. Risus lacus
-            nisi ut vitae. Nulla velit morbi nibh nulla fringilla arcu aliquet.
-            Id lacinia mi sit pharetra.
-            "
-      />
+                  <div className="conteudos">
+                        <div className="container">
+                              <img src="/assets/images/imgServicePage.svg" alt="Extensão de Cílios" />
+                              <img
+                                    src="/assets/images/ciliosServicePage.svg"
+                                    alt="Extensão de Cílios"
+                                    className="cilio"
+                              />
+                              <p>
+                                    Realçamos sua beleza natural com as melhores técnicas de extensão de cílios. Escolha entre o Volume Brasileiro, Fio a Fio ou Volume Fox para destacar seu olhar com elegância e estilo. Cada técnica é personalizada para atender às suas preferências.
+                              </p>
+                              <p>
+                                    Trabalhamos com materiais de alta qualidade para garantir durabilidade, conforto e segurança. O resultado são cílios perfeitos que se adaptam ao seu dia a dia, seja para um visual discreto ou impactante.
+                              </p>
+                              
+                              <button className="agendare">Agendar</button>
+                        </div>
+                  </div>
+
+                  <div className="conteudos">
+                        <div className="container">
+                              <img src="/assets/images/o.svg" alt="Design de Sobrancelhas" />
+                              <img
+                                    src="/assets/images/sobrancelha.svg"
+                                    alt="Design de Sobrancelhas"
+                                    className="sobra"
+                              />
+                              <p>
+                                    Nossas técnicas de design de sobrancelhas são pensadas para harmonizar com o formato do seu rosto. Oferecemos o Design Personalizado para moldar suas sobrancelhas com precisão e o Design com Henna para uma definição ainda mais destacada.
+                              </p>
+                              <p>
+                                    Garantimos um atendimento cuidadoso, proporcionando resultados que valorizam sua expressão facial e refletem sua personalidade. Confie em nosso trabalho e sinta-se ainda mais confiante.
+                              </p>
+                              
+                              <button className="agendare">Agendar</button>
+                        </div>
+                  </div>
+
+                  <div className="conteudos">
+                        <div className="container">
+                              <img src="/assets/images/t.svg" alt="Epilação" />
+                              <img
+                                    src="/assets/images/epilacao.svg"
+                                    alt="Epilação"
+                                    className="epi"
+                              />
+                              <p>
+                                    Nossa epilação é realizada com técnicas suaves e precisas, garantindo a remoção eficaz dos pelos enquanto cuidamos da saúde da sua pele. Utilizamos métodos que minimizam desconfortos e deixam sua pele macia e livre de irritações.
+                              </p>
+                              <p>
+                                    Seja para uma epilação completa ou de áreas específicas, nosso objetivo é oferecer um resultado impecável, respeitando suas preferências e necessidades. Aproveite a sensação de uma pele renovada e bem cuidada.
+                              </p>
+                              
+                              <button className="agendare">Agendar</button>
+                        </div>
+                  </div>
 
 
-
-      
-    </div>
-  );
+            </div>
+      );
 }

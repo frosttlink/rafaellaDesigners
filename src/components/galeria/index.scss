@@ -1,4 +1,7 @@
 .galeria {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100%;
   max-width: 800px; 

@@ -186,7 +186,7 @@ export default function Home() {
         className="vantagens"
       >
         <div className="encontra">
-          <img src="/assets/images/encontra.svg" alt="Imagem Encontra"  />
+          <center><img src="/assets/images/encontra.svg" alt="Imagem Encontra"  /></center>
         </div>
           
    

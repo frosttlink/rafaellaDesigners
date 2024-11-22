@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./index.scss";
 import ButtonVeja from "../vejaButton";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 export default function Galeria() {
   const [indiceAtual, setIndiceAtual] = useState(0);
 
   const fotos = [
-    { url: "/assets/images/olho_depo.svg" },
-    { url: "/assets/images/square.svg" },
-    { url: "/assets/images/image2.svg" },
-    { url: "/assets/images/image3.svg" },
+    { url: "/assets/images/1.svg" },
+    { url: "/assets/images/2.svg" },
+    { url: "/assets/images/3.svg" },
   ];
 
 
@@ -47,11 +47,13 @@ export default function Galeria() {
 
     
       <button onClick={irParaAnterior} className="btn-anterior">
-        &#8592;
+        <ChevronLeftIcon />
+
       </button>
 
       <button onClick={irParaProxima} className="btn-proxima">
-        &#8594;
+      <ChevronRightIcon />
+
       </button>
       
     </div>

@@ -7,6 +7,13 @@
     gap: 30px;
   }
 
+  .iconAcation {
+    color: $color_pink_text;
+    background-color: transparent;
+    margin-right: 5px;
+  } 
+
+
   .menu {
     display: flex;
     align-items: center;
@@ -411,6 +418,13 @@
           align-items: center;
           padding: 10px;
           text-align: left;
+
+          .iconAcation {
+            color: $color_pink_text;
+            background-color: transparent;
+            margin-right: 5px;
+          } 
+      
         }
 
         td img {

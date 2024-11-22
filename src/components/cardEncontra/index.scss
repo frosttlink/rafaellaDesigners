@@ -5,62 +5,27 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;  
-  max-width: 500px;  
-  height: auto;  
+  width: 500px;
+  height: 500px;
   border-radius: 12px;
   box-shadow: 0px 0px 35px $color_pink_shadow;
-  padding: 20px;  
 
   .icon {
     width: 120px;
     height: 120px;
-    color: #ff85a8;
-    margin-bottom: 20px;  
+    color: #FF85A8;
   }
 
   p {
     max-width: 300px;
     text-align: center;
     font-weight: 700;
-    color: #5c5c5c;
-    font-size: 16px; 
+    color: #5C5C5C;
   }
 }
-
 
 @media (max-width: 1024px) {
   .card_encontra {
-    width: 90%;  
     box-shadow: 0px 4px 15px rgba(255, 133, 168, 0.2);
-    padding: 15px;  
-  }
-
-  .icon {
-    width: 100px; 
-    height: 100px;
-  }
-
-  p {
-    font-size: 14px;  
   }
 }
-
-
-@media (max-width: 600px) {
-  .card_encontra {
-    width: 100%;  
-    padding: 10px;  
-  }
-
-  .icon {
-    width: 80px;  
-    height: 80px;
-  }
-
-  p {
-    font-size: 12px;  
-    max-width: 250px;  
-  }
-}
-

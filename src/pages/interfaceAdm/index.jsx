@@ -296,6 +296,8 @@ export default function InterfaceAdm() {
     fecharModalClientes();
   }
 
+  
+
   function handleAgendamentoChange(e) {
     const { name, value } = e.target;
     setNovoAgendamento({ ...novoAgendamento, [name]: value });
@@ -432,6 +434,52 @@ export default function InterfaceAdm() {
     }
   }
 
+  async function alterarProduto(id, produtoAtualizado) {
+    try {
+      await axios.put(`http://localhost:5050/alterar/pee/${id}`, produtoAtualizado)
+
+      setProdutos((prevProdutos) =>
+        prevProdutos.map((produto) =>
+          produto.id_produto === id
+            ? { ...produto, ...produtoAtualizado }
+            : produto,
+        ),
+      );
+
+      toast.success("Produto alterado com sucesso!")
+
+      setVerFormulario(true)
+      
+
+      
+    } catch (error) {
+      console.error("Erro ao alterar produto:", error);
+      toast.error("Erro ao alterar produto.");
+    }
+  }
+
+
+
+
+  const enviarAlteracaoProduto = () => {
+    if (novoProduto.id_produto) {
+      alterarProduto(novoProduto.id_produto, {
+        nm_cliente: novoCliente.nome,
+        ds_telefone: novoCliente.telefone,
+
+
+        nm_produto: novoProduto.nome,
+        tp_produto: novoProduto.tipo,
+        vl_produto: novoProduto.valor,
+        qtd_produto: novoProduto.quantidade,
+        img_produto: novoProduto.imagem
+
+      });
+    } else {
+      addProduto();
+    }
+  };
+
   const enviarAlteracao = () => {
     if (novoCliente.id_cliente) {
       alterarCliente(novoCliente.id_cliente, {
@@ -471,7 +519,7 @@ export default function InterfaceAdm() {
       toast.success("Agendamento marcado como realizado e estoque atualizado!");
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao atualizar o estoque.");
+      toast.success("Agendamento reaçizado");
     }
   };
 
@@ -562,19 +610,19 @@ export default function InterfaceAdm() {
                         <h1>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                                agendamentos[
-                                  agendamentos.length - 1
-                                ].dt_agendamento,
-                              ).getDate()
+                              agendamentos[
+                                agendamentos.length - 1
+                              ].dt_agendamento,
+                            ).getDate()
                             : "Sem data"}
                         </h1>
                         <p>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                                agendamentos[
-                                  agendamentos.length - 1
-                                ].dt_agendamento,
-                              ).toLocaleString("pt-BR", { month: "long" })
+                              agendamentos[
+                                agendamentos.length - 1
+                              ].dt_agendamento,
+                            ).toLocaleString("pt-BR", { month: "long" })
                             : "Sem mês"}
                         </p>
                       </div>
@@ -726,9 +774,8 @@ export default function InterfaceAdm() {
                       <p>Nenhum agendamento encontrado.</p>
                     ) : (
                       <div
-                        className={`agendamentos-lista ${
-                          agendamentos.length > 5 ? "scrollable" : ""
-                        }`}
+                        className={`agendamentos-lista ${agendamentos.length > 5 ? "scrollable" : ""
+                          }`}
                       >
                         {agendamentos.map((agendamento) => (
                           <div
@@ -739,15 +786,15 @@ export default function InterfaceAdm() {
                               <h1>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
-                                    ).getDate()
+                                    agendamento.dt_agendamento,
+                                  ).getDate()
                                   : "Sem data"}
                               </h1>
                               <p>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                      agendamento.dt_agendamento,
-                                    ).toLocaleString("pt-BR", { month: "long" })
+                                    agendamento.dt_agendamento,
+                                  ).toLocaleString("pt-BR", { month: "long" })
                                   : "Sem mês"}
                               </p>
                             </div>
@@ -1054,9 +1101,9 @@ export default function InterfaceAdm() {
                         <Image className="icon" />
                       </label>
                     </div>
-                    <button className="reg" onClick={addProduto}>
-                      Registrar
-                    </button>
+                    <button onClick={enviarAlteracaoProduto} className="reg">
+                        {novoProduto.id_produto ? "Alterar" : "registrar"}
+                      </button>
                   </form>
                 )}
 
@@ -1094,8 +1141,8 @@ export default function InterfaceAdm() {
                                   produto.img_produto == null
                                     ? null
                                     : Buffer.from(
-                                        produto.img_produto.data,
-                                      ).toString()
+                                      produto.img_produto.data,
+                                    ).toString()
                                 }
                                 alt=""
                               />
@@ -1111,7 +1158,7 @@ export default function InterfaceAdm() {
                                   abrirFormularioAlteracao(produto.id_cliente)
                                 }
                               >
-                                <SquarePen className="iconAcation" />
+                                <SquarePen onClick={() => alterarProduto(produto.id_produto)} className="iconAcation" />
                               </button>
 
                               <button

@@ -8,8 +8,8 @@ import Cabecalho from "../../components/header";
 export default function GaleriaPage() {
   return (
     <div className="pagina-galeria">
-      <div className="conteudo-galeria">
         <Cabecalho/>
+      <div className="conteudo-galeria">
         <Galeria />
         <ButtonVeja
           linkDestino="http://instagram.com/rafaella_designers"
