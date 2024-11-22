@@ -7,6 +7,7 @@ import DetalhesServicos from "./pages/servicos";
 import Galeria from "./components/galeria";
 import NotFound from "./pages/notFound";
 import Dicas from "./pages/pageDicas";
+import GaleriaPage from "./pages/pageGaleria";
 
 export default function Navegacao() {
   return (
@@ -19,7 +20,7 @@ export default function Navegacao() {
         <Route path="/interfaceAdm" element={<InterfaceAdm />} />
         <Route path="/interfaceAdm/:id" element={<InterfaceAdm />} />
         <Route path="/servicos" element={<DetalhesServicos />} />
-        <Route path="/galeria" element={<Galeria />} />
+        <Route path="/galeria" element={<GaleriaPage />} />
         <Route path="/dicas" element={<Dicas />} />
         
       </Routes>

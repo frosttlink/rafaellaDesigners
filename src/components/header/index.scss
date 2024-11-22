@@ -4,10 +4,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3px 75px;
+  padding: 10px 5vw; // Usar unidades relativas para escalabilidade
 
   .logo {
-    margin-right: -150px;
+    margin-right: 0; // Ajustar margin para layouts menores
+    max-width: 150px;
+
+    @media (max-width: 768px) {
+      max-width: 120px; // Reduzir o tamanho da logo
+    }
   }
 
   &.not-home {
@@ -21,17 +26,68 @@
   .navigation {
     display: flex;
     gap: 30px;
+
+    @media (max-width: 768px) {
+      gap: 15px; 
+    }
+
+    @media (max-width: 576px) {
+      display: none; 
+    }
   }
 
   a {
     text-decoration: none;
     font-size: 17px;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-weight: 700;
     color: #fff;
 
     &.active {
       color: #ffb6cb;
     }
+
+    @media (max-width: 768px) {
+      font-size: 15px; 
+    }
+  }
+
+  .menu-toggle {
+    display: none;
+
+    @media (max-width: 576px) {
+      display: block;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+
+  .mobile-navigation {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 5vw;
+    background-color: $color_pink_shadow;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+
+    a {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #fff;
+
+      &.active {
+        color: $color_pink_shock;
+      }
+    }
+  }
+
+
+  &.menu-open .mobile-navigation {
+    display: flex;
   }
 }

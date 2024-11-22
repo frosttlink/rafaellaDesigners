@@ -8,8 +8,11 @@ export default function ButtonVeja(props) {
   };
 
   return (
+    <div className="botao">
     <Link to={props.linkDestino || "/"} style={vejaDetalhes} className="veja">
       {props.texto || "textoaqui"}
     </Link>
+
+    </div>
   );
 }

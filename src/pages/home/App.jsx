@@ -51,7 +51,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-        >
+         >
           <center>
             <a href="#dicas">
               <ChevronDown className="roll" />
@@ -185,9 +185,11 @@ export default function Home() {
         viewport={{ once: true }}
         className="vantagens"
       >
-        <center>
-          <img src="/assets/images/encontra.svg" alt="" className="encontra" />
-        </center>
+        <div className="encontra">
+          <img src="/assets/images/encontra.svg" alt="Imagem Encontra"  />
+        </div>
+          
+   
 
         {isMobile ? (
           <Swiper
