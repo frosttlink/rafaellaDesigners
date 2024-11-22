@@ -539,10 +539,6 @@ export default function InterfaceAdm() {
             >
               <Layers className="icon" /> {!menuCompacto && "Estoque"}
             </li>
-            <li onClick={() => setmenuOpcao("editar")}
-              className= {menuOpcao === "editar" ? "active": ""}>
-                <Pencil className="icon" />{!menuCompacto && "Editar"}
-            </li>
           </ul>
 
           <button onClick={sair} className="sair">
@@ -1134,10 +1130,6 @@ export default function InterfaceAdm() {
                 </div>
               )}
             </div>
-          )}
-          {menuOpcao === "editar" && (
-           <div><h1>come rato</h1></div>
-
           )}
         </div>
       </div>
