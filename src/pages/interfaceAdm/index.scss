@@ -210,7 +210,7 @@
       width: 200px;
     }
 
-    & input {
+    & input, select {
       background-color: $color_pink_base;
       color: $color_pink_text;
       width: 900px;
@@ -285,6 +285,22 @@
         display: flex;
         align-items: center;
         position: relative;
+      }
+
+      & select {
+        background-color: $color_pink_base;
+        color: $color_pink_text;
+        width: 165px;
+        height: 45px;
+        padding: 10px;
+        font-weight: 700;
+        border-radius: 8px;
+        outline: none;
+      }
+  
+      & input::placeholder {
+        color: $color_pink_text;
+        font-weight: 700;
       }
 
       .acao {

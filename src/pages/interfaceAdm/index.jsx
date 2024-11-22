@@ -30,12 +30,15 @@ export default function InterfaceAdm() {
   const [imagem, setImagem] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [filtroOrdenacao, setFiltroOrdenacao] = useState("alfabetico");
+
   const servicos = [
     "Selecione o serviço",
     "Cílios - Volume Brasileiro",
     "Cílios - Volume Fio a Fio",
     "Cílios - Volume Fox",
-    "Sobrancelha - Design Personalizado",
+    "Sobrancelha - Limpeza",
     "Sobrancelha - Design com Henna",
     "Epilação",
   ];
@@ -44,7 +47,7 @@ export default function InterfaceAdm() {
     tipo: "",
     valor: "",
     quantidade: "",
-    imagem: "",
+    imagem: "" || "/assets/images/imagemFake.svg",
   });
 
   const [atendimentoDomicilio, setAtendimentoDomicilio] = useState(false);
@@ -63,6 +66,7 @@ export default function InterfaceAdm() {
   const [modalClientesAberto, setModalClientesAberto] = useState(false);
   const [modalFormularioClientesAberto, setModalFormularioClientesAberto] =
     useState(false);
+  const [modalCategoriaAberto, setModalCategoriaAberto] = useState(false);
 
   const [novoCliente, setNovoCliente] = useState({
     nome: "",
@@ -95,7 +99,6 @@ export default function InterfaceAdm() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(id);
 
   async function addProduto() {
     let paramCorpo = {
@@ -105,7 +108,7 @@ export default function InterfaceAdm() {
       quantidade: novoProduto.quantidade,
       imagem: imagem,
     };
-    if (id == undefined) {
+    if (id === undefined) {
       const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
       toast.success("Produto adicionado. Id: " + resp.data.novoID);
@@ -127,6 +130,8 @@ export default function InterfaceAdm() {
     setVerFormulario(false);
     setNovoProduto({ nome: "", tipo: "", valor: "", quantidade: "" });
     setImagem(null);
+    console.log(produto.id);
+    buscar();
   }
 
   async function addCliente() {
@@ -253,6 +258,7 @@ export default function InterfaceAdm() {
       });
 
       toast.success("Agendamento realizado com sucesso!");
+      buscar();
     } catch (error) {
       console.error("Erro ao agendar:", error);
       toast.error("Erro ao agendar. Tente novamente.");
@@ -260,7 +266,7 @@ export default function InterfaceAdm() {
   };
 
   async function buscar() {
-    const url = `http://localhost:5050/procurar/inner/?x-access-token=${token}`;
+    const url = `http://localhost:5050/procurar/inner?x-access-token=${token}`;
     let resp = await axios.get(url);
     console.log(resp.data);
     setNovoProduto(resp.data);
@@ -298,6 +304,9 @@ export default function InterfaceAdm() {
 
   const abrirModalClientes = () => setModalClientesAberto(true);
   const fecharModalClientes = () => setModalClientesAberto(false);
+
+  const abrirModalCategoria = () => setModalCategoriaAberto(true);
+  const fecharModalCategoria = () => setModalCategoriaAberto(false);
 
   const abrirModalFormularioClientesAberto = () =>
     setModalFormularioClientesAberto(true);
@@ -387,7 +396,7 @@ export default function InterfaceAdm() {
     const fetchProdutos = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/produto?x-access-token=${token}`,
+          `http://localhost:5050/procurar/inner?x-access-token=${token}`,
         );
         setProdutos(response.data);
       } catch (error) {
@@ -447,25 +456,59 @@ export default function InterfaceAdm() {
     }
   }
 
-  async function marcarComoRealizado(idAgendamento) {
+  const marcarComoRealizado = async (idAgendamento, servico) => {
     try {
-      await axios.put(
-        `http://localhost:5050/agendamento/${idAgendamento}?x-access-token=${token}`,
-        { bt_realizado: true },
-      );
+      await axios.put(`http://localhost:5050/agendamento/${idAgendamento}`, {
+        realizado: true,
+      });
 
-      setAgendamentos((prevAgendamentos) =>
-        prevAgendamentos.filter(
-          (agendamento) => agendamento.id_agendamento !== idAgendamento,
+      await axios.put(`http://localhost:5050/estoque/atualizar`, {
+        servico,
+      });
+
+      toast.success("Agendamento marcado como realizado e estoque atualizado!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao atualizar o estoque.");
+    }
+  };
+
+  useEffect(() => {
+    if (abrirModalCategoria) {
+      async function fetchCategoria() {
+        try {
+          const resp = await axios.get(
+            `http://localhost:5050/categoria?x-access-token=${token}`,
+          );
+          setCategorias(resp.data);
+        } catch (err) {
+          console.error("Erro ao buscar categorias", err);
+        }
+      }
+      fetchCategoria();
+    }
+  }, [abrirModalCategoria]);
+
+  const categoriaClick = async (categoriaSelecionada) => {
+    try {
+      await axios.delete(`http://localhost:5050/produtos/deletarPorCategoria`, {
+        data: { categoria: categoriaSelecionada },
+      });
+
+      setProdutos((prevProdutos) =>
+        prevProdutos.filter(
+          (produto) => produto.categoria !== categoriaSelecionada,
         ),
       );
 
-      toast.success("Agendamento realizado com sucesso!");
+      toast.success(
+        `Produtos da categoria "${categoriaSelecionada}" deletados com sucesso!`,
+      );
     } catch (error) {
-      console.error("Erro ao atualizar agendamento:", error);
-      toast.error("Erro ao marcar agendamento como realizado.");
+      console.error("Erro ao deletar os produtos:", error);
+      toast.error("Ocorreu um erro ao deletar os produtos da categoria.");
     }
-  }
+  };
 
   return (
     <div className="interface-adm">
@@ -837,7 +880,6 @@ export default function InterfaceAdm() {
                       onChange={handleAgendamentoChange}
                     />
                   </div>
-
                   <div className="atend-for">
                     <div className="int-wrapper">
                       <span className="int-label">Atendimento a domicilio</span>
@@ -878,13 +920,40 @@ export default function InterfaceAdm() {
                     <h4>
                       <Filter /> Filtros
                     </h4>
-                    <h4>
-                      <Tag /> Categorias
-                    </h4>
+                    <select
+                      className="filtros"
+                      value={filtroOrdenacao}
+                      onChange={(e) => setFiltroOrdenacao(e.target.value)}
+                    >
+                      <option value="alfabetico">Ordenar Alfabético</option>
+                      <option value="maiorQuantidade">Maior Quantidade</option>
+                      <option value="menorQuantidade">Menor Quantidade</option>
+                      <option value="maiorPreco">Maior Preço</option>
+                      <option value="menorPreco">Menor Preço</option>
+                    </select>
                   </div>
                   <button onClick={() => setVerFormulario(true)}>
                     <Plus /> Adicionar Produto
                   </button>
+                </div>
+              )}
+
+              {modalCategoriaAberto && (
+                <div className="modal-overlay">
+                  <div className="modal">
+                    <h2>Escolha uma Categoria</h2>
+                    <ul>
+                      {categorias.map((categoria) => (
+                        <li
+                          key={categoria.categoria}
+                          onClick={() => categoriaClick(categoria.categoria)}
+                        >
+                          {categoria.categoria}
+                        </li>
+                      ))}
+                    </ul>
+                    <button onClick={fecharModalCategoria}>Fechar</button>
+                  </div>
                 </div>
               )}
 
@@ -914,20 +983,25 @@ export default function InterfaceAdm() {
                       }
                     />
                     <div className="osDiferentes">
-                      <input
-                        type="text"
+                      <select
                         name="categoria"
-                        placeholder="Categoria"
-                        className="categoria"
                         required
                         value={novoProduto.tipo}
                         onChange={(e) =>
-                          setNovoProduto((prev) => ({
-                            ...prev,
+                          setNovoProduto({
+                            ...novoProduto,
                             tipo: e.target.value,
-                          }))
+                          })
                         }
-                      />
+                        className="categoria"
+                      >
+                        {servicos.map((servico, index) => (
+                          <option key={index} value={servico}>
+                            {servico}
+                          </option>
+                        ))}
+                      </select>
+
                       <input
                         type="number"
                         name="preco"
@@ -935,13 +1009,17 @@ export default function InterfaceAdm() {
                         className="preco"
                         required
                         value={novoProduto.valor}
-                        onChange={(e) =>
-                          setNovoProduto((prev) => ({
-                            ...prev,
-                            valor: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => {
+                          const value = parseFloat(e.target.value);
+                          if (value >= 0 || e.target.value === "") {
+                            setNovoProduto((prev) => ({
+                              ...prev,
+                              valor: e.target.value,
+                            }));
+                          }
+                        }}
                       />
+
                       <input
                         type="number"
                         name="quantidade"
@@ -949,12 +1027,16 @@ export default function InterfaceAdm() {
                         required
                         className="qtd"
                         value={novoProduto.quantidade}
-                        onChange={(e) =>
-                          setNovoProduto((prev) => ({
-                            ...prev,
-                            quantidade: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value, 10);
+                          // Impede valores negativos
+                          if (value >= 0 || e.target.value === "") {
+                            setNovoProduto((prev) => ({
+                              ...prev,
+                              quantidade: e.target.value,
+                            }));
+                          }
+                        }}
                       />
                     </div>
                     <div className="custom-file-input">
@@ -979,7 +1061,11 @@ export default function InterfaceAdm() {
                 {imagem && (
                   <div className="imagem">
                     <h4>Imagem do produto:</h4>
-                    <img id="produto" src={imagem} alt="foto" />
+                    <img
+                      id="produto"
+                      src={imagem || "/assets/images/imagemFake.svg"}
+                      alt="foto"
+                    />
                   </div>
                 )}
               </div>
@@ -1028,7 +1114,9 @@ export default function InterfaceAdm() {
 
                               <button
                                 className="iconAcation"
-                                onClick={() => deletarProduto(produto.id)}
+                                onClick={() =>
+                                  deletarProduto(produto.id_produto)
+                                }
                               >
                                 <Trash className="iconAcation" />
                               </button>

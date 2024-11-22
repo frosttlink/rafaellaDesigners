@@ -17,6 +17,7 @@
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.27.0",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.14.1",
     "sass": "^1.79.5",
     "swiper": "^11.1.14",
     "web-vitals": "^2.1.4"
