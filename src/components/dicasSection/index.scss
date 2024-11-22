@@ -1,8 +1,8 @@
 .dicas {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+  align-items: flex-start;  
+  justify-content: flex-start;  
+  flex-direction: row;  
   margin-left: -75px;
   margin-top: 150px;
 
@@ -13,32 +13,72 @@
     margin-left: -60px;
 
     p {
-      font-family: Roboto, sans-serif;
-      font-weight: 700;
-      padding-left: 15px;
-      margin-bottom: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.2rem;            
+      line-height: 1.6;             
+      color: #333;               
+      margin: 20px auto;            
+      max-width: 370px;              
+      text-align: justify;          
+      padding: 0 15px;            
+    }
+    
+    .ult {
+      margin-top: 20px;            
+      font-weight: 400;              
     }
 
     .ult {
       margin-bottom: 20px;
     }
   }
+
+  .mujer {
+ align-items: center;    
+ justify-content: center;       
+  display: flex;
+  
 }
+
+}
+
+
+
+@media (max-width: 1024px) {
+  .mujer {
+    max-width: 80%;         
+  }
+}
+
+@media (max-width: 168px) {
+  .mujer {
+    max-width: 70%;         
+  }
+}
+
+@media (max-width: 76px) {
+  .mujer {
+    max-width: 60%;        
+  }
+}
+
+@media (max-width: 5px) {
+  .mujer {
+    max-width: 50%;         
+  }
+}
+
 
 @media (max-width: 1024px) {
   .dicas {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
+    flex-direction: column;  
+    text-align: center;  
+    align-items: center;  
     justify-content: center;
-    margin-left: 0;
-
-    .mujer {
-      width: 500px;
-    }
+    margin-left: 0;  
 
     .pele {
-      margin-left: 0px;
+      margin-left: 0px;  
     }
 
     .botaoDicas {
@@ -48,5 +88,27 @@
       margin: 0 auto;
       margin-top: 20px;
     }
+  }
+}
+
+
+@media (max-width: 600px) {
+  .dicas {
+    margin-top: 100px; 
+    margin-left: 0;  
+    padding: 0 15px;  
+  }
+
+  .pele {
+    max-width: 100%;  
+    margin-left: 0;  
+  }
+
+  .pele p {
+    font-size: 14px; 
+  }
+
+  .botaoDicas {
+    width: 100%;  
   }
 }

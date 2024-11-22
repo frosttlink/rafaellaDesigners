@@ -23,8 +23,6 @@
     opacity: 1; 
   }
 
-  
-
   .btn-anterior,
   .btn-proxima {
     position: absolute;
@@ -53,8 +51,23 @@
     background: rgba(0, 0, 0, 0.7);
   }
 
+  @media (max-width: 1024px) {
+    .galeria {
+      height: 400px;
+    }
+
+    .foto {
+      object-fit: contain;
+    }
+
+    .btn-anterior,
+    .btn-proxima {
+      font-size: 22px;
+      padding: 12px;
+    }
+  }
+
   @media (max-width: 768px) {
-    
     .galeria {
       height: 300px;
     }
@@ -63,14 +76,57 @@
       object-fit: contain; 
     }
 
+    .btn-anterior,
+    .btn-proxima {
+      font-size: 18px;
+      padding: 10px;
+    }
+
     .veja {
       font-size: 12px; 
       padding: 8px;
     }
+  }
+
+  @media (max-width: 576px) {
+    .galeria {
+      height: 250px;
+    }
+
+    .foto {
+      object-fit: contain;
+    }
 
     .btn-anterior,
     .btn-proxima {
-      font-size: 18px;
+      font-size: 16px;
+      padding: 8px;
+    }
+
+    .veja {
+      font-size: 10px; 
+      padding: 6px;
+    }
+  }
+
+  @media (max-width: 375px) {
+    .galeria {
+      height: 200px;
+    }
+
+    .foto {
+      object-fit: contain;
+    }
+
+    .btn-anterior,
+    .btn-proxima {
+      font-size: 14px;
+      padding: 6px;
+    }
+
+    .veja {
+      font-size: 10px; 
+      padding: 5px;
     }
   }
 }
