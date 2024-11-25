@@ -19,6 +19,8 @@ export default function Depoimentos() {
           <h5>@cristinaribeirotst</h5>
         </div>
       </div>
+
+      <img src="/assets/images/olho_depo.svg" alt="" className="olho_depo"/>
     </div>
   );
 }

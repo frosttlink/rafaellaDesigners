@@ -16,13 +16,12 @@ import {
 } from "lucide-react";
 import "./index.scss";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Buffer } from "buffer";
 import toast, { Toaster } from "react-hot-toast";
 import InputMask from "react-input-mask";
-import { div } from "framer-motion/client";
 
 export default function InterfaceAdm() {
   const [menuOpcao, setmenuOpcao] = useState("");
@@ -34,6 +33,13 @@ export default function InterfaceAdm() {
   const [clientes, setClientes] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [filtroOrdenacao, setFiltroOrdenacao] = useState("alfabetico");
+  const buttonRef = useRef(null);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      buttonRef.current.click();
+    }
+  };
 
   const servicos = [
     "Selecione o serviço",
@@ -110,30 +116,44 @@ export default function InterfaceAdm() {
       quantidade: novoProduto.quantidade,
       imagem: imagem,
     };
+
+    // Verificar se estamos adicionando um produto novo ou alterando um existente
     if (id === undefined) {
+      // Produto novo
       const url = `http://localhost:5050/adicionar/pee?x-access-token=${token}`;
       let resp = await axios.post(url, paramCorpo);
       toast.success("Produto adicionado. Id: " + resp.data.novoID);
+
+      // Adicionando o produto ao estado sem duplicar
+      const produto = {
+        id_produto: resp.data.novoID, // ID retornado do backend
+        nome: novoProduto.nome,
+        tipo: novoProduto.tipo,
+        valor: novoProduto.valor,
+        quantidade: novoProduto.quantidade,
+        imagem: imagem || "/assets/images/imagemFake.svg",
+      };
+
+      setProdutos((prevProdutos) => [...prevProdutos, produto]);
     } else {
+      // Produto existente, alterando
       const url = `http://localhost:5050/alterar/pee/${id}?x-access-token=${token}`;
       let resp = await axios.put(url, paramCorpo);
-
       toast.success("Produto alterado.");
+
+      // Atualizando a lista de produtos sem duplicação
+      setProdutos((prevProdutos) =>
+        prevProdutos.map((produto) =>
+          produto.id_produto === id ? { ...produto, ...paramCorpo } : produto,
+        ),
+      );
     }
 
-    const produto = {
-      ...novoProduto,
-      id: produtos.length + 1,
-      preco: parseFloat(novoProduto.valor),
-      quantidade: parseInt(novoProduto.quantidade, 10),
-      imagem: imagem || "/assets/images/imagemFake.svg",
-    };
-    setProdutos([...produtos, produto]);
+    // Resetando formulário após a operação
     setVerFormulario(false);
     setNovoProduto({ nome: "", tipo: "", valor: "", quantidade: "" });
     setImagem(null);
-    console.log(produto.id);
-    buscar();
+    buscar(); // Buscando os produtos mais recentes
   }
 
   async function addCliente() {
@@ -268,11 +288,14 @@ export default function InterfaceAdm() {
   };
 
   async function buscar() {
-    const url = `http://localhost:5050/procurar/inner?x-access-token=${token}`;
-    let resp = await axios.get(url);
-    console.log(resp.data);
-    setNovoProduto(resp.data);
-    console.log(produtos);
+    try {
+      const response = await axios.get(
+        `http://localhost:5050/procurar/inner?x-access-token=${token}`,
+      );
+      setProdutos(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
   }
 
   async function buscarCliente() {
@@ -295,8 +318,6 @@ export default function InterfaceAdm() {
     });
     fecharModalClientes();
   }
-
-  
 
   function handleAgendamentoChange(e) {
     const { name, value } = e.target;
@@ -384,12 +405,17 @@ export default function InterfaceAdm() {
 
   async function deletarProduto(id) {
     try {
+      // Excluindo o produto no backend
       await axios.delete(
         `http://localhost:5050/deletar/pee/${id}?x-access-token=${token}`,
       );
       toast.success("Produto deletado com sucesso!");
 
+      // Atualizando o estado local para remover o produto deletado
       setProdutos((prev) => prev.filter((produto) => produto.id !== id));
+
+      // Rebuscando os produtos atualizados do backend
+      buscar(); // Essa chamada pode ser redundante se você já tiver atualizado o estado local
     } catch (error) {
       console.error("Erro ao deletar produto:", error);
       toast.error("Erro ao deletar produto.");
@@ -436,7 +462,10 @@ export default function InterfaceAdm() {
 
   async function alterarProduto(id, produtoAtualizado) {
     try {
-      await axios.put(`http://localhost:5050/alterar/pee/${id}`, produtoAtualizado)
+      await axios.put(
+        `http://localhost:5050/alterar/pee/${id}`,
+        produtoAtualizado,
+      );
 
       setProdutos((prevProdutos) =>
         prevProdutos.map((produto) =>
@@ -446,34 +475,24 @@ export default function InterfaceAdm() {
         ),
       );
 
-      toast.success("Produto alterado com sucesso!")
+      toast.success("Produto alterado com sucesso!");
 
-      setVerFormulario(true)
-      
-
-      
+      setVerFormulario(true);
+      setVerFormulario(false);
     } catch (error) {
       console.error("Erro ao alterar produto:", error);
       toast.error("Erro ao alterar produto.");
     }
   }
 
-
-
-
   const enviarAlteracaoProduto = () => {
     if (novoProduto.id_produto) {
       alterarProduto(novoProduto.id_produto, {
-        nm_cliente: novoCliente.nome,
-        ds_telefone: novoCliente.telefone,
-
-
+        qtd_produto: novoProduto.quantidade,
         nm_produto: novoProduto.nome,
         tp_produto: novoProduto.tipo,
         vl_produto: novoProduto.valor,
-        qtd_produto: novoProduto.quantidade,
-        img_produto: novoProduto.imagem
-
+        img_produto: novoProduto.imagem,
       });
     } else {
       addProduto();
@@ -491,6 +510,7 @@ export default function InterfaceAdm() {
     }
   };
 
+  // Função chamada quando o botão de edição for clicado
   function abrirFormularioAlteracao(idCliente) {
     const clienteParaAlterar = clientes.find(
       (cliente) => cliente.id_cliente === idCliente,
@@ -503,6 +523,24 @@ export default function InterfaceAdm() {
         telefone: clienteParaAlterar.ds_telefone,
       });
       abrirModalFormularioClientesAberto();
+    }
+  }
+
+  function abrirFormularioAlteracaoProduto(idProduto) {
+    const produtoParaAlterar = produtos.find(
+      (produto) => produto.id_produto === idProduto,
+    );
+
+    if (produtoParaAlterar) {
+      setNovoProduto({
+        id_produto: produtoParaAlterar.id_produto,
+        quantidade: produtoParaAlterar.qtd_produto,
+        nome: produtoParaAlterar.nm_produto,
+        tipo: produtoParaAlterar.tp_produto,
+        valor: produtoParaAlterar.vl_produto,
+        imagem: produtoParaAlterar.img_produto,
+      });
+      setVerFormulario(true);
     }
   }
 
@@ -610,19 +648,19 @@ export default function InterfaceAdm() {
                         <h1>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                              agendamentos[
-                                agendamentos.length - 1
-                              ].dt_agendamento,
-                            ).getDate()
+                                agendamentos[
+                                  agendamentos.length - 1
+                                ].dt_agendamento,
+                              ).getDate()
                             : "Sem data"}
                         </h1>
                         <p>
                           {agendamentos[agendamentos.length - 1].dt_agendamento
                             ? new Date(
-                              agendamentos[
-                                agendamentos.length - 1
-                              ].dt_agendamento,
-                            ).toLocaleString("pt-BR", { month: "long" })
+                                agendamentos[
+                                  agendamentos.length - 1
+                                ].dt_agendamento,
+                              ).toLocaleString("pt-BR", { month: "long" })
                             : "Sem mês"}
                         </p>
                       </div>
@@ -736,7 +774,7 @@ export default function InterfaceAdm() {
                       <InputMask
                         mask="(99) 99999-9999"
                         value={novoCliente.telefone}
-                        placeholder="Número de clientes"
+                        placeholder="Número do cliente"
                         onChange={(e) =>
                           setNovoCliente((prev) => ({
                             ...prev,
@@ -774,8 +812,9 @@ export default function InterfaceAdm() {
                       <p>Nenhum agendamento encontrado.</p>
                     ) : (
                       <div
-                        className={`agendamentos-lista ${agendamentos.length > 5 ? "scrollable" : ""
-                          }`}
+                        className={`agendamentos-lista ${
+                          agendamentos.length > 5 ? "scrollable" : ""
+                        }`}
                       >
                         {agendamentos.map((agendamento) => (
                           <div
@@ -786,15 +825,15 @@ export default function InterfaceAdm() {
                               <h1>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                    agendamento.dt_agendamento,
-                                  ).getDate()
+                                      agendamento.dt_agendamento,
+                                    ).getDate()
                                   : "Sem data"}
                               </h1>
                               <p>
                                 {agendamento.dt_agendamento
                                   ? new Date(
-                                    agendamento.dt_agendamento,
-                                  ).toLocaleString("pt-BR", { month: "long" })
+                                      agendamento.dt_agendamento,
+                                    ).toLocaleString("pt-BR", { month: "long" })
                                   : "Sem mês"}
                               </p>
                             </div>
@@ -957,6 +996,7 @@ export default function InterfaceAdm() {
 
           {menuOpcao === "estoque" && (
             <div className="listagem-estoque">
+              {/* Barra de Pesquisa e Filtros */}
               {!verFormulario && (
                 <div className="barra-pesquisa">
                   <div className="barra">
@@ -987,6 +1027,7 @@ export default function InterfaceAdm() {
                 </div>
               )}
 
+              {/* Modal de Categoria */}
               {modalCategoriaAberto && (
                 <div className="modal-overlay">
                   <div className="modal">
@@ -1006,12 +1047,14 @@ export default function InterfaceAdm() {
                 </div>
               )}
 
+              {/* Formulário para Adicionar/Alterar Produto */}
               <div className="adicionar-estoque">
                 {verFormulario && (
                   <form
                     className="estoque-form"
                     onSubmit={(e) => {
                       e.preventDefault();
+                      enviarAlteracaoProduto();
                     }}
                   >
                     <Link onClick={() => setVerFormulario(false)}>
@@ -1037,10 +1080,10 @@ export default function InterfaceAdm() {
                         required
                         value={novoProduto.tipo}
                         onChange={(e) =>
-                          setNovoProduto({
-                            ...novoProduto,
+                          setNovoProduto((prev) => ({
+                            ...prev,
                             tipo: e.target.value,
-                          })
+                          }))
                         }
                         className="categoria"
                       >
@@ -1078,7 +1121,6 @@ export default function InterfaceAdm() {
                         value={novoProduto.quantidade}
                         onChange={(e) => {
                           const value = parseInt(e.target.value, 10);
-                          // Impede valores negativos
                           if (value >= 0 || e.target.value === "") {
                             setNovoProduto((prev) => ({
                               ...prev,
@@ -1102,11 +1144,12 @@ export default function InterfaceAdm() {
                       </label>
                     </div>
                     <button onClick={enviarAlteracaoProduto} className="reg">
-                        {novoProduto.id_produto ? "Alterar" : "registrar"}
-                      </button>
+                      {novoProduto.id_produto ? "Alterar" : "Registrar"}
+                    </button>
                   </form>
                 )}
 
+                {/* Exibição de Imagem do Produto */}
                 {imagem && (
                   <div className="imagem">
                     <h4>Imagem do produto:</h4>
@@ -1119,6 +1162,7 @@ export default function InterfaceAdm() {
                 )}
               </div>
 
+              {/* Lista de Produtos */}
               {!verFormulario && (
                 <div className="lista-produto">
                   <table>
@@ -1132,33 +1176,40 @@ export default function InterfaceAdm() {
                       </tr>
                     </thead>
                     <tbody>
-                      {novoProduto.length > 0 &&
-                        novoProduto?.map((produto) => (
-                          <tr key={produto.id}>
+                      {produtos.length > 0 &&
+                        produtos.map((produto) => (
+                          <tr key={produto.id_produto}>
                             <td className="produto">
                               <img
                                 src={
-                                  produto.img_produto == null
-                                    ? null
-                                    : Buffer.from(
-                                      produto.img_produto.data,
-                                    ).toString()
+                                  produto.img_produto &&
+                                  produto.img_produto.data
+                                    ? `data:image/jpeg;base64,${Buffer.from(
+                                        produto.img_produto.data,
+                                      ).toString("base64")}`
+                                    : "/assets/images/imagemFake.svg" // Exibe imagem padrão se não houver imagem
                                 }
                                 alt=""
                               />
-                              {produto.nm_produto}
+                              {produto.nm_produto || "Produto sem nome"}
                             </td>
-                            <td>{produto.tp_produto}</td>
-                            <td className="qtd">{produto.qtd_produto}</td>
-                            <td>R${Number(produto.vl_produto).toFixed(2)}</td>
+                            <td>
+                              {produto.tp_produto || "Categoria não definida"}
+                            </td>
+                            <td className="qtd">{produto.qtd_produto || 0}</td>
+                            <td>
+                              R${Number(produto.vl_produto || 0).toFixed(2)}
+                            </td>
                             <td className="action">
                               <button
                                 className="iconAcation"
                                 onClick={() =>
-                                  abrirFormularioAlteracao(produto.id_cliente)
+                                  abrirFormularioAlteracaoProduto(
+                                    produto.id_produto,
+                                  )
                                 }
                               >
-                                <SquarePen onClick={() => alterarProduto(produto.id_produto)} className="iconAcation" />
+                                <SquarePen className="iconAcation" />
                               </button>
 
                               <button
