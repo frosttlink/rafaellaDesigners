@@ -153,7 +153,7 @@ export default function InterfaceAdm() {
     setVerFormulario(false);
     setNovoProduto({ nome: "", tipo: "", valor: "", quantidade: "" });
     setImagem(null);
-    buscar(); // Buscando os produtos mais recentes
+    buscar(); 
   }
 
   async function addCliente() {
